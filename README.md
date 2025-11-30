@@ -8,41 +8,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* ألوان متطورة وجذابة */
-            --primary: #6366F1;
-            --primary-dark: #4F46E5;
-            --primary-light: #8B5CF6;
-            --accent: #EC4899;
-            --accent-dark: #DB2777;
-            --accent-light: #F472B6;
-            --secondary: #10B981;
-            --secondary-dark: #059669;
-            --tertiary: #F59E0B;
-            --quaternary: #8B5CF6;
-            --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text: #1F2937;
-            --light-text: #6B7280;
-            --border: rgba(255, 255, 255, 0.2);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-dark: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-            --gradient-light: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
-            --accent-gradient: linear-gradient(135deg, #EC4899, #8B5CF6);
-            --success-gradient: linear-gradient(135deg, #10B981, #34D399);
-            --warning-gradient: linear-gradient(135deg, #F59E0B, #FBBF24);
-            --primary-gradient: linear-gradient(135deg, #6366F1, #8B5CF6);
+            /* ألوان عسكرية */
+            --primary: #556B2F; /* أخضر زيتوني */
+            --primary-dark: #3D4A23;
+            --primary-light: #6B8E23;
+            --accent: #B8860B; /* ذهبي عسكري */
+            --accent-dark: #8B6508;
+            --accent-light: #DAA520;
+            --secondary: #8B7355; /* بني عسكري */
+            --secondary-dark: #6B5742;
+            --tertiary: #696969; /* رمادي عسكري */
+            --quaternary: #2F4F4F; /* رمادي داكن */
+            --bg: linear-gradient(135deg, #2F4F4F 0%, #3D4A23 100%); /* تدرج عسكري */
+            --card-bg: rgba(47, 79, 79, 0.9); /* خلفية شبه شفافة */
+            --text: #F5F5DC; /* لون بيج فاتح */
+            --light-text: #D2B48C; /* تان فاتح */
+            --border: rgba(139, 115, 85, 0.5); /* حدود بنية */
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --gradient: linear-gradient(135deg, #2F4F4F 0%, #3D4A23 100%);
+            --gradient-dark: linear-gradient(135deg, #253737 0%, #2D381B 100%);
+            --gradient-light: linear-gradient(135deg, #3D5C5C 0%, #4D5E2A 100%);
+            --accent-gradient: linear-gradient(135deg, #B8860B, #DAA520);
+            --success-gradient: linear-gradient(135deg, #556B2F, #6B8E23);
+            --warning-gradient: linear-gradient(135deg, #B8860B, #DAA520);
+            --primary-gradient: linear-gradient(135deg, #556B2F, #6B8E23);
         }
 
         .dark-theme {
-            --bg: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            --card-bg: rgba(30, 41, 59, 0.95);
-            --text: #F1F5F9;
-            --light-text: #CBD5E1;
-            --border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --bg: linear-gradient(135deg, #1C2A2A 0%, #222B11 100%);
+            --card-bg: rgba(28, 42, 42, 0.95);
+            --text: #F5F5DC;
+            --light-text: #D2B48C;
+            --border: rgba(139, 115, 85, 0.3);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -60,19 +60,35 @@
             padding-top: 80px;
             transition: all 0.5s ease;
             min-height: 100vh;
+            position: relative;
         }
 
-        /* Header بتصميم شفاف وجذاب */
+        /* تأثير التمويه في الخلفية */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(85, 107, 47, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(47, 79, 79, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 40% 80%, rgba(139, 115, 85, 0.1) 0%, transparent 20%);
+            z-index: -1;
+        }
+
+        /* Header بتصميم عسكري */
         header {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(47, 79, 79, 0.9);
             backdrop-filter: blur(20px);
-            color: white;
+            color: var(--text);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
             box-shadow: var(--shadow);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid var(--accent);
             padding: 15px 0;
         }
 
@@ -92,7 +108,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 2px 10px rgba(236, 72, 153, 0.3);
+            text-shadow: 0 2px 10px rgba(184, 134, 11, 0.3);
+            letter-spacing: 1px;
         }
 
         .header-actions {
@@ -101,11 +118,11 @@
         }
 
         .theme-btn, .back-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(139, 115, 85, 0.3);
+            color: var(--text);
+            border: 1px solid var(--border);
             padding: 8px 15px;
-            border-radius: 12px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -114,12 +131,14 @@
             gap: 6px;
             backdrop-filter: blur(10px);
             text-decoration: none;
+            font-size: 0.9rem;
         }
 
         .theme-btn:hover, .back-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(184, 134, 11, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
         }
 
         /* Main Content */
@@ -129,11 +148,12 @@
             padding: 0 20px;
         }
 
+        /* Hero Section بتصميم عسكري */
         .hero-section {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(47, 79, 79, 0.7);
             backdrop-filter: blur(20px);
-            color: white;
-            border-radius: 24px;
+            color: var(--text);
+            border-radius: 8px;
             padding: 40px;
             margin-bottom: 30px;
             text-align: center;
@@ -141,6 +161,7 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
         }
 
         .hero-section::before {
@@ -149,10 +170,8 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
+            height: 4px;
             background: var(--accent-gradient);
-            opacity: 0.1;
-            z-index: -1;
         }
 
         .hero-content {
@@ -164,10 +183,12 @@
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            background: linear-gradient(135deg, #F5F5DC 0%, #D2B48C 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .hero-subtitle {
@@ -177,13 +198,14 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
-        /* Cards بتصميم زجاجي */
+        /* Cards بتصميم عسكري */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            border-radius: 8px;
             padding: 30px;
             margin-bottom: 25px;
             box-shadow: var(--shadow);
@@ -191,6 +213,7 @@
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
+            border-top: 3px solid var(--accent);
         }
 
         .card::before {
@@ -204,8 +227,9 @@
         }
 
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
+            border-color: var(--accent);
         }
 
         .section-title {
@@ -216,6 +240,8 @@
             font-weight: 800;
             position: relative;
             padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .section-title::after {
@@ -225,23 +251,24 @@
             right: 50%;
             transform: translateX(50%);
             width: 100px;
-            height: 4px;
+            height: 3px;
             background: var(--accent-gradient);
             border-radius: 2px;
         }
 
-        /* تصميم الأسئلة المتطور */
+        /* تصميم الأسئلة المتطور بالطابع العسكري */
         .question-box {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             padding: 30px;
             margin-bottom: 25px;
-            border-radius: 20px;
+            border-radius: 8px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            border-top: 3px solid var(--primary);
         }
 
         .question-box::before {
@@ -250,23 +277,26 @@
             top: 0;
             right: 0;
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: var(--primary-gradient);
         }
 
         .question-box:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
         }
 
         .question-number {
             font-size: 1.3em;
-            color: var(--primary);
+            color: var(--accent);
             margin-bottom: 15px;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .question-number i {
@@ -292,10 +322,10 @@
             padding: 18px 20px;
             margin: 12px 0;
             border: 2px solid var(--border);
-            border-radius: 15px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: var(--card-bg);
+            background: rgba(47, 79, 79, 0.5);
             position: relative;
             overflow: hidden;
             font-weight: 500;
@@ -315,8 +345,8 @@
 
         .options label:hover {
             border-color: var(--primary);
-            transform: translateX(-8px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(85, 107, 47, 0.3);
         }
 
         .options label:hover::before {
@@ -336,9 +366,9 @@
         }
 
         .options label.selected {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.2), rgba(107, 142, 35, 0.2));
             border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 5px 15px rgba(85, 107, 47, 0.2);
         }
 
         .options label.selected::before {
@@ -347,9 +377,9 @@
         }
 
         .options label.correct-answer {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(52, 211, 153, 0.15));
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.3), rgba(107, 142, 35, 0.3));
             border-color: var(--secondary);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 5px 15px rgba(85, 107, 47, 0.3);
         }
 
         .options label.correct-answer::before {
@@ -358,9 +388,9 @@
         }
 
         .options label.wrong-answer {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.1));
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.2), rgba(218, 165, 32, 0.2));
             border-color: var(--accent);
-            box-shadow: 0 5px 15px rgba(236, 72, 153, 0.2);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2);
         }
 
         .options label.wrong-answer::before {
@@ -381,9 +411,9 @@
         .explanation {
             margin-top: 25px;
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 6px;
             display: none;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.1), rgba(184, 134, 11, 0.1));
             border-left: 4px solid var(--secondary);
             animation: slideDown 0.5s ease;
             backdrop-filter: blur(10px);
@@ -403,27 +433,27 @@
         .explanation-line {
             padding: 15px;
             margin: 10px 0;
-            border-radius: 10px;
+            border-radius: 6px;
             transition: all 0.3s ease;
         }
 
         .explanation-correct {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.15), rgba(107, 142, 35, 0.15));
             border-right: 3px solid var(--secondary);
         }
 
         .explanation-wrong-1 {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.1));
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(218, 165, 32, 0.15));
             border-right: 3px solid var(--accent);
         }
 
         .explanation-wrong-2 {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+            background: linear-gradient(135deg, rgba(139, 115, 85, 0.15), rgba(162, 134, 100, 0.15));
             border-right: 3px solid var(--tertiary);
         }
 
         .explanation-wrong-3 {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(196, 181, 253, 0.1));
+            background: linear-gradient(135deg, rgba(47, 79, 79, 0.15), rgba(61, 92, 92, 0.15));
             border-right: 3px solid var(--quaternary);
         }
 
@@ -437,7 +467,7 @@
 
         .btn {
             padding: 15px 30px;
-            border-radius: 15px;
+            border-radius: 6px;
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
@@ -449,6 +479,8 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn::before {
@@ -458,7 +490,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.6s;
         }
 
@@ -468,47 +500,51 @@
 
         .btn-primary {
             background: var(--accent-gradient);
-            color: white;
-            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+            color: #2F2F2F;
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+            border: 1px solid var(--accent);
         }
 
         .btn-primary:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4);
+            box-shadow: 0 15px 35px rgba(184, 134, 11, 0.4);
         }
 
         .btn-secondary {
             background: var(--primary-gradient);
-            color: white;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            color: var(--text);
+            box-shadow: 0 8px 25px rgba(85, 107, 47, 0.3);
+            border: 1px solid var(--primary);
         }
 
         .btn-secondary:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 15px 35px rgba(85, 107, 47, 0.4);
         }
 
         .btn:disabled {
-            background: #9CA3AF;
+            background: #696969;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+            border: 1px solid #696969;
         }
 
         .btn:disabled:hover::before {
             left: -100%;
         }
 
-        /* Progress Bar متطور */
+        /* Progress Bar متطور بالطابع العسكري */
         .progress-bar {
             height: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            background: rgba(47, 79, 79, 0.5);
+            border-radius: 8px;
             margin-bottom: 30px;
             overflow: hidden;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
             position: relative;
             backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
         }
 
         .progress {
@@ -516,7 +552,7 @@
             background: var(--accent-gradient);
             width: 0%;
             transition: width 0.5s ease;
-            border-radius: 10px;
+            border-radius: 8px;
             position: relative;
             overflow: hidden;
         }
@@ -528,7 +564,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 1.5s infinite;
         }
 
@@ -543,11 +579,12 @@
             backdrop-filter: blur(20px);
             padding: 30px;
             margin-top: 30px;
-            border-radius: 20px;
+            border-radius: 8px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             display: none;
             animation: slideUp 0.6s ease;
+            border-top: 3px solid var(--accent);
         }
 
         @keyframes slideUp {
@@ -573,32 +610,34 @@
         .quiz-info {
             font-size: 1rem;
             color: var(--light-text);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            background: linear-gradient(135deg, rgba(85, 107, 47, 0.2), rgba(184, 134, 11, 0.2));
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 6px;
             font-weight: 600;
             backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
         }
 
-        /* Timer متطور */
+        /* Timer متطور بالطابع العسكري */
         #timer {
             font-size: 1.1rem;
             font-weight: bold;
-            color: white;
+            color: var(--text);
             margin-left: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(47, 79, 79, 0.5);
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 6px;
             backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
         }
 
         .timer-warning {
-            color: #FECACA !important;
+            color: #FFA07A !important;
             animation: pulse 0.8s infinite;
-            background: rgba(254, 202, 202, 0.3) !important;
+            background: rgba(255, 160, 122, 0.3) !important;
         }
 
         @keyframes pulse {
@@ -607,16 +646,17 @@
             100% { transform: scale(1); }
         }
 
-        /* Questions List متطور */
+        /* Questions List متطور بالطابع العسكري */
         #questions-list {
             margin-top: 25px;
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 8px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             display: none;
+            border-top: 3px solid var(--primary);
         }
 
         #questions-grid {
@@ -630,14 +670,14 @@
             width: 60px;
             height: 60px;
             border: 2px solid var(--border);
-            border-radius: 15px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-weight: 700;
             transition: all 0.3s ease;
-            background: var(--card-bg);
+            background: rgba(47, 79, 79, 0.5);
             position: relative;
             overflow: hidden;
             font-size: 1.1rem;
@@ -663,14 +703,14 @@
         .question-status-grid.current {
             border-color: var(--accent);
             background: var(--accent);
-            color: white;
+            color: #2F2F2F;
             transform: scale(1.1);
         }
 
         .question-status-grid.answered {
             border-color: var(--secondary);
             background: var(--secondary);
-            color: white;
+            color: var(--text);
         }
 
         .question-status-grid.flagged {
@@ -704,7 +744,7 @@
         }
 
         .dark-theme .options label {
-            background: var(--card-bg);
+            background: rgba(28, 42, 42, 0.7);
         }
 
         /* Responsive Design */
@@ -827,9 +867,9 @@
 
         /* تأثيرات الجلاس مورفيزم */
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(47, 79, 79, 0.7);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border);
         }
 
         /* رسوم متحركة للخلفية */
@@ -905,7 +945,7 @@
     <header class="glass-effect">
         <div class="header-container">
             <div class="title-section">
-                <h1>اختبار دورة الاتصالات التفاعلي</h1>
+                <h1><i class="fas fa-satellite-dish"></i> اختبار دورة الاتصالات التفاعلي</h1>
             </div>
             <div class="header-actions">
                 <button class="theme-btn" id="themeBtn">
@@ -970,11 +1010,11 @@
             <div id="questions-grid"></div>
             <div class="legend">
                 <div class="legend-item">
-                    <div class="question-status-grid" style="background: var(--accent); color: white;"></div>
+                    <div class="question-status-grid" style="background: var(--accent); color: #2F2F2F;"></div>
                     <span>السؤال الحالي</span>
                 </div>
                 <div class="legend-item">
-                    <div class="question-status-grid" style="background: var(--secondary); color: white;"></div>
+                    <div class="question-status-grid" style="background: var(--secondary); color: var(--text);"></div>
                     <span>تمت الإجابة</span>
                 </div>
                 <div class="legend-item">
@@ -999,7 +1039,7 @@
                 الدرجات الحالية
             </h3>
             <p id="current-correct" style="margin-bottom: 15px; font-size: 1.1rem;"></p>
-            <p id="current-percentage" style="font-weight: bold; font-size: 1.3rem; color: var(--primary);"></p>
+            <p id="current-percentage" style="font-weight: bold; font-size: 1.3rem; color: var(--accent);"></p>
         </div>
 
         <!-- Final Results -->
