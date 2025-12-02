@@ -1269,6 +1269,83 @@ width: 100% !important;
 display: none !important;
 }
 }
+
+/* تحسينات PDF */
+.pdf-container {
+position: fixed;
+top: -9999px;
+left: -9999px;
+width: 794px; /* A4 width in pixels at 96 DPI */
+height: 1123px; /* A4 height in pixels at 96 DPI */
+background: white;
+padding: 40px;
+color: #1a1a1a;
+font-family: 'Tajawal', sans-serif;
+direction: rtl;
+text-align: right;
+z-index: 9999;
+}
+
+.pdf-header {
+border-bottom: 3px solid #3B82F6;
+padding-bottom: 20px;
+margin-bottom: 30px;
+text-align: center;
+}
+
+.pdf-title {
+color: #3B82F6;
+font-size: 28px;
+margin-bottom: 10px;
+}
+
+.pdf-subtitle {
+color: #6366F1;
+font-size: 18px;
+}
+
+.pdf-section {
+margin-bottom: 30px;
+}
+
+.pdf-section-title {
+color: #3B82F6;
+font-size: 20px;
+border-bottom: 2px solid #10B981;
+padding-bottom: 10px;
+margin-bottom: 15px;
+}
+
+.pdf-table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0;
+}
+
+.pdf-table th, .pdf-table td {
+border: 1px solid #ddd;
+padding: 12px;
+text-align: center;
+}
+
+.pdf-table th {
+background: #f8f9fa;
+color: #3B82F6;
+font-weight: bold;
+}
+
+.pdf-table tr:nth-child(even) {
+background: #f9f9f9;
+}
+
+.pdf-footer {
+margin-top: 50px;
+padding-top: 20px;
+border-top: 2px solid #3B82F6;
+text-align: center;
+color: #6B7280;
+font-size: 14px;
+}
 </style>
 </head>
 <body>
@@ -1457,6 +1534,9 @@ display: none !important;
 </div>
 </div>
 </main>
+
+<!-- PDF Container (مخفي) -->
+<div id="pdf-container" class="pdf-container"></div>
 
 <script>
 // مصفوفة مكونة من 3 أسئلة فقط
@@ -2148,85 +2228,184 @@ document.getElementById('certificate').style.display = 'none';
 document.getElementById('result-box').style.display = 'block';
 }
 
-// إنشاء تقرير PDF
+// إنشاء تقرير PDF - الطريقة المحسنة
 function generatePDF() {
 const score = calculateScore();
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF('p', 'mm', 'a4');
 const now = new Date();
 const dateString = now.toLocaleDateString('ar-SA');
+const name = prompt("أدخل اسمك لتضمينه في التقرير:", "المستخدم");
+if (!name) name = "المستخدم";
 
-// إعداد الخط العربي
-doc.setLanguage('ar');
-doc.setFont('courier');
+// إنشاء محتوى PDF
+const pdfContent = `
+<div class="pdf-container">
+    <div class="pdf-header">
+        <h1 class="pdf-title">تقرير نتائج اختبار الرخصة المهنية</h1>
+        <p class="pdf-subtitle">إعداد: المعلم فهد الخالدي</p>
+    </div>
+    
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">معلومات الاختبار</h2>
+        <p><strong>اسم المستخدم:</strong> ${name}</p>
+        <p><strong>تاريخ الاختبار:</strong> ${dateString}</p>
+        <p><strong>عدد الأسئلة:</strong> ${score.total}</p>
+        <p><strong>مدة الاختبار:</strong> 15 دقيقة</p>
+    </div>
+    
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">النتائج</h2>
+        <table class="pdf-table">
+            <tr>
+                <th>المؤشر</th>
+                <th>القيمة</th>
+                <th>النسبة</th>
+            </tr>
+            <tr>
+                <td>الإجابات الصحيحة</td>
+                <td>${score.correct}</td>
+                <td>${score.percentage}%</td>
+            </tr>
+            <tr>
+                <td>الإجابات الخاطئة</td>
+                <td>${score.total - score.correct}</td>
+                <td>${(100 - score.percentage).toFixed(2)}%</td>
+            </tr>
+            <tr>
+                <td>إجمالي الأسئلة</td>
+                <td>${score.total}</td>
+                <td>100%</td>
+            </tr>
+        </table>
+        <p style="margin-top: 20px; font-size: 18px; color: ${score.percentage >= 70 ? '#10B981' : '#F59E0B'}">
+            <strong>التقييم:</strong> ${score.evaluation}
+        </p>
+    </div>
+    
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">تفاصيل الإجابات</h2>
+        <table class="pdf-table">
+            <tr>
+                <th>رقم السؤال</th>
+                <th>الحالة</th>
+                <th>الإجابة الصحيحة</th>
+            </tr>
+            ${questions.map((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.answer;
+                return `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td style="color: ${isCorrect ? '#10B981' : '#EF4444'}">
+                        ${isCorrect ? '✓ صحيح' : '✗ خطأ'}
+                    </td>
+                    <td>${q.options[q.answer]}</td>
+                </tr>
+                `;
+            }).join('')}
+        </table>
+    </div>
+    
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">نصائح للتحسين</h2>
+        ${score.percentage >= 90 ? 
+            '<p>أداؤك ممتاز! استمر في المراجعة الدورية للمحافظة على هذا المستوى.</p>' : 
+        score.percentage >= 70 ?
+            '<p>أداؤك جيد. ركز على الأسئلة التي أخطأت فيها وحاول فهمها جيداً.</p>' :
+            '<p>أنت بحاجة إلى مراجعة شاملة للمفاهيم الأساسية. ننصحك بمراجعة المواد التعليمية وحل المزيد من التمارين.</p>'
+        }
+        <ul style="margin-right: 20px; margin-top: 15px;">
+            <li>مراجعة النظريات التربوية الأساسية</li>
+            <li>حل تمارين إضافية متنوعة</li>
+            <li>التركيز على فهم التفسيرات بدلاً من حفظ الإجابات</li>
+            <li>التدرب على إدارة وقت الاختبار</li>
+        </ul>
+    </div>
+    
+    <div class="pdf-section">
+        <h2 class="pdf-section-title">معلومات إضافية</h2>
+        <p><strong>وقت الإكمال:</strong> ${(15 - timeLeft/60).toFixed(0)} دقيقة من أصل 15 دقيقة</p>
+        <p><strong>عدد الأسئلة المعلمة:</strong> ${markedQuestions.length}</p>
+        <p><strong>سجل الأداء:</strong> ${performanceHistory.length} محاولة سابقة</p>
+    </div>
+    
+    <div class="pdf-footer">
+        <p>تم إنشاء هذا التقرير تلقائياً بواسطة نظام اختبار الرخصة المهنية التفاعلي</p>
+        <p>© ${new Date().getFullYear()} - إعداد المعلم فهد الخالدي</p>
+    </div>
+</div>
+`;
 
-// إضافة خلفية وتصميم
-doc.setFillColor(59, 130, 246);
-doc.rect(0, 0, 210, 297, 'F');
-doc.setFillColor(255, 255, 255);
-doc.rect(10, 10, 190, 277, 'F');
+// إضافة المحتوى إلى الصفحة
+const pdfContainer = document.getElementById('pdf-container');
+pdfContainer.innerHTML = pdfContent;
 
-// العنوان
-doc.setFontSize(24);
-doc.setTextColor(59, 130, 246);
-doc.text('تقرير نتائج اختبار الرخصة المهنية', 105, 30, null, null, 'center');
-
-// المعلومات العامة
-doc.setFontSize(14);
-doc.setTextColor(0, 0, 0);
-doc.text(`التاريخ: ${dateString}`, 20, 50);
-doc.text(`عدد الأسئلة: ${score.total}`, 20, 60);
-doc.text(`الإجابات الصحيحة: ${score.correct}`, 20, 70);
-doc.text(`النسبة المئوية: ${score.percentage}%`, 20, 80);
-doc.text(`التقييم: ${score.evaluation}`, 20, 90);
-
-// تفاصيل الأسئلة
-let y = 110;
-doc.setFontSize(16);
-doc.setTextColor(59, 130, 246);
-doc.text('تفاصيل الإجابات:', 20, y);
-y += 10;
-
-doc.setFontSize(12);
-doc.setTextColor(0, 0, 0);
-questions.forEach((question, index) => {
-if (y > 250) {
-doc.addPage();
-y = 20;
-}
-const userAnswer = userAnswers[index];
-const isCorrect = userAnswer === question.answer;
-doc.text(`سؤال ${index + 1}: ${isCorrect ? '✓ صحيح' : '✗ خطأ'}`, 20, y);
-y += 7;
-if (!isCorrect) {
-doc.text(`الإجابة الصحيحة: ${question.options[question.answer]}`, 25, y);
-y += 7;
-}
-y += 3;
+// استخدام html2canvas لتحويل المحتوى إلى صورة
+html2canvas(pdfContainer, {
+    scale: 2,
+    backgroundColor: '#ffffff',
+    useCORS: true,
+    logging: false
+}).then(canvas => {
+    // تحويل Canvas إلى صورة
+    const imgData = canvas.toDataURL('image/png');
+    
+    // استخدام jsPDF مع الصورة
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    
+    // حساب أبعاد الصورة
+    const imgWidth = 210; // A4 width in mm
+    const pageHeight = 297; // A4 height in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+    // إضافة الصورة إلى PDF
+    doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    
+    // إذا كانت الصورة أطول من صفحة واحدة، إضافة صفحات إضافية
+    let heightLeft = imgHeight;
+    let position = 0;
+    
+    // إضافة صفحات إضافية إذا لزم الأمر
+    while (heightLeft >= pageHeight) {
+        position = heightLeft - pageHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+    }
+    
+    // حفظ الملف
+    const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
+    doc.save(`تقرير_نتائج_اختبار_الرخصة_المهنية_${date}.pdf`);
+    
+    // إظهار رسالة نجاح
+    alert('تم إنشاء وتحميل التقرير بنجاح!');
+    
+}).catch(error => {
+    console.error('خطأ في إنشاء PDF:', error);
+    
+    // طريقة بديلة إذا فشلت الطريقة الأولى
+    try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        
+        // إضافة نص بسيط إذا فشلت الطريقة الأولى
+        doc.setFontSize(16);
+        doc.text('تقرير نتائج اختبار الرخصة المهنية', 105, 20, null, null, 'center');
+        doc.setFontSize(12);
+        doc.text(`اسم المستخدم: ${name}`, 20, 40);
+        doc.text(`التاريخ: ${dateString}`, 20, 50);
+        doc.text(`النتيجة: ${score.correct}/${score.total} (${score.percentage}%)`, 20, 60);
+        doc.text(`التقييم: ${score.evaluation}`, 20, 70);
+        doc.text('إعداد: المعلم فهد الخالدي', 105, 280, null, null, 'center');
+        
+        const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
+        doc.save(`تقرير_نتائج_${date}.pdf`);
+        
+        alert('تم تحميل التقرير بنسخة مبسطة (بدون رسوم بيانية).');
+    } catch (e) {
+        alert('حدث خطأ في إنشاء PDF. الرجاء المحاولة مرة أخرى أو استخدام زر طباعة الشهادة بدلاً من ذلك.');
+    }
 });
-
-// النصائح
-doc.addPage();
-doc.setFontSize(16);
-doc.setTextColor(59, 130, 246);
-doc.text('نصائح للتحسين:', 20, 20);
-doc.setFontSize(12);
-doc.setTextColor(0, 0, 0);
-
-const tips = score.percentage >= 70 ? 
-"أداؤك جيد، استمر في المراجعة الدورية وحل المزيد من الأسئلة التطبيقية." :
-"ركز على مراجعة المفاهيم الأساسية وحل الأسئلة التدريبية بشكل منتظم.";
-
-doc.text(tips, 20, 35, { maxWidth: 170 });
-
-// توقيع
-doc.setFontSize(14);
-doc.setTextColor(59, 130, 246);
-doc.text('إعداد: المعلم فهد الخالدي', 105, 270, null, null, 'center');
-
-// حفظ الملف
-const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
-doc.save(`نتيجة_اختبار_الرخصة_المهنية_${date}.pdf`);
 }
 
 // مشاركة النتائج
