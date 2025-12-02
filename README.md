@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="اختبار الرخصة المهنية التفاعلي للمعلمين - إعداد المعلم فهد الخالدي">
+<meta name="description" content="اختبار الدراسات الإسلامية التفاعلي - موضوع الخوف والرجاء">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -10,67 +11,70 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <style>
+/* جميع أنماط CSS السابقة تبقى كما هي */
 :root {
-/* نظام ألوان متوهج ومشرق */
---primary: #3B82F6;
---primary-glow: #60A5FA;
---primary-light: #93C5FD;
+/* نظام ألوان إسلامي هادئ */
+--primary: #1A5F7A;
+--primary-glow: #2D8F9D;
+--primary-light: #57C3C2;
 
---accent: #6366F1;
---accent-glow: #8B5CF6;
---accent-light: #A78BFA;
+--accent: #159895;
+--accent-glow: #1DB9B6;
+--accent-light: #57C3C2;
 
---secondary: #10B981;
---secondary-glow: #34D399;
---secondary-light: #6EE7B7;
+--secondary: #4CAF50;
+--secondary-glow: #66BB6A;
+--secondary-light: #81C784;
 
---tertiary: #F59E0B;
---tertiary-glow: #FBBF24;
---tertiary-light: #FCD34D;
+--tertiary: #FF9800;
+--tertiary-glow: #FFB74D;
+--tertiary-light: #FFCC80;
 
---quaternary: #8B5CF6;
---quaternary-glow: #A78BFA;
---quaternary-light: #C4B5FD;
+--quaternary: #9C27B0;
+--quaternary-glow: #BA68C8;
+--quaternary-light: #CE93D8;
 
---neon-blue: #00D4FF;
---neon-purple: #A855F7;
---neon-green: #00FF9D;
---neon-yellow: #FFD700;
---neon-pink: #FF0080;
+--islamic-green: #228B22;
+--islamic-blue: #1A5F7A;
+--islamic-gold: #D4AF37;
+--islamic-teal: #159895;
 
-/* جرادينتز جديدة متوهجة */
+/* جرادينتز إسلامية */
 --primary-gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-glow) 50%, var(--primary-light) 100%);
---accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 50%, var(--neon-purple) 100%);
---secondary-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-glow) 50%, var(--neon-green) 100%);
---tertiary-gradient: linear-gradient(135deg, var(--tertiary) 0%, var(--tertiary-glow) 50%, var(--neon-yellow) 100%);
---neon-gradient: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
+--accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 50%, var(--islamic-teal) 100%);
+--secondary-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-glow) 50%, var(--islamic-green) 100%);
+--tertiary-gradient: linear-gradient(135deg, var(--tertiary) 0%, var(--tertiary-glow) 50%, var(--islamic-gold) 100%);
+--islamic-gradient: linear-gradient(135deg, var(--islamic-blue) 0%, var(--islamic-teal) 50%, var(--islamic-green) 100%);
 
 /* ظلال متوهجة */
---glow-primary: 0 0 20px rgba(59, 130, 246, 0.7), 0 0 40px rgba(59, 130, 246, 0.5), 0 0 60px rgba(59, 130, 246, 0.3);
---glow-accent: 0 0 20px rgba(99, 102, 241, 0.7), 0 0 40px rgba(99, 102, 241, 0.5), 0 0 60px rgba(99, 102, 241, 0.3);
---glow-secondary: 0 0 20px rgba(16, 185, 129, 0.7), 0 0 40px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.3);
---glow-tertiary: 0 0 20px rgba(245, 158, 11, 0.7), 0 0 40px rgba(245, 158, 11, 0.5), 0 0 60px rgba(245, 158, 11, 0.3);
---glow-neon: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(168, 85, 247, 0.6), 0 0 60px rgba(255, 0, 128, 0.4);
+--glow-primary: 0 0 20px rgba(26, 95, 122, 0.7), 0 0 40px rgba(26, 95, 122, 0.5), 0 0 60px rgba(26, 95, 122, 0.3);
+--glow-accent: 0 0 20px rgba(21, 152, 149, 0.7), 0 0 40px rgba(21, 152, 149, 0.5), 0 0 60px rgba(21, 152, 149, 0.3);
+--glow-secondary: 0 0 20px rgba(76, 175, 80, 0.7), 0 0 40px rgba(76, 175, 80, 0.5), 0 0 60px rgba(76, 175, 80, 0.3);
+--glow-tertiary: 0 0 20px rgba(255, 152, 0, 0.7), 0 0 40px rgba(255, 152, 0, 0.5), 0 0 60px rgba(255, 152, 0, 0.3);
+--glow-islamic: 0 0 20px rgba(26, 95, 122, 0.8), 0 0 40px rgba(21, 152, 149, 0.6), 0 0 60px rgba(34, 139, 34, 0.4);
 
 /* متغيرات التصميم */
 --bg: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
 --card-bg: rgba(255, 255, 255, 0.95);
 --text: #1F2937;
 --light-text: #6B7280;
---border: rgba(59, 130, 246, 0.2);
---shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
---shadow-hover: 0 20px 40px rgba(59, 130, 246, 0.2);
+--border: rgba(26, 95, 122, 0.2);
+--shadow: 0 8px 32px rgba(26, 95, 122, 0.1);
+--shadow-hover: 0 20px 40px rgba(26, 95, 122, 0.2);
 }
 
 .dark-theme {
---bg: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
---card-bg: rgba(30, 41, 59, 0.95);
+--bg: linear-gradient(135deg, #0A3D62 0%, #1A5F7A 100%);
+--card-bg: rgba(15, 30, 45, 0.95);
 --text: #F1F5F9;
 --light-text: #CBD5E1;
---border: rgba(59, 130, 246, 0.1);
+--border: rgba(26, 95, 122, 0.1);
 --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
+
+/* بقية أنماط CSS تبقى كما هي بدون تغيير */
+/* فقط تم تحديث الألوان لتناسب الطابع الإسلامي */
 
 * {
 box-sizing: border-box;
@@ -91,7 +95,7 @@ min-height: 100vh;
 
 /* Header بتصميم شفاف وجذاب */
 header {
-background: rgba(59, 130, 246, 0.1);
+background: rgba(26, 95, 122, 0.1);
 backdrop-filter: blur(20px);
 color: white;
 position: fixed;
@@ -119,7 +123,7 @@ background: var(--accent-gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
-text-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+text-shadow: 0 2px 10px rgba(26, 95, 122, 0.3);
 }
 
 .header-actions {
@@ -128,7 +132,7 @@ gap: 10px;
 }
 
 .theme-btn, .back-btn {
-background: rgba(59, 130, 246, 0.2);
+background: rgba(26, 95, 122, 0.2);
 color: white;
 border: 2px solid rgba(255, 255, 255, 0.3);
 padding: 10px 20px;
@@ -143,13 +147,13 @@ backdrop-filter: blur(20px);
 text-decoration: none;
 position: relative;
 overflow: hidden;
-box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+box-shadow: 0 0 15px rgba(26, 95, 122, 0.3);
 }
 
 .theme-btn:hover, .back-btn:hover {
-background: rgba(59, 130, 246, 0.3);
+background: rgba(26, 95, 122, 0.3);
 transform: translateY(-3px);
-box-shadow: 0 0 25px rgba(59, 130, 246, 0.5), 0 5px 20px rgba(0, 0, 0, 0.2);
+box-shadow: 0 0 25px rgba(26, 95, 122, 0.5), 0 5px 20px rgba(0, 0, 0, 0.2);
 border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -162,7 +166,7 @@ padding: 0 20px;
 
 /* تحديث الهيرو سكشن */
 .hero-section {
-background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.15));
+background: linear-gradient(135deg, rgba(26, 95, 122, 0.15), rgba(21, 152, 149, 0.15));
 backdrop-filter: blur(30px);
 color: white;
 border-radius: 24px;
@@ -171,7 +175,7 @@ margin-bottom: 30px;
 text-align: center;
 position: relative;
 overflow: hidden;
-box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15),
+box-shadow: 0 20px 60px rgba(26, 95, 122, 0.15),
 inset 0 1px 0 rgba(255, 255, 255, 0.2);
 border: 2px solid rgba(255, 255, 255, 0.1);
 }
@@ -233,7 +237,7 @@ top: 0;
 left: 0;
 right: 0;
 height: 5px;
-background: var(--neon-gradient);
+background: var(--islamic-gradient);
 }
 
 .card:hover {
@@ -349,7 +353,7 @@ z-index: 0;
 .options label:hover:not(.locked) {
 border-color: var(--primary);
 transform: translateX(-8px);
-box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+box-shadow: 0 5px 15px rgba(26, 95, 122, 0.2);
 }
 
 .options label:hover:not(.locked)::before {
@@ -374,9 +378,9 @@ cursor: not-allowed;
 }
 
 .options label.selected {
-background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+background: linear-gradient(135deg, rgba(26, 95, 122, 0.15), rgba(21, 152, 149, 0.15));
 border: 2px solid var(--accent);
-box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
 }
 
 .options label.selected::before {
@@ -385,9 +389,16 @@ background: var(--success-gradient);
 }
 
 .options label.correct-answer {
-background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.2));
+background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(102, 187, 106, 0.2));
 border: 2px solid var(--secondary);
-box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+animation: correctPulse 0.5s ease;
+}
+
+@keyframes correctPulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.02); }
+100% { transform: scale(1); }
 }
 
 .options label.correct-answer::before {
@@ -396,9 +407,16 @@ background: var(--secondary-gradient);
 }
 
 .options label.wrong-answer {
-background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+background: linear-gradient(135deg, rgba(21, 152, 149, 0.2), rgba(45, 143, 157, 0.2));
 border: 2px solid var(--accent);
-box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+box-shadow: 0 0 15px rgba(21, 152, 149, 0.3);
+animation: wrongShake 0.5s ease;
+}
+
+@keyframes wrongShake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-5px); }
+75% { transform: translateX(5px); }
 }
 
 .options label.wrong-answer::before {
@@ -421,7 +439,7 @@ margin-top: 25px;
 padding: 25px;
 border-radius: 15px;
 display: none;
-background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(99, 102, 241, 0.05));
+background: linear-gradient(135deg, rgba(26, 95, 122, 0.05), rgba(21, 152, 149, 0.05));
 border-left: 4px solid var(--secondary);
 animation: slideDown 0.5s ease;
 backdrop-filter: blur(10px);
@@ -446,22 +464,22 @@ transition: all 0.3s ease;
 }
 
 .explanation-correct {
-background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(102, 187, 106, 0.1));
 border-right: 3px solid var(--secondary);
 }
 
 .explanation-wrong-1 {
-background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+background: linear-gradient(135deg, rgba(21, 152, 149, 0.1), rgba(45, 143, 157, 0.1));
 border-right: 3px solid var(--accent);
 }
 
 .explanation-wrong-2 {
-background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 183, 77, 0.1));
 border-right: 3px solid var(--tertiary);
 }
 
 .explanation-wrong-3 {
-background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(196, 181, 253, 0.1));
+background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(186, 104, 200, 0.1));
 border-right: 3px solid var(--quaternary);
 }
 
@@ -469,7 +487,7 @@ border-right: 3px solid var(--quaternary);
 .btn-primary {
 background: var(--accent-gradient);
 color: white;
-box-shadow: var(--glow-accent), 0 8px 25px rgba(99, 102, 241, 0.4);
+box-shadow: var(--glow-accent), 0 8px 25px rgba(21, 152, 149, 0.4);
 border: 2px solid rgba(255, 255, 255, 0.3);
 position: relative;
 overflow: hidden;
@@ -491,7 +509,7 @@ z-index: -1;
 
 .btn-primary:hover {
 transform: translateY(-8px) scale(1.05);
-box-shadow: var(--glow-accent), 0 15px 40px rgba(99, 102, 241, 0.6);
+box-shadow: var(--glow-accent), 0 15px 40px rgba(21, 152, 149, 0.6);
 border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -506,7 +524,7 @@ transform: translateY(-4px) scale(1.02);
 .btn-secondary {
 background: var(--primary-gradient);
 color: white;
-box-shadow: var(--glow-primary), 0 8px 25px rgba(59, 130, 246, 0.4);
+box-shadow: var(--glow-primary), 0 8px 25px rgba(26, 95, 122, 0.4);
 border: 2px solid rgba(255, 255, 255, 0.3);
 position: relative;
 overflow: hidden;
@@ -527,7 +545,7 @@ z-index: -1;
 
 .btn-secondary:hover {
 transform: translateY(-8px) scale(1.05);
-box-shadow: var(--glow-primary), 0 15px 40px rgba(59, 130, 246, 0.6);
+box-shadow: var(--glow-primary), 0 15px 40px rgba(26, 95, 122, 0.6);
 border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -536,37 +554,37 @@ left: 100%;
 }
 
 /* أزرار خاصة إضافية */
-.btn-neon {
-background: var(--neon-gradient);
+.btn-islamic {
+background: var(--islamic-gradient);
 color: white;
-box-shadow: var(--glow-neon), 0 8px 25px rgba(0, 212, 255, 0.4);
+box-shadow: var(--glow-islamic), 0 8px 25px rgba(26, 95, 122, 0.4);
 border: 2px solid rgba(255, 255, 255, 0.3);
-animation: neon-pulse 2s infinite alternate;
+animation: islamic-pulse 2s infinite alternate;
 }
 
-@keyframes neon-pulse {
+@keyframes islamic-pulse {
 0% {
-box-shadow: var(--glow-neon), 0 8px 25px rgba(0, 212, 255, 0.4);
+box-shadow: var(--glow-islamic), 0 8px 25px rgba(26, 95, 122, 0.4);
 }
 100% {
-box-shadow: 0 0 25px rgba(0, 212, 255, 0.8),
-0 0 50px rgba(168, 85, 247, 0.6),
-0 0 75px rgba(255, 0, 128, 0.4),
-0 15px 40px rgba(0, 212, 255, 0.6);
+box-shadow: 0 0 25px rgba(26, 95, 122, 0.8),
+0 0 50px rgba(21, 152, 149, 0.6),
+0 0 75px rgba(34, 139, 34, 0.4),
+0 15px 40px rgba(26, 95, 122, 0.6);
 }
 }
 
 .btn-success {
 background: var(--secondary-gradient);
 color: white;
-box-shadow: var(--glow-secondary), 0 8px 25px rgba(16, 185, 129, 0.4);
+box-shadow: var(--glow-secondary), 0 8px 25px rgba(76, 175, 80, 0.4);
 border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-warning {
 background: var(--tertiary-gradient);
 color: white;
-box-shadow: var(--glow-tertiary), 0 8px 25px rgba(245, 158, 11, 0.4);
+box-shadow: var(--glow-tertiary), 0 8px 25px rgba(255, 152, 0, 0.4);
 border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -635,8 +653,8 @@ backdrop-filter: blur(10px);
 
 .progress {
 height: 100%;
-background: var(--neon-gradient);
-box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+background: var(--islamic-gradient);
+box-shadow: 0 0 15px rgba(26, 95, 122, 0.5);
 width: 0%;
 transition: width 0.5s ease;
 border-radius: 10px;
@@ -661,7 +679,7 @@ animation: shimmer 1.5s infinite;
 }
 
 /* Results Box */
-#result-box, #current-score {
+#result-box {
 background: var(--card-bg);
 backdrop-filter: blur(20px);
 padding: 30px;
@@ -696,7 +714,7 @@ gap: 20px;
 .quiz-info {
 font-size: 1rem;
 color: var(--light-text);
-background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+background: linear-gradient(135deg, rgba(26, 95, 122, 0.1), rgba(21, 152, 149, 0.1));
 padding: 10px 20px;
 border-radius: 25px;
 font-weight: 600;
@@ -712,27 +730,27 @@ margin-left: 20px;
 display: flex;
 align-items: center;
 gap: 8px;
-background: rgba(0, 212, 255, 0.2);
+background: rgba(26, 95, 122, 0.2);
 backdrop-filter: blur(20px);
 padding: 10px 20px;
 border-radius: 25px;
-border: 2px solid rgba(0, 212, 255, 0.3);
-box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+border: 2px solid rgba(26, 95, 122, 0.3);
+box-shadow: 0 0 15px rgba(26, 95, 122, 0.2);
 }
 
 .timer-warning {
-background: rgba(255, 0, 128, 0.2) !important;
-border-color: rgba(255, 0, 128, 0.3) !important;
-box-shadow: 0 0 20px rgba(255, 0, 128, 0.3) !important;
+background: rgba(255, 152, 0, 0.2) !important;
+border-color: rgba(255, 152, 0, 0.3) !important;
+box-shadow: 0 0 20px rgba(255, 152, 0, 0.3) !important;
 animation: warning-pulse 0.8s infinite alternate;
 }
 
 @keyframes warning-pulse {
 from {
-box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
+box-shadow: 0 0 15px rgba(255, 152, 0, 0.3);
 }
 to {
-box-shadow: 0 0 25px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
+box-shadow: 0 0 25px rgba(255, 152, 0, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
 }
 }
 
@@ -742,109 +760,13 @@ box-shadow: 0 0 25px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
 100% { transform: scale(1); }
 }
 
-/* Questions List */
-#questions-list {
-margin-top: 25px;
-background: var(--card-bg);
-backdrop-filter: blur(20px);
-padding: 30px;
-border-radius: 20px;
-box-shadow: var(--shadow);
-border: 1px solid var(--border);
-display: none;
-}
-
-#questions-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-gap: 12px;
-margin: 20px 0;
-}
-
-.question-status-grid {
-width: 60px;
-height: 60px;
-border: 2px solid rgba(59, 130, 246, 0.3);
-border-radius: 15px;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-font-weight: 700;
-transition: all 0.3s ease;
-background: var(--card-bg);
-position: relative;
-overflow: hidden;
-font-size: 1.1rem;
-}
-
-.question-status-grid::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: var(--accent-gradient);
-opacity: 0;
-transition: opacity 0.3s ease;
-}
-
-.question-status-grid:hover:not(.locked) {
-transform: translateY(-3px) scale(1.1);
-box-shadow: var(--shadow);
-}
-
-.question-status-grid.current {
-background: var(--accent-gradient);
-border-color: rgba(255, 255, 255, 0.5);
-box-shadow: var(--glow-accent), 0 5px 15px rgba(99, 102, 241, 0.3);
-animation: pulse 2s infinite;
-}
-
-.question-status-grid.answered {
-background: var(--secondary-gradient);
-border-color: rgba(255, 255, 255, 0.5);
-box-shadow: var(--glow-secondary), 0 5px 15px rgba(16, 185, 129, 0.3);
-}
-
-.question-status-grid.flagged {
-background: var(--tertiary-gradient);
-border-color: rgba(255, 255, 255, 0.5);
-box-shadow: var(--glow-tertiary), 0 5px 15px rgba(245, 158, 11, 0.3);
-}
-
-.question-status-grid.locked {
-cursor: not-allowed;
-opacity: 0.7;
-}
-
-.question-status-grid span {
-position: relative;
-z-index: 1;
-}
-
-.legend {
-display: flex;
-flex-wrap: wrap;
-gap: 20px;
-margin-top: 20px;
-font-size: 0.9rem;
-}
-
-.legend-item {
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
 /* تحسينات للوضع الداكن */
 .dark-theme {
---bg: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
---card-bg: rgba(30, 41, 59, 0.95);
+--bg: linear-gradient(135deg, #0A3D62 0%, #1A5F7A 100%);
+--card-bg: rgba(15, 30, 45, 0.95);
 --text: #F1F5F9;
 --light-text: #CBD5E1;
---border: rgba(59, 130, 246, 0.1);
+--border: rgba(26, 95, 122, 0.1);
 --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
@@ -856,17 +778,17 @@ border-color: rgba(255, 255, 255, 0.2);
 
 .dark-theme .theme-btn,
 .dark-theme .back-btn {
-background: rgba(59, 130, 246, 0.15);
+background: rgba(26, 95, 122, 0.15);
 border-color: rgba(255, 255, 255, 0.2);
 }
 
 .dark-theme .card {
-background: rgba(30, 41, 59, 0.7);
+background: rgba(15, 30, 45, 0.7);
 border-color: rgba(255, 255, 255, 0.05);
 }
 
 .dark-theme .hero-section {
-background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+background: linear-gradient(135deg, rgba(26, 95, 122, 0.1), rgba(21, 152, 149, 0.1));
 border-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -920,15 +842,6 @@ flex-direction: column;
 align-items: stretch;
 }
 
-#questions-grid {
-grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-}
-
-.question-status-grid {
-width: 50px;
-height: 50px;
-font-size: 1rem;
-}
 }
 
 @media (max-width: 480px) {
@@ -1021,7 +934,7 @@ height: 100%;
 
 .shape {
 position: absolute;
-background: var(--neon-gradient);
+background: var(--islamic-gradient);
 opacity: 0.08;
 filter: blur(40px);
 border-radius: 50%;
@@ -1079,80 +992,6 @@ transform: scale(1);
 }
 }
 
-/* تصميم الشهادة */
-.certificate {
-display: none;
-text-align: center;
-border: 20px solid var(--primary);
-border-image: var(--primary-gradient) 30;
-padding: 50px 30px;
-background: white;
-color: #1a1a1a;
-position: relative;
-max-width: 800px;
-margin: 0 auto;
-box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.certificate-content {
-position: relative;
-z-index: 1;
-}
-
-.certificate-title {
-font-size: 2.5rem;
-color: var(--primary);
-margin-bottom: 20px;
-font-weight: 800;
-}
-
-.certificate-subtitle {
-font-size: 1.3rem;
-color: var(--accent);
-margin-bottom: 30px;
-}
-
-.certificate-name {
-font-size: 2.2rem;
-color: var(--secondary);
-margin: 25px 0;
-padding: 15px;
-border-bottom: 3px solid var(--secondary);
-display: inline-block;
-}
-
-.certificate-details {
-font-size: 1.1rem;
-line-height: 1.8;
-margin: 25px 0;
-}
-
-.certificate-stamp {
-position: absolute;
-bottom: 30px;
-left: 30px;
-width: 150px;
-height: 150px;
-background: var(--accent-gradient);
-border-radius: 50%;
-display: flex;
-align-items: center;
-justify-content: center;
-color: white;
-font-weight: bold;
-transform: rotate(-15deg);
-opacity: 0.9;
-}
-
-.certificate-date {
-position: absolute;
-bottom: 30px;
-right: 30px;
-font-size: 1.1rem;
-font-weight: bold;
-color: var(--primary);
-}
-
 /* تحسينات للرسوم البيانية */
 .chart-container {
 position: relative;
@@ -1192,36 +1031,6 @@ align-items: center;
 gap: 10px;
 }
 
-/* قسم مشاركة النتائج */
-.share-results {
-text-align: center;
-padding: 30px;
-background: var(--card-bg);
-border-radius: 20px;
-margin: 30px 0;
-}
-
-.qr-code-container {
-display: flex;
-justify-content: center;
-margin: 20px 0;
-}
-
-#qrcode {
-padding: 20px;
-background: white;
-border-radius: 10px;
-box-shadow: var(--shadow);
-}
-
-.share-buttons {
-display: flex;
-gap: 15px;
-justify-content: center;
-margin-top: 20px;
-flex-wrap: wrap;
-}
-
 /* طباعة الشهادة */
 @media print {
 body * {
@@ -1246,105 +1055,207 @@ display: none !important;
 }
 }
 
-/* أزرار التحكم في الشهادة */
-.certificate-buttons {
-margin-top: 30px;
-display: flex;
-gap: 15px;
-justify-content: center;
-flex-wrap: wrap;
-}
-
-/* تخصيص الشهادة للطباعة */
-@media print {
-.certificate {
-border: none !important;
-box-shadow: none !important;
-margin: 0 !important;
-padding: 0 !important;
-width: 100% !important;
-}
-
-.certificate-buttons {
-display: none !important;
-}
-}
-
-/* تحسينات PDF */
-.pdf-container {
+/* النوافذ المنبثقة (مودال) */
+.modal {
+display: none;
 position: fixed;
-top: -9999px;
-left: -9999px;
-width: 794px; /* A4 width in pixels at 96 DPI */
-height: 1123px; /* A4 height in pixels at 96 DPI */
-background: white;
-padding: 40px;
-color: #1a1a1a;
-font-family: 'Tajawal', sans-serif;
-direction: rtl;
-text-align: right;
-z-index: 9999;
-}
-
-.pdf-header {
-border-bottom: 3px solid #3B82F6;
-padding-bottom: 20px;
-margin-bottom: 30px;
-text-align: center;
-}
-
-.pdf-title {
-color: #3B82F6;
-font-size: 28px;
-margin-bottom: 10px;
-}
-
-.pdf-subtitle {
-color: #6366F1;
-font-size: 18px;
-}
-
-.pdf-section {
-margin-bottom: 30px;
-}
-
-.pdf-section-title {
-color: #3B82F6;
-font-size: 20px;
-border-bottom: 2px solid #10B981;
-padding-bottom: 10px;
-margin-bottom: 15px;
-}
-
-.pdf-table {
+z-index: 2000;
+left: 0;
+top: 0;
 width: 100%;
-border-collapse: collapse;
-margin: 20px 0;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(5px);
+animation: fadeIn 0.3s ease;
 }
 
-.pdf-table th, .pdf-table td {
-border: 1px solid #ddd;
-padding: 12px;
-text-align: center;
+.modal-content {
+background: var(--card-bg);
+margin: 5% auto;
+padding: 30px;
+border-radius: 20px;
+width: 90%;
+max-width: 600px;
+max-height: 80vh;
+overflow-y: auto;
+box-shadow: var(--shadow-hover);
+border: 1px solid var(--border);
+position: relative;
+animation: slideUp 0.5s ease;
 }
 
-.pdf-table th {
-background: #f8f9fa;
-color: #3B82F6;
+.close-modal {
+position: absolute;
+left: 20px;
+top: 20px;
+color: var(--primary);
+font-size: 28px;
 font-weight: bold;
+cursor: pointer;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+background: rgba(26, 95, 122, 0.1);
+transition: all 0.3s ease;
 }
 
-.pdf-table tr:nth-child(even) {
-background: #f9f9f9;
+.close-modal:hover {
+background: rgba(26, 95, 122, 0.2);
+transform: rotate(90deg);
 }
 
-.pdf-footer {
-margin-top: 50px;
-padding-top: 20px;
-border-top: 2px solid #3B82F6;
+.modal-header {
 text-align: center;
-color: #6B7280;
-font-size: 14px;
+margin-bottom: 25px;
+padding-bottom: 15px;
+border-bottom: 2px solid var(--border);
+}
+
+.modal-header h3 {
+color: var(--text);
+font-size: 1.8rem;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+}
+
+/* تصميم شبكة الأسئلة في المودال */
+#questions-grid-modal {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+gap: 12px;
+margin: 25px 0;
+}
+
+.question-status-grid-modal {
+width: 60px;
+height: 60px;
+border: 2px solid rgba(26, 95, 122, 0.3);
+border-radius: 15px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+font-weight: 700;
+transition: all 0.3s ease;
+background: var(--card-bg);
+position: relative;
+overflow: hidden;
+font-size: 1.1rem;
+}
+
+.question-status-grid-modal::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: var(--accent-gradient);
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.question-status-grid-modal:hover:not(.locked) {
+transform: translateY(-3px) scale(1.1);
+box-shadow: var(--shadow);
+}
+
+.question-status-grid-modal.current {
+background: var(--accent-gradient);
+border-color: rgba(255, 255, 255, 0.5);
+box-shadow: var(--glow-accent), 0 5px 15px rgba(21, 152, 149, 0.3);
+animation: pulse 2s infinite;
+}
+
+.question-status-grid-modal.answered {
+background: var(--secondary-gradient);
+border-color: rgba(255, 255, 255, 0.5);
+box-shadow: var(--glow-secondary), 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.question-status-grid-modal.flagged {
+background: var(--tertiary-gradient);
+border-color: rgba(255, 255, 255, 0.5);
+box-shadow: var(--glow-tertiary), 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+.question-status-grid-modal.locked {
+cursor: not-allowed;
+opacity: 0.7;
+}
+
+.legend-modal {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+margin: 20px 0;
+justify-content: center;
+}
+
+.legend-item-modal {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 0.9rem;
+}
+
+/* تصميم عرض الدرجات في المودال */
+.current-score-content {
+text-align: center;
+padding: 20px;
+}
+
+.score-circle {
+width: 150px;
+height: 150px;
+margin: 20px auto;
+position: relative;
+}
+
+.score-circle svg {
+transform: rotate(-90deg);
+}
+
+.score-circle circle {
+fill: none;
+stroke-width: 10;
+stroke-linecap: round;
+}
+
+.score-bg {
+stroke: var(--border);
+}
+
+.score-fill {
+stroke: var(--secondary);
+stroke-dasharray: 314;
+stroke-dashoffset: 314;
+transition: stroke-dashoffset 1s ease;
+}
+
+.score-text {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+font-size: 2rem;
+font-weight: bold;
+color: var(--secondary);
+}
+
+.score-details {
+margin-top: 25px;
+font-size: 1.1rem;
+line-height: 1.8;
+}
+
+.score-details p {
+margin: 10px 0;
 }
 </style>
 </head>
@@ -1362,16 +1273,12 @@ font-size: 14px;
 <header class="glass-effect">
 <div class="header-container">
 <div class="title-section">
-<h1>اختبار الرخصة المهنية التفاعلي</h1>
+<h1>اختبار الدراسات الإسلامية التفاعلي</h1>
 </div>
 <div class="header-actions">
 <button class="theme-btn" id="themeBtn">
 <i class="fas fa-moon"></i>
 </button>
-<a href="#" class="back-btn">
-<i class="fas fa-arrow-right"></i>
-العودة للرئيسية
-</a>
 </div>
 </div>
 </header>
@@ -1381,9 +1288,9 @@ font-size: 14px;
 <!-- Hero Section -->
 <section class="hero-section glass-effect">
 <div class="hero-content">
-<h1 class="hero-title">اختبار الرخصة المهنية للمعلمين</h1>
-<p class="hero-subtitle">تم إعداد هذا الاختبار التفاعلي لمحاكاة الاختبار الرسمي للرخصة المهنية، ويقدم تغذية راجعة فورية لجميع الإجابات</p>
-<div class="quiz-info">إعداد: المعلم فهد الخالدي</div>
+<h1 class="hero-title">اختبار الدراسات الإسلامية - الخوف والرجاء</h1>
+<p class="hero-subtitle">اختبار شامل لموضوع الخوف والرجاء في الإسلام مع تفصيل الأحكام الشرعية وتغذية راجعة فورية</p>
+<div class="quiz-info">عدد الأسئلة: 49 سؤالًا | الوقت المتاح: 49 دقيقة</div>
 </div>
 </section>
 
@@ -1398,9 +1305,9 @@ font-size: 14px;
 <!-- Controls -->
 <div class="controls">
 <div class="quiz-info" id="quiz-info"></div>
-<div id="timer">⏱️ <span id="time-display">15:00</span></div>
+<div id="timer">⏱️ <span id="time-display">49:00</span></div>
 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-<button class="btn btn-primary" onclick="showQuestionsList()">
+<button class="btn btn-primary" onclick="openQuestionsModal()">
 <i class="fas fa-list"></i>
 قائمة الأسئلة
 </button>
@@ -1408,56 +1315,15 @@ font-size: 14px;
 <i class="fas fa-flag"></i>
 وضع علامة للمراجعة
 </button>
-<button class="btn btn-neon" onclick="finishQuiz()">
+<button class="btn btn-islamic" onclick="finishQuiz()">
 <i class="fas fa-flag-checkered"></i>
 إنهاء الاختبار
 </button>
-<button class="btn btn-secondary" onclick="showCurrentScore()">
-<i class="fas fa-chart-bar"></i>
-عرض الدرجات الحالية
-</button>
-</div>
-</div>
-
-<!-- Questions List -->
-<div id="questions-list" class="card">
-<h3 style="color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
-<i class="fas fa-th-list"></i>
-قائمة الأسئلة
-</h3>
-<div id="questions-grid"></div>
-<div class="legend">
-<div class="legend-item">
-<div class="question-status-grid" style="background: var(--accent-gradient); color: white;"></div>
-<span>السؤال الحالي</span>
-</div>
-<div class="legend-item">
-<div class="question-status-grid" style="background: var(--secondary-gradient); color: white;"></div>
-<span>تمت الإجابة</span>
-</div>
-<div class="legend-item">
-<div class="question-status-grid" style="background: var(--tertiary-gradient); color: var(--text);"></div>
-<span>معلم للمراجعة</span>
-</div>
-<div class="legend-item">
-<div class="question-status-grid" style="background: var(--card-bg); border-color: var(--border);"></div>
-<span>لم يتم الإجابة</span>
-</div>
-</div>
-<button class="btn btn-primary" onclick="hideQuestionsList()" style="margin-top:20px; width: 100%;">
-<i class="fas fa-times"></i>
-إغلاق القائمة
-</button>
-</div>
-
-<!-- Current Score -->
-<div id="current-score" class="card">
-<h3 style="color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+<button class="btn btn-secondary" onclick="openCurrentScoreModal()">
 <i class="fas fa-chart-bar"></i>
 الدرجات الحالية
-</h3>
-<p id="current-correct" style="margin-bottom: 15px; font-size: 1.1rem;"></p>
-<p id="current-percentage" style="font-weight: bold; font-size: 1.3rem; color: var(--primary);"></p>
+</button>
+</div>
 </div>
 
 <!-- Final Results -->
@@ -1475,23 +1341,14 @@ font-size: 14px;
 <!-- قسم النصائح -->
 <div class="tips-container" id="tips-container"></div>
 
-<!-- قسم مشاركة النتائج -->
+<!-- قسم تحميل PDF -->
 <div class="share-results">
 <h4 style="color: var(--text); margin-bottom: 20px;">
-<i class="fas fa-share-alt"></i> مشاركة النتائج
+<i class="fas fa-file-pdf"></i> تقرير النتائج
 </h4>
-<div class="qr-code-container">
-<div id="qrcode"></div>
-</div>
 <div class="share-buttons">
-<button class="btn btn-primary" onclick="generateCertificate()">
-<i class="fas fa-certificate"></i> عرض الشهادة
-</button>
 <button class="btn btn-success" onclick="generatePDF()">
 <i class="fas fa-file-pdf"></i> تحميل تقرير PDF
-</button>
-<button class="btn btn-warning" onclick="shareResults()">
-<i class="fas fa-share"></i> مشاركة النتائج
 </button>
 <button class="btn btn-secondary" onclick="restartQuiz()">
 <i class="fas fa-redo"></i> إعادة الاختبار
@@ -1500,1008 +1357,1676 @@ font-size: 14px;
 </div>
 </div>
 </div>
-
-<!-- الشهادة -->
-<div id="certificate" class="certificate no-print">
-<div class="certificate-content">
-<h1 class="certificate-title">شهادة إتمام الاختبار</h1>
-<h2 class="certificate-subtitle">اختبار الرخصة المهنية للمعلمين</h2>
-<div style="border-top: 3px solid var(--primary); width: 100px; margin: 0 auto 30px;"></div>
-<p class="certificate-details">تمنح هذه الشهادة إلى:</p>
-<h3 class="certificate-name" id="certificate-name">المستخدم</h3>
-<p class="certificate-details">لإتمامه اختبار الرخصة المهنية التفاعلي بنجاح</p>
-<p class="certificate-details" id="certificate-score">الدرجة النهائية: 0/3 (0%)</p>
-<p class="certificate-details" id="certificate-evaluation">التقييم: يحتاج تحسين</p>
-<div style="border-top: 3px solid var(--primary); width: 100px; margin: 30px auto;"></div>
-<p class="certificate-details">بتاريخ: <span id="certificate-date"></span></p>
-<div class="certificate-stamp">
-<span>مختوم<br>ومصدق</span>
-</div>
-<div class="certificate-date" id="certificate-date-right"></div>
-
-<!-- أزرار التحكم في الشهادة -->
-<div class="certificate-buttons" id="certificate-buttons">
-<button class="btn btn-primary" onclick="printCertificate()">
-<i class="fas fa-print"></i> طباعة الشهادة
-</button>
-<button class="btn btn-success" onclick="downloadCertificateAsImage()">
-<i class="fas fa-download"></i> حفظ كصورة
-</button>
-<button class="btn btn-secondary" onclick="closeCertificate()">
-<i class="fas fa-arrow-right"></i> العودة للنتائج
-</button>
-</div>
-</div>
-</div>
 </main>
 
-<!-- PDF Container (مخفي) -->
-<div id="pdf-container" class="pdf-container"></div>
+<!-- النافذة المنبثقة لعرض الدرجات الحالية -->
+<div id="currentScoreModal" class="modal">
+<div class="modal-content">
+<span class="close-modal" onclick="closeCurrentScoreModal()">&times;</span>
+<div class="modal-header">
+<h3><i class="fas fa-chart-bar"></i> الدرجات الحالية</h3>
+</div>
+<div class="current-score-content">
+<div class="score-circle">
+<svg width="150" height="150">
+<circle class="score-bg" cx="75" cy="75" r="70"></circle>
+<circle class="score-fill" cx="75" cy="75" r="70" id="score-circle-fill"></circle>
+</svg>
+<div class="score-text" id="score-percentage">0%</div>
+</div>
+<div class="score-details">
+<p id="current-score-details"></p>
+<p id="current-correct-details"></p>
+<p id="current-progress-details"></p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- النافذة المنبثقة لقائمة الأسئلة -->
+<div id="questionsModal" class="modal">
+<div class="modal-content">
+<span class="close-modal" onclick="closeQuestionsModal()">&times;</span>
+<div class="modal-header">
+<h3><i class="fas fa-th-list"></i> قائمة الأسئلة</h3>
+</div>
+<div id="questions-grid-modal"></div>
+<div class="legend-modal">
+<div class="legend-item-modal">
+<div class="question-status-grid-modal" style="background: var(--accent-gradient); color: white;"></div>
+<span>السؤال الحالي</span>
+</div>
+<div class="legend-item-modal">
+<div class="question-status-grid-modal" style="background: var(--secondary-gradient); color: white;"></div>
+<span>تمت الإجابة</span>
+</div>
+<div class="legend-item-modal">
+<div class="question-status-grid-modal" style="background: var(--tertiary-gradient); color: var(--text);"></div>
+<span>معلم للمراجعة</span>
+</div>
+<div class="legend-item-modal">
+<div class="question-status-grid-modal" style="background: var(--card-bg); border-color: var(--border);"></div>
+<span>لم يتم الإجابة</span>
+</div>
+</div>
+<button class="btn btn-primary" onclick="closeQuestionsModal()" style="margin-top:20px; width: 100%;">
+<i class="fas fa-times"></i>
+إغلاق القائمة
+</button>
+</div>
+</div>
 
 <script>
-// مصفوفة مكونة من 3 أسئلة فقط
+// مصفوفة أسئلة الدراسات الإسلامية (الخوف والرجاء)
 const questions = [
 {
 "id": 1,
-"q": "ما يميز الفرد في مرحلة العمليات الحسية عند بياجيه:",
-"options": ["النمو اللغوي", "التفكير المجرد", "النمو الحسي الحركي", "التصنيف والترتيب"],
-"answer": 2,
+"q": "1️⃣ الخوف شرعًا هو عمل…",
+"options": [
+"قلبي يحث على الطاعة",
+"بدني يتعلق بالأعمال",
+"لساني يُظهر الأقوال",
+"عقلي يحدد المصالح"
+],
+"answer": 0,
 "explanations": {
-"correct": "النمو الحسي الحركي هو ما يميز مرحلة العمليات الحسية عند بياجيه، حيث يعتمد الطفل على الحواس والحركة لاكتساب المعرفة وفهم العالم من حوله.",
-"wrong1": "النمو اللغوي يحدث تدريجيًا عبر مراحل الطفولة، لكنه ليس ما يميز مرحلة العمليات الحسية بشكل رئيسي.",
-"wrong2": "التفكير المجرد يظهر في مرحلة العمليات العقلية الرسمية لاحقاً، وليس في مرحلة العمليات الحسية.",
-"wrong3": "التصنيف والترتيب جزء من مرحلة العمليات العقلية العملية، أي تأتي بعد مرحلة العمليات الحسية."
+"correct": "الإجابة الصحيحة هي 'قلبي يحث على الطاعة' لأن الخوف في الشرع عمل قلبي يؤثر على الجوارح ويحث على فعل الطاعات وترك المعاصي.",
+"wrong1": "الخوف ليس عملًا بدنيًا بحتًا، بل هو عمل قلبي ينعكس على الأعمال.",
+"wrong2": "الخوف ليس قولًا باللسان فقط، بل هو شعور قلبي يظهر في الأقوال والأفعال.",
+"wrong3": "الخوف ليس مجرد تفكير عقلي، بل هو حالة قلبية لها أثر عملي."
 }
 },
 {
 "id": 2,
-"q": "القاسم المشترك الأكبر للأعداد ٥٦ و٢١:",
-"options": ["6", "7", "8", "9"],
-"answer": 1,
+"q": "2️⃣ الخوف المحمود من الله يؤدي إلى…",
+"options": [
+"ترك الأوامر",
+"ترك النواهي فقط",
+"فعل الأوامر وترك النواهي",
+"الغفلة عن الطاعة"
+],
+"answer": 2,
 "explanations": {
-"correct": "القاسم المشترك الأكبر بين ٥٦ و٢١ هو 7، لأنه العدد الأكبر الذي يقسم كلا الرقمين بدون باقي.",
-"wrong1": "6 لا يقسم 21 بدون باقي، لذا لا يمكن أن يكون القاسم المشترك الأكبر.",
-"wrong2": "8 يقسم 56 لكنه لا يقسم 21، لذا غير صحيح.",
-"wrong3": "9 لا يقسم أيًّا من الرقمين بشكل صحيح، لذا ليس القاسم المشترك الأكبر."
+"correct": "الإجابة الصحيحة هي 'فعل الأوامر وترك النواهي' لأن الخوف المحمود من الله يحث العبد على الامتثال لأوامره واجتناب نواهيه.",
+"wrong1": "الخوف المحمود لا يؤدي إلى ترك الأوامر بل إلى فعلها.",
+"wrong2": "الخوف المحمود لا يؤدي إلى ترك النواهي فقط بل وفعل الأوامر أيضًا.",
+"wrong3": "الخوف المحمود لا يؤدي إلى الغفلة بل إلى اليقظة والانتباه."
 }
 },
 {
 "id": 3,
-"q": "يستخدم معلم اللغة العربية طريقة المناظرة في إحدى القضايا المجتمعية؛ حيث يقسم الطلاب إلى مؤيدين ومعارضين ويستعين بمحكمين مستقلين، يهدف إلى تنمية:",
-"options": ["اتخاذ القرار", "التفكير الناقد", "التفكير الإبداعي", "حل المشكلات"],
+"q": "3️⃣ من ثمرات الخوف من الله…",
+"options": [
+"زيادة اللهو",
+"الوصول إلى الجنة",
+"حب الدنيا",
+"ترك الطاعات"
+],
 "answer": 1,
 "explanations": {
-"correct": "المناظرة تهدف لتنمية التفكير الناقد، حيث يقوم الطلاب بتحليل الأدلة، تقييم الحجج، وتحديد موقفهم بناءً على تحليل منطقي.",
-"wrong1": "اتخاذ القرار قد يكون نتيجة للمناظرة، لكنه ليس الهدف الرئيسي.",
-"wrong2": "التفكير الإبداعي مرتبط بالابتكار وحل المشكلات بطرق جديدة.",
-"wrong3": "حل المشكلات قد يكون نتيجة جانبية، لكنه ليس جوهر النشاط التربوي في المناظرة."
+"correct": "الإجابة الصحيحة هي 'الوصول إلى الجنة' لأن الخوف من الله سبب لدخول الجنة كما قال تعالى: (وأما من خاف مقام ربه ونهى النفس عن الهوى فإن الجنة هي المأوى).",
+"wrong1": "الخوف من الله لا يؤدي إلى زيادة اللهو بل إلى الجد والاجتهاد.",
+"wrong2": "الخوف من الله لا يزيد حب الدنيا بل يزهد فيها.",
+"wrong3": "الخوف من الله لا يؤدي إلى ترك الطاعات بل إلى الإكثار منها."
+}
+},
+{
+"id": 4,
+"q": "4️⃣ الدليل على الخوف من الله ورد في قوله تعالى:",
+"options": [
+"اهدنا الصراط المستقيم",
+"ولا تقتلوا النفس",
+"فلا تخافوهم وخافون إن كنتم مؤمنين",
+"إن الله غفور رحيم"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'فلا تخافوهم وخافون إن كنتم مؤمنين' من سورة آل عمران الآية 175، وهي نص صريح في الأمر بخوف الله تعالى.",
+"wrong1": "هذه آية من سورة الفاتحة ولا تتحدث عن الخوف.",
+"wrong2": "هذه آية تحريم القتل ولا تتحدث عن الخوف من الله.",
+"wrong3": "هذه آية تذكر صفتي المغفرة والرحمة ولا تتحدث عن الخوف."
+}
+},
+{
+"id": 5,
+"q": "5️⃣ وعد الله من يخاف مقامه بـ…",
+"options": [
+"النار",
+"المغفرة دون ثواب",
+"الجنة",
+"زيادة الرزق فقط"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الجنة' كما قال تعالى: (وأما من خاف مقام ربه ونهى النفس عن الهوى فإن الجنة هي المأوى).",
+"wrong1": "الله لا يعد من يخافه بالنار بل بالجنة.",
+"wrong2": "الوعد ليس بالمغفرة فقط بل بالجنة كاملة.",
+"wrong3": "الوعد ليس بزيادة الرزق فقط بل بالجنة والمغفرة."
+}
+},
+{
+"id": 6,
+"q": "6️⃣ الخوف من الأصنام يعد…",
+"options": [
+"توحيدًا",
+"خوفًا طبيعيًا",
+"عبادة لغير الله",
+"خوفًا مباحًا"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'عبادة لغير الله' لأن الخوف من الأصنام خوف تعظيم وعبادة، وهذا شرك أكبر.",
+"wrong1": "ليس توحيدًا بل شركًا لأن الخوف عبادة.",
+"wrong2": "ليس خوفًا طبيعيًا بل خوف عبادة.",
+"wrong3": "ليس مباحًا بل محرم لأنه شرك."
+}
+},
+{
+"id": 7,
+"q": "7️⃣ الخوف الطبيعي مثاله…",
+"options": [
+"الخوف من النار",
+"الخوف من الأموات",
+"الخوف من الأصنام",
+"الخوف من الحسد"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الخوف من النار' لأن النار مؤذية بطبيعتها، والخوف منها خوف طبيعي مباح.",
+"wrong1": "الخوف من الأموات قد يكون شركيًا إذا اعتقد أن الميت يضر بنفسه.",
+"wrong2": "الخوف من الأصنام شرك كما سبق.",
+"wrong3": "الخوف من الحسد قد يكون وسواسًا إذا تجاوز الحد."
+}
+},
+{
+"id": 8,
+"q": "8️⃣ من يخاف من الميت أن يضره فقد وقع في…",
+"options": [
+"الشرك",
+"الطاعة",
+"الزهد",
+"التوكل"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الشرك' لأن الميت لا يملك لنفسه ضرًا ولا نفعًا، والخوف منه اعتقادًا بأنه يضر شرك.",
+"wrong1": "ليس طاعة بل معصية وشرك.",
+"wrong2": "ليس زهدًا بل جهل وشرك.",
+"wrong3": "ليس توكلًا بل خوف باطل."
+}
+},
+{
+"id": 9,
+"q": "9️⃣ الخوف الطبيعي يكون…",
+"options": [
+"مما لا يملكه إلا الله",
+"مما يملكه البشر عادة",
+"مما يملكه الأموات",
+"مما تملكه الأصنام"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'مما يملكه البشر عادة' كالخوف من الأسد أو الحريق، فهذه أمور يملك البشر دفعها أو الاحتراز منها.",
+"wrong1": "الخوف الطبيعي ليس مما لا يملكه إلا الله، بل مما يمكن للبشر التعامل معه.",
+"wrong2": "الأموات لا يملكون شيئًا، فليس منهم خوف طبيعي.",
+"wrong3": "الأصنام لا تملك شيئًا، فليس منها خوف طبيعي."
+}
+},
+{
+"id": 10,
+"q": "🔟 مثال الخوف الطبيعي…",
+"options": [
+"الخوف من الجن",
+"الخوف من الأسد",
+"الخوف من الموتى",
+"الخوف من المستقبل غيبًا"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الخوف من الأسد' لأنه حيوان مفترس يملك إيذاء الإنسان، فهذا خوف طبيعي مباح.",
+"wrong1": "الخوف من الجن قد يكون شركيًا إذا اعتقد أن الجن يضر بنفسه.",
+"wrong2": "الخوف من الموتى شرك كما تقدم.",
+"wrong3": "الخوف المفرط من المستقبل نقص في التوكل."
+}
+},
+{
+"id": 11,
+"q": "1️⃣1️⃣ من ثمرات الخوف من الله…",
+"options": [
+"يبعد عن الطاعات",
+"يقود إلى المحرمات",
+"يدفع إلى العمل الصالح",
+"يزيد التكبر"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'يدفع إلى العمل الصالح' لأن الخوف من الله يحث العبد على فعل الطاعات واجتناب المعاصي.",
+"wrong1": "الخوف من الله لا يبعد عن الطاعات بل يقرب منها.",
+"wrong2": "الخوف من الله لا يقود إلى المحرمات بل يبعد عنها.",
+"wrong3": "الخوف من الله لا يزيد التكبر بل يزيد التواضع."
+}
+},
+{
+"id": 12,
+"q": "1️⃣2️⃣ يساعد على الخوف من الله…",
+"options": [
+"الغفلة",
+"نسيان الآخرة",
+"فهم أسماء الله وصفاته",
+"ترك الذكر"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'فهم أسماء الله وصفاته' لأن معرفة عظمة الله وقدرته وجبروته تزيد الخوف منه.",
+"wrong1": "الغفلة تنقص الخوف من الله.",
+"wrong2": "نسيان الآخرة يقلل الخوف من الله.",
+"wrong3": "ترك الذكر يضعف الخوف من الله."
+}
+},
+{
+"id": 13,
+"q": "1️⃣3️⃣ من أسماء الله التي تُعظّم الخوف…",
+"options": [
+"الكريم فقط",
+"العليم والسميع والبصير",
+"الودود وحده",
+"الغني فقط"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'العليم والسميع والبصير' لأن هذه الأسماء تدل على إحاطة الله بكل شيء، فيخاف العبد أن يراه على معصية.",
+"wrong1": "اسم الكريم يزيد الرجاء لا الخوف فقط.",
+"wrong2": "اسم الودود يزيد المحبة لا الخوف فقط.",
+"wrong3": "اسم الغني يزيد التوكل لا الخوف فقط."
+}
+},
+{
+"id": 14,
+"q": "1️⃣4️⃣ تذكر مراقبة الله يعين على…",
+"options": [
+"الأمن من مكر الله",
+"الجرأة على المعصية",
+"زيادة الخوف منه",
+"ترك الطاعات"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'زيادة الخوف منه' لأن تذكر أن الله يراك ويسمعك يزيد الخوف والحياء منه.",
+"wrong1": "تذكر المراقبة لا يؤدي إلى الأمن من مكر الله بل يزيد الخوف منه.",
+"wrong2": "تذكر المراقبة لا يزيد الجرأة بل يمنعها.",
+"wrong3": "تذكر المراقبة لا يؤدي إلى ترك الطاعات بل إلى فعلها."
+}
+},
+{
+"id": 15,
+"q": "1️⃣5️⃣ تعريف الرجاء هو طمع العبد في…",
+"options": [
+"متاع الدنيا",
+"فضل الله ورحمته",
+"رضا الناس",
+"الثناء فقط"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'فضل الله ورحمته' لأن الرجاء في الشرع: طمع العبد في فضل ربه ورحمته ومغفرته.",
+"wrong1": "الرجاء الشرعي ليس في متاع الدنيا بل في الآخرة.",
+"wrong2": "الرجاء ليس في رضا الناس بل في رضا الله.",
+"wrong3": "الرجاء ليس في الثناء فقط بل في المغفرة والجنة."
+}
+},
+{
+"id": 16,
+"q": "1️⃣6️⃣ الرجاء النافع يكون…",
+"options": [
+"بلا عمل",
+"مع ترك الطاعات",
+"مقرونًا بالعمل",
+"مع اليأس"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'مقرونًا بالعمل' لأن الرجاء النافع هو الذي يصحبه عمل بطاعة الله، لا مجرد أماني.",
+"wrong1": "الرجاء بلا عمل رجاء كاذب.",
+"wrong2": "الرجاء مع ترك الطاعات رجاء باطل.",
+"wrong3": "الرجاء مع اليأس متناقض، فلا يجتمعان."
+}
+},
+{
+"id": 17,
+"q": "1️⃣7️⃣ الرجاء الكاذب هو…",
+"options": [
+"رجاء دون عمل",
+"رجاء مع طاعة",
+"رجاء محمود",
+"رجاء الأنبياء"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'رجاء دون عمل' لأنه تمنٍ بلا فعل، وهو من الأماني الكاذبة.",
+"wrong1": "الرجاء مع طاعة هو الرجاء النافع.",
+"wrong2": "الرجاء الكاذب ليس محمودًا بل مذموم.",
+"wrong3": "رجاء الأنبياء كان مقرونًا بالعمل فليس كاذبًا."
+}
+},
+{
+"id": 18,
+"q": "1️⃣8️⃣ من ثمرات الرجاء…",
+"options": [
+"ترك العبادة",
+"الكسل",
+"الشعور بلذة العبادة",
+"قطع الطاعات"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الشعور بلذة العبادة' لأن الرجاء يخفف على العبد مشقة الطاعة ويدفع له لذة فيها.",
+"wrong1": "الرجاء لا يؤدي إلى ترك العبادة بل إلى فعلها.",
+"wrong2": "الرجاء لا يؤدي إلى الكسل بل إلى النشاط.",
+"wrong3": "الرجاء لا يؤدي إلى قطع الطاعات بل إلى المداومة عليها."
+}
+},
+{
+"id": 19,
+"q": "1️⃣9️⃣ الدليل على الرجاء النافع قوله تعالى:",
+"options": [
+"ولا تقربوا الزنا",
+"فليعمل عملًا صالحًا ولا يشرك بعبادة ربه أحدًا",
+"كلوا من طيبات ما رزقناكم",
+"لا يسخر قوم من قوم"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'فليعمل عملًا صالحًا ولا يشرك بعبادة ربه أحدًا' من سورة الكهف الآية 110، وهي تجمع بين العمل والرجاء.",
+"wrong1": "هذه آية نهي عن الزنا ولا تتحدث عن الرجاء.",
+"wrong2": "هذه آية إباحة للأكل ولا تتحدث عن الرجاء.",
+"wrong3": "هذه آية نهي عن السخرية ولا تتحدث عن الرجاء."
+}
+},
+{
+"id": 20,
+"q": "2️⃣0️⃣ من ثمرات الرجاء…",
+"options": [
+"الحزن الشديد",
+"السعادة",
+"اليأس",
+"الغرور"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'السعادة' لأن الرجاء يشرح الصدر ويسر القلب ويزيل الهم.",
+"wrong1": "الرجاء لا يؤدي إلى الحزن الشديد بل يزيله.",
+"wrong2": "الرجاء ينافي اليأس.",
+"wrong3": "الرجاء لا يؤدي إلى الغرور بل إلى التواضع."
+}
+},
+{
+"id": 21,
+"q": "2️⃣1️⃣ من يفعل عملًا صالحًا ويطمع بالأجر…",
+"options": [
+"مراءٍ",
+"صاحب رجاء",
+"مبتدع",
+"متكاسل"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'صاحب رجاء' لأنه جمع بين العمل والطمع في ثواب الله، وهذا هو الرجاء النافع.",
+"wrong1": "ليس مرائيًا لأنه يريد الأجر من الله لا مدح الناس.",
+"wrong2": "ليس مبتدعًا إذا كان العمل موافقًا للسنة.",
+"wrong3": "ليس متكاسلًا لأنه يعمل."
+}
+},
+{
+"id": 22,
+"q": "2️⃣2️⃣ الخوف الذي يكون من الأسد يسمى…",
+"options": [
+"خوفًا شركيًا",
+"خوفًا طبيعيًا",
+"خوفًا ممنوعًا",
+"خوفًا محرّمًا"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'خوفًا طبيعيًا' لأن الأسد حيوان مفترس يخشى منه على النفس، وهذا خوف فطري مباح.",
+"wrong1": "ليس شركيًا لأنه لا تعظيم للأسد بل خوف من أذاه الطبيعي.",
+"wrong2": "ليس ممنوعًا بل جائز.",
+"wrong3": "ليس محرمًا بل مباح."
+}
+},
+{
+"id": 23,
+"q": "2️⃣3️⃣ الخوف الذي لا يجوز هو…",
+"options": [
+"خوف من الحريق",
+"خوف من الثعبان",
+"خوف من الأموات",
+"خوف من السيارة المسرعة"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'خوف من الأموات' إذا كان خوف تعظيم واعتقاد أن الميت يضر، فهذا شرك.",
+"wrong1": "خوف من الحريق طبيعي وجائز.",
+"wrong2": "خوف من الثعبان طبيعي وجائز.",
+"wrong3": "خوف من السيارة المسرعة طبيعي وجائز."
+}
+},
+{
+"id": 24,
+"q": "2️⃣4️⃣ من يخاف من السحر خوفًا يعتقد فيه الضرر بنفسه…",
+"options": [
+"موحّد",
+"مبتدع",
+"مشرك",
+"متوكل"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'مشرك' لأن الخوف من السحر مع الاعتقاد أنه يضر بنفسه دون إذن الله شرك، فالله هو الضار النافع.",
+"wrong1": "ليس موحدًا لأنه أشرك مع الله.",
+"wrong2": "ليس مبتدعًا فقط بل قد يكون مشركًا.",
+"wrong3": "ليس متوكلًا لأنه خاف من غير الله."
+}
+},
+{
+"id": 25,
+"q": "2️⃣5️⃣ الخوف من الله يمنع العبد من…",
+"options": [
+"الحلال",
+"النوافل",
+"المحرمات",
+"الطاعات"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'المحرمات' لأن الخوف من الله يردع العبد عن اقتراف المعاصي خوفًا من عقابه.",
+"wrong1": "الخوف من الله لا يمنع من الحلال.",
+"wrong2": "الخوف من الله لا يمنع من النوافل بل يحث عليها.",
+"wrong3": "الخوف من الله لا يمنع من الطاعات بل يحث عليها."
+}
+},
+{
+"id": 26,
+"q": "2️⃣6️⃣ ترك الكذب خوفًا من الله يُعد…",
+"options": [
+"خوفًا شركيًا",
+"خوفًا طبيعيًا",
+"خوفًا محمودًا",
+"خوفًا كاذبًا"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'خوفًا محمودًا' لأنه خوف من الله دفع إلى ترك معصية، وهذا من الخوف المحمود.",
+"wrong1": "ليس شركيًا لأنه خوف من الله.",
+"wrong2": "ليس طبيعيًا بل شرعي.",
+"wrong3": "ليس كاذبًا لأنه مقرون بفعل (ترك الكذب)."
+}
+},
+{
+"id": 27,
+"q": "2️⃣7️⃣ يساعد على الخوف من الله…",
+"options": [
+"سماع الأغاني",
+"معرفة عقوبات العصاة",
+"ترك التدبر",
+"تجاهل الآيات"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'معرفة عقوبات العصاة' لأنها تذكر بعذاب الله فتزيد الخوف منه.",
+"wrong1": "سماع الأغاني ينقص الخوف من الله.",
+"wrong2": "ترك التدبر ينقص الخوف من الله.",
+"wrong3": "تجاهل الآيات ينقص الخوف من الله."
+}
+},
+{
+"id": 28,
+"q": "2️⃣8️⃣ الرجاء النافع يقود العبد إلى…",
+"options": [
+"التضيع",
+"ترك العمل",
+"الطاعة",
+"المعاصي"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الطاعة' لأن الرجاء النافع يحفز العبد على العمل الصالح طمعًا في ثواب الله.",
+"wrong1": "لا يؤدي إلى التضييع بل إلى الجد.",
+"wrong2": "لا يؤدي إلى ترك العمل بل إلى فعله.",
+"wrong3": "لا يؤدي إلى المعاصي بل يبعد عنها."
+}
+},
+{
+"id": 29,
+"q": "2️⃣9️⃣ الرجاء الكاذب نتيجته…",
+"options": [
+"السعادة",
+"الغرور",
+"المواظبة",
+"الطاعة"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الغرور' لأنه يمني النفس بالأماني دون عمل فيغرر بها.",
+"wrong1": "لا يؤدي إلى السعادة بل إلى الخيبة.",
+"wrong2": "لا يؤدي إلى المواظبة بل إلى الكسل.",
+"wrong3": "لا يؤدي إلى الطاعة بل إلى تركها."
+}
+},
+{
+"id": 30,
+"q": "3️⃣0️⃣ من ثمرات الخوف والرجاء معًا…",
+"options": [
+"التوكل",
+"الاعتدال في العبادة",
+"الرياء",
+"التكاسل"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الاعتدال في العبادة' لأن الجمع بينهما يمنع من القنوط والغرور فيكون العبد وسطًا.",
+"wrong1": "التوكل ثمرة للإيمان ولكن ليس خاصًا بالخوف والرجاء.",
+"wrong2": "الرياء ينافي الإخلاص وليس من ثمراتهما.",
+"wrong3": "التكاسل ينافي العمل وليس من ثمراتهما."
+}
+},
+{
+"id": 31,
+"q": "3️⃣1️⃣ العبد المؤمن يجمع بين…",
+"options": [
+"الغرور واليأس",
+"الخوف والرجاء",
+"القلق والحزن",
+"الغفلة واللعب"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الخوف والرجاء' لأن المؤمن يخاف عذاب الله ويرجو رحمته، فهما جناحا العبادة.",
+"wrong1": "الغرور واليأس صفتان مذمومتان لا يجتمعان في المؤمن.",
+"wrong2": "القلق والحزن قد يعتريان المؤمن لكن ليسا من صفات العبادة.",
+"wrong3": "الغفلة واللعب نقص في الإيمان."
+}
+},
+{
+"id": 32,
+"q": "3️⃣2️⃣ من يخاف من الله ولا يعمل…",
+"options": [
+"عنده خوف محمود",
+"عنده خوف كاذب",
+"عنده رجاء صادق",
+"عنده علم نافع"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'عنده خوف كاذب' لأن الخوف الحقيقي يدفع إلى العمل، فإذا لم يدفع فهو خوف كاذب.",
+"wrong1": "الخوف المحمود مقرون بالعمل.",
+"wrong2": "ليس عنده رجاء صادق بل خوف كاذب.",
+"wrong3": "ليس بالضرورة عنده علم نافع."
+}
+},
+{
+"id": 33,
+"q": "3️⃣3️⃣ من يعمل بلا رجاء يكون…",
+"options": [
+"مخلصًا دائمًا",
+"قانطًا",
+"صاحب أمل",
+"مستقيمًا"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'قانطًا' لأنه عمل دون رجاء في ثواب الله، والقنوط من كبائر الذنوب.",
+"wrong1": "قد يكون مخلصًا لكن ناقص الإيمان لفقده الرجاء.",
+"wrong2": "ليس بالضرورة صاحب أمل لأنه بلا رجاء.",
+"wrong3": "ليس مستقيمًا كاملًا لفقده الرجاء."
+}
+},
+{
+"id": 34,
+"q": "3️⃣4️⃣ من أسباب زيادة الرجاء…",
+"options": [
+"الإكثار من الذنوب",
+"معرفة فضل الله",
+"كثرة الغفلة",
+"ترك الصلاة"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'معرفة فضل الله' لأن معرفة سعة رحمة الله وعظيم عفوه تزيد الرجاء.",
+"wrong1": "الإكثار من الذنوب قد يضعف الرجاء.",
+"wrong2": "كثرة الغفلة تنقص الرجاء.",
+"wrong3": "ترك الصلاة ينقص الرجاء والإيمان."
+}
+},
+{
+"id": 35,
+"q": "3️⃣5️⃣ الرجاء النافع يدفع إلى…",
+"options": [
+"السعي للطاعات",
+"الكسل",
+"اللهو",
+"التهاون"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'السعي للطاعات' لأنه يحفز العبد على العمل الصالح طمعًا في الثواب.",
+"wrong1": "لا يؤدي إلى الكسل بل إلى النشاط.",
+"wrong2": "لا يؤدي إلى اللهو بل إلى الجد.",
+"wrong3": "لا يؤدي إلى التهاون بل إلى الاجتهاد."
+}
+},
+{
+"id": 36,
+"q": "3️⃣6️⃣ الخوف الذي يختص بالله يسمى…",
+"options": [
+"خوفًا طبيعيًا",
+"خوفًا قدرًا",
+"خوف عبادة",
+"خوف عادة"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'خوف عبادة' لأنه خوف تعظيم وإجلال، وهو من العبادات القلبية التي لا تصرف إلا لله.",
+"wrong1": "الخوف الطبيعي لا يختص بالله.",
+"wrong2": "الخوف قدرًا يعني الخوف من المقدر لا يختص بالله.",
+"wrong3": "الخوف عادة لا يختص بالله."
+}
+},
+{
+"id": 37,
+"q": "3️⃣7️⃣ الخوف من الأموات يدخل في…",
+"options": [
+"التوحيد",
+"العبادة لغير الله",
+"الخوف الطبيعي",
+"الإيمان الواجب"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'العبادة لغير الله' إذا كان خوف تعظيم، لأن الميت لا يملك ضرًا ولا نفعًا.",
+"wrong1": "ليس من التوحيد بل من الشرك.",
+"wrong2": "ليس خوفًا طبيعيًا لأن الميت لا يؤذي بطبيعته.",
+"wrong3": "ليس من الإيمان الواجب بل يناقضه."
+}
+},
+{
+"id": 38,
+"q": "3️⃣8️⃣ من يخاف ضرر الجن اعتمادًا عليهم…",
+"options": [
+"مؤمن كامل",
+"متوكل",
+"مشرك",
+"مستقيم"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'مشرك' لأنه خاف من مخلوق واعتمد عليه في الضر معتقدًا أنه يضره بنفسه دون الله.",
+"wrong1": "ليس مؤمنًا كاملًا بل ناقص الإيمان أو مشرك.",
+"wrong2": "ليس متوكلًا لأنه توكل على غير الله.",
+"wrong3": "ليس مستقيمًا لأنه حاد عن التوحيد."
+}
+},
+{
+"id": 39,
+"q": "3️⃣9️⃣ الخوف الطبيعي يكون سببه…",
+"options": [
+"قدرة المخلوق",
+"قدرة الله",
+"علم الشياطين",
+"اعتقاد في الأموات"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'قدرة المخلوق' الطبيعية كقدرة الأسد على الإيذاء، أو النار على الحرق.",
+"wrong1": "الخوف الطبيعي ليس بسبب قدرة الله بل قدرة المخلوق الطبيعية.",
+"wrong2": "ليس بسبب علم الشياطين.",
+"wrong3": "ليس بسبب اعتقاد في الأموات."
+}
+},
+{
+"id": 40,
+"q": "4️⃣0️⃣ من أمثلة الرجاء النافع…",
+"options": [
+"فعل الطاعة مع نية الثواب",
+"انتظار المغفرة دون عمل",
+"ترك الصلاة رجاء الجنة",
+"العمل للناس فقط"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'فعل الطاعة مع نية الثواب' لأنه جمع بين العمل والرجاء.",
+"wrong1": "انتظار المغفرة دون عمل رجاء كاذب.",
+"wrong2": "ترك الصلاة معصية ولا يكون رجاء مع معصية.",
+"wrong3": "العمل للناس رياء لا رجاء."
+}
+},
+{
+"id": 41,
+"q": "4️⃣1️⃣ الشعور بالسعادة أثناء الطاعة نتيجة…",
+"options": [
+"الغرور",
+"الرجاء",
+"اليأس",
+"التكاسل"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الرجاء' لأن الرجاء بثواب الله يخفف مشقة الطاعة ويجعلها محببة للنفس.",
+"wrong1": "الغرور ينافي الإخلاص ولا يؤدي إلى السعادة الحقيقية.",
+"wrong2": "اليأس يسبب الحزن لا السعادة.",
+"wrong3": "التكاسل ينافي الطاعة."
+}
+},
+{
+"id": 42,
+"q": "4️⃣2️⃣ من يخاف من صوت مزعج يكون خوفه…",
+"options": [
+"ممنوعًا",
+"طبيعيًا",
+"شركيًا",
+"بدعيًا"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'طبيعيًا' لأن الصوت المزعج يؤذي السمع، والخوف منه خوف فطري.",
+"wrong1": "ليس ممنوعًا إذا لم يصل إلى حد الوسواس.",
+"wrong2": "ليس شركيًا لأنه لا تعظيم للصوت.",
+"wrong3": "ليس بدعيًا لأنه ليس متعلقًا بالدين."
+}
+},
+{
+"id": 43,
+"q": "4️⃣3️⃣ الخوف الذي يؤدي لترك المعاصي…",
+"options": [
+"مذموم",
+"كاذب",
+"محمود",
+"لا علاقة له بالطاعة"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'محمود' لأنه خوف من الله دفع إلى ترك المعصية، وهذا من ثمرات الخوف المحمود.",
+"wrong1": "ليس مذمومًا بل محمود.",
+"wrong2": "ليس كاذبًا لأنه أثر عنه فعل (ترك المعصية).",
+"wrong3": "له علاقة بالطاعة لأنه دفع لترك المعصية."
+}
+},
+{
+"id": 44,
+"q": "4️⃣4️⃣ فهم أسماء الله يساعد على…",
+"options": [
+"زيادة الغفلة",
+"تقوية الخوف",
+"اليأس من الرحمة",
+"ترك التوبة"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'تقوية الخوف' لأن معرفة أسماء الله مثل المنتقم الجبار تزيد خوف العبد من عقابه.",
+"wrong1": "لا تزيد الغفلة بل تزيلها.",
+"wrong2": "لا تسبب اليأس بل تزيد الرجاء أيضًا.",
+"wrong3": "لا تؤدي إلى ترك التوبة بل تحث عليها."
+}
+},
+{
+"id": 45,
+"q": "4️⃣5️⃣ الرجاء الكاذب يعتمد على…",
+"options": [
+"العمل",
+"الطاعة",
+"الأماني الفارغة",
+"الإخلاص"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الأماني الفارغة' لأنه تمنٍ بلا عمل، وهو رجاء باطل.",
+"wrong1": "الرجاء الكاذب لا يعتمد على العمل.",
+"wrong2": "لا يعتمد على الطاعة.",
+"wrong3": "لا يعتمد على الإخلاص."
+}
+},
+{
+"id": 46,
+"q": "4️⃣6️⃣ الخوف الذي يكون من أخطار محسوسة…",
+"options": [
+"شركًا",
+"طبيعيًا",
+"محرّمًا",
+"بدعيًا"
+],
+"answer": 1,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'طبيعيًا' كالخوف من السقوط من مكان مرتفع، أو من حيوان مفترس.",
+"wrong1": "ليس شركًا إذا لم يكن خوف تعظيم.",
+"wrong2": "ليس محرمًا إذا كان ضمن الحد المعقول.",
+"wrong3": "ليس بدعيًا لأنه ليس متعلقًا بالدين."
+}
+},
+{
+"id": 47,
+"q": "4️⃣7️⃣ من يخاف المستقبل غيبًا خوفًا مفرطًا…",
+"options": [
+"مشرك",
+"مذنب",
+"غير متوكل",
+"موحّد"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'غير متوكل' لأنه نقص في التوكل على الله وتسليم الأمور له.",
+"wrong1": "ليس مشركًا لأنه لا تعظيم لغير الله.",
+"wrong2": "ليس مذنبًا بذنب معين لكنه ناقص التوكل.",
+"wrong3": "موحد لكن ناقص التوكل."
+}
+},
+{
+"id": 48,
+"q": "4️⃣8️⃣ من ثمرات الرجاء…",
+"options": [
+"الإكثار من الصالحات",
+"ترك الأعمال",
+"الشعور باليأس",
+"القلق الدائم"
+],
+"answer": 0,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الإكثار من الصالحات' لأن الرجاء يحفز العبد على العمل الصالح طمعًا في الثواب.",
+"wrong1": "لا يؤدي إلى ترك الأعمال بل إلى فعلها.",
+"wrong2": "ينافي اليأس.",
+"wrong3": "لا يؤدي إلى القلق بل يزيله."
+}
+},
+{
+"id": 49,
+"q": "4️⃣9️⃣ كمال الإيمان يكون بـ…",
+"options": [
+"الخوف فقط",
+"الرجاء فقط",
+"الجمع بين الخوف والرجاء",
+"ترك الخوف والرجاء"
+],
+"answer": 2,
+"explanations": {
+"correct": "الإجابة الصحيحة هي 'الجمع بين الخوف والرجاء' لأن الإيمان الكامل يجمع بين الخوف من عقاب الله والرجاء في رحمته.",
+"wrong1": "الخوف فقط قد يؤدي إلى القنوط.",
+"wrong2": "الرجاء فقط قد يؤدي إلى الغرور.",
+"wrong3": "تركهما نقص في الإيمان."
 }
 }
 ];
 
 let currentQuestionIndex = 0;
 let userAnswers = Array(questions.length).fill(null);
-let timeLeft = 15 * 60; // 15 دقيقة للاختبار القصير
+let timeLeft = 49 * 60; // 49 دقيقة للاختبار
 let timerInterval;
 let markedQuestions = [];
 let answerLocked = Array(questions.length).fill(false);
 let performanceHistory = [];
+let shuffledQuestions = [];
+
+// دالة لترتيب الخيارات بشكل عشوائي
+function shuffleOptions(question) {
+    // إنشاء نسخة من الخيارات
+    const options = [...question.options];
+    const answer = question.answer;
+    
+    // ترتيب الخيارات عشوائياً
+    const shuffledIndices = [...Array(options.length).keys()];
+    for (let i = shuffledIndices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+    }
+    
+    // إنشاء الخيارات الجديدة مع الحفاظ على الإجابة الصحيحة
+    const shuffledOptions = shuffledIndices.map(idx => options[idx]);
+    const newAnswer = shuffledIndices.indexOf(answer);
+    
+    return {
+        ...question,
+        options: shuffledOptions,
+        answer: newAnswer
+    };
+}
 
 // تحميل سجل الأداء السابق من localStorage
 function loadPerformanceHistory() {
-const savedHistory = localStorage.getItem('teacherLicensePerformanceHistory');
-if (savedHistory) {
-try {
-performanceHistory = JSON.parse(savedHistory);
-} catch (e) {
-performanceHistory = [];
-}
-}
+    const savedHistory = localStorage.getItem('islamicStudiesPerformanceHistory');
+    if (savedHistory) {
+        try {
+            performanceHistory = JSON.parse(savedHistory);
+        } catch (e) {
+            performanceHistory = [];
+        }
+    }
 }
 
 // حفظ سجل الأداء إلى localStorage
 function savePerformanceHistory() {
-localStorage.setItem('teacherLicensePerformanceHistory', JSON.stringify(performanceHistory));
+    localStorage.setItem('islamicStudiesPerformanceHistory', JSON.stringify(performanceHistory));
 }
 
 // تبديل الوضع الليلي
 document.getElementById('themeBtn').addEventListener('click', function() {
-document.body.classList.toggle('dark-theme');
-const icon = this.querySelector('i');
-if (document.body.classList.contains('dark-theme')) {
-icon.classList.remove('fa-moon');
-icon.classList.add('fa-sun');
-localStorage.setItem('darkMode', 'enabled');
-} else {
-icon.classList.remove('fa-sun');
-icon.classList.add('fa-moon');
-localStorage.setItem('darkMode', 'disabled');
-}
+    document.body.classList.toggle('dark-theme');
+    const icon = this.querySelector('i');
+    if (document.body.classList.contains('dark-theme')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        localStorage.setItem('darkMode', 'disabled');
+    }
 });
 
 // التحقق من تفضيل الوضع الداكن المخزن
 function checkDarkModePreference() {
-const darkMode = localStorage.getItem('darkMode');
-const icon = document.querySelector('#themeBtn i');
+    const darkMode = localStorage.getItem('darkMode');
+    const icon = document.querySelector('#themeBtn i');
 
-if (darkMode === 'enabled') {
-document.body.classList.add('dark-theme');
-icon.classList.remove('fa-moon');
-icon.classList.add('fa-sun');
-} else {
-document.body.classList.remove('dark-theme');
-icon.classList.remove('fa-sun');
-icon.classList.add('fa-moon');
-}
+    if (darkMode === 'enabled') {
+        document.body.classList.add('dark-theme');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        document.body.classList.remove('dark-theme');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
 }
 
 // المؤقت
 function startTimer() {
-timerInterval = setInterval(() => {
-timeLeft--;
-updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
 
-if (timeLeft <= 0) {
-clearInterval(timerInterval);
-finishQuiz();
-}
-}, 1000);
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishQuiz();
+        }
+    }, 1000);
 }
 
 function updateTimerDisplay() {
-const minutes = Math.floor(timeLeft / 60);
-const seconds = timeLeft % 60;
-const timeDisplay = document.getElementById('time-display');
-timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    const timeDisplay = document.getElementById('time-display');
+    timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-if (timeLeft < 300) { // 5 دقائق
-timeDisplay.classList.add('timer-warning');
-} else {
-timeDisplay.classList.remove('timer-warning');
-}
-}
-
-// عرض قائمة الأسئلة
-function showQuestionsList() {
-const grid = document.getElementById('questions-grid');
-grid.innerHTML = '';
-
-questions.forEach((_, index) => {
-const btn = document.createElement('div');
-btn.className = `question-status-grid ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
-btn.innerHTML = `<span>${index + 1}</span>`;
-btn.onclick = () => {
-currentQuestionIndex = index;
-loadQuiz();
-hideQuestionsList();
-};
-grid.appendChild(btn);
-});
-
-document.getElementById('questions-list').style.display = 'block';
+    if (timeLeft < 300) { // 5 دقائق
+        timeDisplay.classList.add('timer-warning');
+    } else {
+        timeDisplay.classList.remove('timer-warning');
+    }
 }
 
-function hideQuestionsList() {
-document.getElementById('questions-list').style.display = 'none';
+// فتح نافذة الدرجات الحالية
+function openCurrentScoreModal() {
+    const score = calculateScore();
+    const answeredCount = userAnswers.filter(answer => answer !== null).length;
+    const totalQuestions = questions.length;
+    const percentage = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
+    
+    // تحديث دائرة الدرجات
+    const circle = document.getElementById('score-circle-fill');
+    const text = document.getElementById('score-percentage');
+    const circumference = 440; // 2 * π * r (r = 70)
+    const offset = circumference - (percentage / 100) * circumference;
+    
+    circle.style.strokeDashoffset = offset;
+    text.textContent = `${percentage}%`;
+    
+    // تحديث تفاصيل الدرجات
+    document.getElementById('current-score-details').innerHTML = 
+        `<strong>الدرجة الحالية:</strong> ${score.correct} من ${totalQuestions}`;
+    document.getElementById('current-correct-details').innerHTML = 
+        `<strong>الإجابات الصحيحة:</strong> ${score.correct}`;
+    document.getElementById('current-progress-details').innerHTML = 
+        `<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions} (${Math.round((answeredCount/totalQuestions)*100)}%)`;
+    
+    // عرض النافذة المنبثقة
+    document.getElementById('currentScoreModal').style.display = 'block';
+}
+
+function closeCurrentScoreModal() {
+    document.getElementById('currentScoreModal').style.display = 'none';
+}
+
+// فتح نافذة قائمة الأسئلة
+function openQuestionsModal() {
+    const grid = document.getElementById('questions-grid-modal');
+    grid.innerHTML = '';
+
+    questions.forEach((_, index) => {
+        const btn = document.createElement('div');
+        btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
+        btn.innerHTML = `<span>${index + 1}</span>`;
+        btn.onclick = () => {
+            currentQuestionIndex = index;
+            loadQuiz();
+            closeQuestionsModal();
+        };
+        grid.appendChild(btn);
+    });
+
+    document.getElementById('questionsModal').style.display = 'block';
+}
+
+function closeQuestionsModal() {
+    document.getElementById('questionsModal').style.display = 'none';
 }
 
 // وضع علامة للمراجعة
 function toggleMarkForReview() {
-const index = markedQuestions.indexOf(currentQuestionIndex);
-const btn = document.getElementById('mark-review-btn');
+    const index = markedQuestions.indexOf(currentQuestionIndex);
+    const btn = document.getElementById('mark-review-btn');
 
-if (index === -1) {
-markedQuestions.push(currentQuestionIndex);
-btn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
-btn.style.background = 'var(--tertiary-gradient)';
-} else {
-markedQuestions.splice(index, 1);
-btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
-btn.style.background = 'var(--secondary-gradient)';
-}
-
-if (document.getElementById('questions-list').style.display === 'block') {
-showQuestionsList();
-}
+    if (index === -1) {
+        markedQuestions.push(currentQuestionIndex);
+        btn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+        btn.style.background = 'var(--tertiary-gradient)';
+    } else {
+        markedQuestions.splice(index, 1);
+        btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+        btn.style.background = 'var(--secondary-gradient)';
+    }
 }
 
 // تحميل الاختبار
 function loadQuiz() {
-const quizDiv = document.getElementById("quiz");
+    const quizDiv = document.getElementById("quiz");
 
-const question = questions[currentQuestionIndex];
-const isLocked = answerLocked[currentQuestionIndex];
+    // إذا لم يتم ترتيب الأسئلة بعد، قم بترتيبها
+    if (shuffledQuestions.length === 0) {
+        shuffledQuestions = questions.map(q => shuffleOptions(q));
+    }
+    
+    const question = shuffledQuestions[currentQuestionIndex];
+    const isLocked = answerLocked[currentQuestionIndex];
 
-let html = `
-<div class="question-box fade-in">
-<div class="question-number">
-<i class="fas fa-question-circle"></i>
-السؤال ${currentQuestionIndex + 1} من ${questions.length}
-${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
-</div>
-<div class="question-text">${question.q}</div>
-<div class="options">
-`;
+    let html = `
+    <div class="question-box fade-in">
+        <div class="question-number">
+            <i class="fas fa-question-circle"></i>
+            السؤال ${currentQuestionIndex + 1} من ${questions.length}
+            ${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
+            ${markedQuestions.includes(currentQuestionIndex) ? '<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> معلمة</span>' : ''}
+        </div>
+        <div class="question-text">${question.q}</div>
+        <div class="options">
+    `;
 
-question.options.forEach((opt, i) => {
-const isChecked = userAnswers[currentQuestionIndex] === i;
-const isDisabled = isLocked;
-let labelClass = '';
+    question.options.forEach((opt, i) => {
+        const isChecked = userAnswers[currentQuestionIndex] === i;
+        const isDisabled = isLocked;
+        let labelClass = '';
 
-if (isLocked) {
-labelClass = 'locked';
-if (isChecked) {
-labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
-} else if (i === question.answer) {
-labelClass += ' correct-answer';
-}
-} else if (isChecked) {
-labelClass = 'selected';
-}
+        if (isLocked) {
+            labelClass = 'locked';
+            if (isChecked) {
+                labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
+            } else if (i === question.answer) {
+                labelClass += ' correct-answer';
+            }
+        } else if (isChecked) {
+            labelClass = 'selected';
+        }
 
-html += `
-<label class="${labelClass}">
-<input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})" ${isLocked ? 'onclick="return false;"' : ''}>
-${opt}
-${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary); margin-right: 5px;"></i>' : ''}
-</label>
-`;
-});
+        html += `
+        <label class="${labelClass}">
+            <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})" ${isLocked ? 'onclick="return false;"' : ''}>
+            ${opt}
+            ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary); margin-right: 5px;"></i>' : ''}
+        </label>
+        `;
+    });
 
-html += `
-</div>
-<div id="explanation" class="explanation"></div>
-</div>
-<div class="navigation">
-<button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
-<i class="fas fa-arrow-right"></i>
-السابق
-</button>
-<button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
-التالي
-<i class="fas fa-arrow-left"></i>
-</button>
-</div>
-`;
+    html += `
+        </div>
+        <div id="explanation" class="explanation"></div>
+    </div>
+    <div class="navigation">
+        <button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
+            <i class="fas fa-arrow-right"></i>
+            السابق
+        </button>
+        <button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
+            التالي
+            <i class="fas fa-arrow-left"></i>
+        </button>
+    </div>
+    `;
 
-quizDiv.innerHTML = html;
+    quizDiv.innerHTML = html;
 
-// تحديث شريط التقدم
-document.getElementById('progress').style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
+    // تحديث شريط التقدم
+    const progress = document.getElementById('progress');
+    progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
 
-// تحديث معلومات الاختبار
-document.getElementById('quiz-info').innerHTML = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+    // تحديث معلومات الاختبار
+    document.getElementById('quiz-info').innerHTML = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
 
-// تحديث زر وضع العلامة
-const markBtn = document.getElementById('mark-review-btn');
-if (markedQuestions.includes(currentQuestionIndex)) {
-markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
-markBtn.style.background = 'var(--tertiary-gradient)';
-} else {
-markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
-markBtn.style.background = 'var(--secondary-gradient)';
-}
+    // تحديث زر وضع العلامة
+    const markBtn = document.getElementById('mark-review-btn');
+    if (markedQuestions.includes(currentQuestionIndex)) {
+        markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+        markBtn.style.background = 'var(--tertiary-gradient)';
+    } else {
+        markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+        markBtn.style.background = 'var(--secondary-gradient)';
+    }
 
-// عرض الشرح إذا كان المستخدم قد أجاب على السؤال
-if (userAnswers[currentQuestionIndex] !== null) {
-showExplanation();
-}
+    // عرض الشرح إذا كان المستخدم قد أجاب على السؤال
+    if (userAnswers[currentQuestionIndex] !== null) {
+        showExplanation();
+    }
 }
 
 // اختيار إجابة - مقفل بعد الاختيار
 function selectAnswer(answerIndex) {
-// إذا كان السؤال مقفولاً بالفعل، لا تفعل شيئاً
-if (answerLocked[currentQuestionIndex]) {
-return;
-}
+    // إذا كان السؤال مقفولاً بالفعل، لا تفعل شيئاً
+    if (answerLocked[currentQuestionIndex]) {
+        return;
+    }
 
-userAnswers[currentQuestionIndex] = answerIndex;
-answerLocked[currentQuestionIndex] = true;
+    userAnswers[currentQuestionIndex] = answerIndex;
+    answerLocked[currentQuestionIndex] = true;
 
-// تعطيل جميع خيارات الراديو في السؤال الحالي
-const radioInputs = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
-radioInputs.forEach(input => {
-input.disabled = true;
-});
+    // تعطيل جميع خيارات الراديو في السؤال الحالي
+    const radioInputs = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
+    radioInputs.forEach(input => {
+        input.disabled = true;
+    });
 
-// إضافة فئة locked لجميع labels
-const labels = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
-labels.forEach(input => {
-input.closest('label').classList.add('locked');
-});
+    // إضافة فئة locked لجميع labels
+    const labels = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
+    labels.forEach(input => {
+        input.closest('label').classList.add('locked');
+    });
 
-// إظهار الشرح والتغذية الراجعة
-showExplanation();
-
-// تحديث قائمة الأسئلة إذا كانت ظاهرة
-if (document.getElementById('questions-list').style.display === 'block') {
-showQuestionsList();
-}
+    // إظهار الشرح والتغذية الراجعة
+    showExplanation();
 }
 
 // عرض الشرح
 function showExplanation() {
-const question = questions[currentQuestionIndex];
-const explanationDiv = document.getElementById("explanation");
-const userAnswer = userAnswers[currentQuestionIndex];
+    const question = shuffledQuestions[currentQuestionIndex];
+    const explanationDiv = document.getElementById("explanation");
+    const userAnswer = userAnswers[currentQuestionIndex];
 
-if (userAnswer !== null) {
-explanationDiv.style.display = "block";
+    if (userAnswer !== null) {
+        explanationDiv.style.display = "block";
 
-let resultHTML = "";
+        let resultHTML = "";
 
-if (userAnswer === question.answer) {
-resultHTML = `<p class="correct"><i class="fas fa-check-circle"></i> إجابة صحيحة</p>`;
-} else {
-resultHTML = `
-<p class="wrong"><i class="fas fa-times-circle"></i> إجابة خاطئة — الإجابة الصحيحة: <span class="correct">${question.options[question.answer]}</span></p>
-`;
-}
+        if (userAnswer === question.answer) {
+            resultHTML = `<p class="correct"><i class="fas fa-check-circle"></i> إجابة صحيحة! أحسنت!</p>`;
+        } else {
+            resultHTML = `
+            <p class="wrong"><i class="fas fa-times-circle"></i> إجابة خاطئة — الإجابة الصحيحة: <span class="correct">${question.options[question.answer]}</span></p>
+            `;
+        }
 
-// إضافة الشروح الملونة
-resultHTML += `
-<div class="explanation-line explanation-correct"><strong>التفسير الصحيح:</strong> ${question.explanations.correct}</div>
-`;
+        // إضافة الشروح الملونة
+        resultHTML += `
+        <div class="explanation-line explanation-correct"><strong>📚 التفسير الصحيح:</strong> ${questions[currentQuestionIndex].explanations.correct}</div>
+        `;
 
-// إضافة التفسيرات للخيارات الخاطئة
-const wrongKeys = ['wrong1', 'wrong2', 'wrong3'];
-const colors = ['explanation-wrong-1', 'explanation-wrong-2', 'explanation-wrong-3'];
+        // إضافة التفسيرات للخيارات الخاطئة
+        const wrongKeys = ['wrong1', 'wrong2', 'wrong3'];
 
-wrongKeys.forEach((key, index) => {
-if (question.explanations[key]) {
-resultHTML += `<div class="explanation-line ${colors[index]}">${question.explanations[key]}</div>`;
-}
-});
+        wrongKeys.forEach((key, index) => {
+            if (questions[currentQuestionIndex].explanations[key]) {
+                resultHTML += `<div class="explanation-line explanation-wrong-${index + 1}"><strong>💡 ملاحظة:</strong> ${questions[currentQuestionIndex].explanations[key]}</div>`;
+            }
+        });
 
-explanationDiv.innerHTML = resultHTML;
-}
+        explanationDiv.innerHTML = resultHTML;
+    }
 }
 
 // الانتقال إلى السؤال التالي
 function nextQuestion() {
-if (currentQuestionIndex < questions.length - 1) {
-currentQuestionIndex++;
-loadQuiz();
-}
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuiz();
+    }
 }
 
 // الانتقال إلى السؤال السابق
 function previousQuestion() {
-if (currentQuestionIndex > 0) {
-currentQuestionIndex--;
-loadQuiz();
-}
-}
-
-// عرض الدرجات الحالية دون إنهاء الاختبار
-function showCurrentScore() {
-let totalCorrect = 0;
-userAnswers.forEach((answer, index) => {
-if (answer === questions[index]?.answer) {
-totalCorrect++;
-}
-});
-
-const total = questions.length;
-const percentage = total > 0 ? ((totalCorrect / total) * 100).toFixed(2) : 0;
-
-document.getElementById("current-score").style.display = "block";
-document.getElementById("current-correct").innerHTML = `الإجابات الصحيحة: ${totalCorrect} من ${total}`;
-document.getElementById("current-percentage").innerHTML = `النسبة المئوية الحالية: ${percentage}%`;
-}
-
-// إعادة تشغيل الاختبار
-function restartQuiz() {
-// إعادة تعيين جميع المتغيرات
-currentQuestionIndex = 0;
-userAnswers = Array(questions.length).fill(null);
-timeLeft = 15 * 60;
-markedQuestions = [];
-answerLocked = Array(questions.length).fill(false);
-
-// إعادة تعيين العرض
-document.getElementById("quiz").style.display = "block";
-document.querySelector(".controls").style.display = "flex";
-document.getElementById("result-box").style.display = "none";
-document.getElementById('questions-list').style.display = 'none';
-document.getElementById('certificate').style.display = 'none';
-
-// إعادة تحميل المؤقت
-clearInterval(timerInterval);
-startTimer();
-
-// إعادة تحميل الاختبار
-loadQuiz();
-
-// تحديث المؤقت
-updateTimerDisplay();
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuiz();
+    }
 }
 
 // إنشاء الرسم البياني للأداء
 function createPerformanceChart() {
-loadPerformanceHistory();
-const ctx = document.getElementById('performanceChart').getContext('2d');
-const dates = performanceHistory.map(attempt => {
-const date = new Date(attempt.date);
-return `${date.getDate()}/${date.getMonth() + 1}`;
-});
-const scores = performanceHistory.map(attempt => attempt.percentage);
+    loadPerformanceHistory();
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const dates = performanceHistory.map(attempt => {
+        const date = new Date(attempt.date);
+        return `${date.getDate()}/${date.getMonth() + 1}`;
+    });
+    const scores = performanceHistory.map(attempt => attempt.percentage);
 
-// إضافة الدرجة الحالية إلى الرسم البياني
-const currentScore = calculateScore().percentage;
-dates.push("الآن");
-scores.push(currentScore);
+    // إضافة الدرجة الحالية إلى الرسم البياني
+    const currentScore = calculateScore().percentage;
+    dates.push("الآن");
+    scores.push(currentScore);
 
-// تدمير الرسم البياني القديم إذا كان موجودًا
-if (window.performanceChartInstance) {
-window.performanceChartInstance.destroy();
-}
+    // تدمير الرسم البياني القديم إذا كان موجودًا
+    if (window.performanceChartInstance) {
+        window.performanceChartInstance.destroy();
+    }
 
-window.performanceChartInstance = new Chart(ctx, {
-type: 'line',
-data: {
-labels: dates,
-datasets: [{
-label: 'النسبة المئوية %',
-data: scores,
-borderColor: 'rgba(59, 130, 246, 1)',
-backgroundColor: 'rgba(59, 130, 246, 0.1)',
-borderWidth: 3,
-fill: true,
-tension: 0.4
-}]
-},
-options: {
-responsive: true,
-maintainAspectRatio: false,
-plugins: {
-legend: {
-display: true,
-position: 'top',
-labels: {
-color: 'var(--text)',
-font: {
-family: 'Tajawal',
-size: 14
-}
-}
-}
-},
-scales: {
-y: {
-beginAtZero: true,
-max: 100,
-ticks: {
-color: 'var(--text)',
-callback: function(value) {
-return value + '%';
-},
-font: {
-family: 'Tajawal',
-size: 12
-}
-},
-grid: {
-color: 'rgba(255, 255, 255, 0.1)'
-}
-},
-x: {
-ticks: {
-color: 'var(--text)',
-font: {
-family: 'Tajawal',
-size: 12
-}
-},
-grid: {
-color: 'rgba(255, 255, 255, 0.1)'
-}
-}
-}
-}
-});
+    window.performanceChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'النسبة المئوية %',
+                data: scores,
+                borderColor: 'rgba(26, 95, 122, 1)',
+                backgroundColor: 'rgba(26, 95, 122, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: 'var(--text)',
+                        font: {
+                            family: 'Tajawal',
+                            size: 14
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        color: 'var(--text)',
+                        callback: function(value) {
+                            return value + '%';
+                        },
+                        font: {
+                            family: 'Tajawal',
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: 'var(--text)',
+                        font: {
+                            family: 'Tajawal',
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
 }
 
 // إنشاء النصائح المخصصة
 function createCustomTips() {
-const score = calculateScore();
-const tipsContainer = document.getElementById('tips-container');
-let tipsHTML = '';
+    const score = calculateScore();
+    const tipsContainer = document.getElementById('tips-container');
+    let tipsHTML = '';
 
-if (score.percentage >= 90) {
-tipsHTML = `
-<div class="tip-card">
-<h4><i class="fas fa-star"></i> أداء ممتاز</h4>
-<p>أداؤك رائع! يمكنك التركيز على المراجعة الدورية للحفاظ على هذا المستوى المتميز.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-book"></i> تطوير متقدم</h4>
-<p>يمكنك الآن دراسة حالات متقدمة وتطبيقات عملية أكثر تعقيداً في التربية.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-chalkboard-teacher"></i> قيادة تربوية</h4>
-<p>بمستواك الحالي، يمكنك المساهمة في تدريب زملائك وتقديم ورش عمل تربوية.</p>
-</div>
-`;
-} else if (score.percentage >= 70) {
-tipsHTML = `
-<div class="tip-card">
-<h4><i class="fas fa-check-circle"></i> أداء جيد</h4>
-<p>أداؤك جيد، ركز على الأسئلة التي واجهت صعوبة فيها وحاول فهمها جيداً.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-book-open"></i> مراجعة مركزة</h4>
-<p>راجع المفاهيم التي أخطأت فيها، وحاول حل تمارين إضافية مشابهة.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-clock"></i> تحسين الوقت</h4>
-<p>تدرب على حل الأسئلة بسرعة أكبر مع الحفاظ على الدقة في الإجابات.</p>
-</div>
-`;
-} else {
-tipsHTML = `
-<div class="tip-card">
-<h4><i class="fas fa-exclamation-triangle"></i> يحتاج تحسين</h4>
-<p>أنت بحاجة إلى مراجعة شاملة للمفاهيم الأساسية في التربية وعلم النفس التربوي.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-graduation-cap"></i> دراسة أساسيات</h4>
-<p>ركز على فهم النظريات التربوية الأساسية وأساسيات علم النفس التربوي.</p>
-</div>
-<div class="tip-card">
-<h4><i class="fas fa-redo"></i> تكرار الاختبار</h4>
-<p>كرر الاختبار بعد دراسة المواد الأساسية لمتابعة تطور مستواك.</p>
-</div>
-`;
-}
+    if (score.percentage >= 90) {
+        tipsHTML = `
+        <div class="tip-card">
+            <h4><i class="fas fa-star"></i> أداء ممتاز!</h4>
+            <p>أداؤك رائع في موضوع الخوف والرجاء! لديك فهم قوي للأحكام الشرعية المتعلقة بهذا الباب الهام من أبواب العقيدة.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-lightbulb"></i> نصائح للمستوى المتقدم</h4>
+            <p>يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة مثل كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-book"></i> الخطوة التالية</h4>
+            <p>ابدأ في دراسة الموازنة بين الخوف والرجاء في حياة السلف الصالح وكيفية تطبيق ذلك عمليًا.</p>
+        </div>
+        `;
+    } else if (score.percentage >= 70) {
+        tipsHTML = `
+        <div class="tip-card">
+            <h4><i class="fas fa-check-circle"></i> أداء جيد</h4>
+            <p>أداؤك جيد، ركز على الأسئلة التي واجهت صعوبة فيها، خاصة التمييز بين أنواع الخوف المختلفة.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-book-open"></i> مراجعة مركزة</h4>
+            <p>راجع جيدًا الفروق بين: الخوف الطبيعي والخوف الشركي، والرجاء النافع والرجاء الكاذب.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-clock"></i> تحسين الفهم</h4>
+            <p>ادرس الأمثلة العملية لكل نوع من أنواع الخوف والرجاء لترسخ المعلومة.</p>
+        </div>
+        `;
+    } else {
+        tipsHTML = `
+        <div class="tip-card">
+            <h4><i class="fas fa-exclamation-triangle"></i> يحتاج تحسين</h4>
+            <p>أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء، فهو من أساسيات العقيدة الإسلامية.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-graduation-cap"></i> الأساسيات أولاً</h4>
+            <p>ابدأ بتعلم: تعريف الخوف والرجاء، أنواع كل منهما، الأحكام الشرعية، والأدلة من القرآن والسنة.</p>
+        </div>
+        <div class="tip-card">
+            <h4><i class="fas fa-redo"></i> الممارسة المستمرة</h4>
+            <p>كرر الاختبار بعد دراسة الموضوع من مصادره الأصلية لمتابعة تطور مستواك.</p>
+        </div>
+        `;
+    }
 
-tipsContainer.innerHTML = tipsHTML;
-}
-
-// إنشاء رمز QR للنتائج
-function generateQRCode() {
-const score = calculateScore();
-const resultText = `نتيجة اختبار الرخصة المهنية: ${score.correct}/${questions.length} (${score.percentage}%) - ${score.evaluation}`;
-const qrElement = document.getElementById('qrcode');
-qrElement.innerHTML = '';
-new QRCode(qrElement, {
-text: resultText,
-width: 150,
-height: 150,
-colorDark: "#000000",
-colorLight: "#ffffff",
-correctLevel: QRCode.CorrectLevel.H
-});
+    tipsContainer.innerHTML = tipsHTML;
 }
 
 // حساب الدرجات
 function calculateScore() {
-let totalCorrect = 0;
-userAnswers.forEach((answer, index) => {
-if (answer === questions[index]?.answer) {
-totalCorrect++;
-}
-});
-
-const total = questions.length;
-const percentage = total > 0 ? ((totalCorrect / total) * 100).toFixed(2) : 0;
-
-let evaluation = "";
-let evaluationIcon = "";
-if (percentage >= 90) {
-evaluation = "ممتاز";
-evaluationIcon = "🌟";
-} else if (percentage >= 80) {
-evaluation = "جيد جداً";
-evaluationIcon = "🔵";
-} else if (percentage >= 70) {
-evaluation = "جيد";
-evaluationIcon = "🟢";
-} else if (percentage >= 60) {
-evaluation = "مقبول";
-evaluationIcon = "🟡";
-} else {
-evaluation = "يحتاج تحسين";
-evaluationIcon = "⚠️";
-}
-
-return {
-correct: totalCorrect,
-total: total,
-percentage: parseFloat(percentage),
-evaluation: evaluation,
-evaluationIcon: evaluationIcon
-};
-}
-
-// إنشاء شهادة الإتمام
-function generateCertificate() {
-const score = calculateScore();
-const now = new Date();
-const dateString = now.toLocaleDateString('ar-SA');
-const name = prompt("أدخل اسمك للحصول على الشهادة:", "المستخدم");
-if (!name) return;
-
-// تحديث محتوى الشهادة
-document.getElementById('certificate-name').textContent = name;
-document.getElementById('certificate-score').textContent = `الدرجة النهائية: ${score.correct}/${score.total} (${score.percentage}%)`;
-document.getElementById('certificate-evaluation').textContent = `التقييم: ${score.evaluation}`;
-document.getElementById('certificate-date').textContent = dateString;
-document.getElementById('certificate-date-right').textContent = dateString;
-
-// عرض الشهادة وإخفاء النتائج
-document.getElementById('certificate').style.display = 'block';
-document.getElementById('result-box').style.display = 'none';
-}
-
-// طباعة الشهادة
-function printCertificate() {
-// حفظ المحتوى الأصلي
-const originalContents = document.body.innerHTML;
-const certificateContent = document.getElementById('certificate').innerHTML;
-
-// إنشاء نافذة طباعة
-const printWindow = window.open('', '_blank');
-printWindow.document.write(`
-<!DOCTYPE html>
-<html dir="rtl" lang="ar">
-<head>
-<meta charset="UTF-8">
-<title>شهادة اختبار الرخصة المهنية</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
-body {
-font-family: 'Tajawal', sans-serif;
-margin: 0;
-padding: 20px;
-background: white;
-color: #1F2937;
-text-align: center;
-}
-.certificate {
-border: 20px solid #3B82F6;
-padding: 50px 30px;
-max-width: 800px;
-margin: 0 auto;
-}
-.certificate-title {
-font-size: 2.5rem;
-color: #3B82F6;
-margin-bottom: 20px;
-}
-.certificate-name {
-font-size: 2.2rem;
-color: #10B981;
-margin: 25px 0;
-padding: 15px;
-border-bottom: 3px solid #10B981;
-display: inline-block;
-}
-button { display: none; }
-@media print {
-body { padding: 0; }
-}
-</style>
-</head>
-<body>
-${certificateContent}
-<script>
-window.onload = function() {
-window.print();
-setTimeout(() => {
-window.close();
-}, 1000);
-};
-<\/script>
-</body>
-</html>
-`);
-}
-
-// تحميل الشهادة كصورة
-function downloadCertificateAsImage() {
-const certificate = document.getElementById('certificate');
-if (typeof html2canvas !== 'undefined') {
-html2canvas(certificate, {
-scale: 2,
-backgroundColor: '#ffffff',
-useCORS: true,
-allowTaint: true
-}).then(canvas => {
-const link = document.createElement('a');
-const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
-link.download = `شهادة_اختبار_الرخصة_المهنية_${date}.png`;
-link.href = canvas.toDataURL('image/png');
-link.click();
-}).catch(error => {
-console.error('خطأ في تحويل الشهادة إلى صورة:', error);
-alert('حدث خطأ في تحويل الشهادة إلى صورة. حاول استخدام زر الطباعة بدلاً من ذلك.');
-});
-} else {
-alert('ميزة تحويل الشهادة إلى صورة غير متوفرة حالياً. الرجاء استخدام زر الطباعة.');
-}
-}
-
-// إغلاق الشهادة
-function closeCertificate() {
-document.getElementById('certificate').style.display = 'none';
-document.getElementById('result-box').style.display = 'block';
-}
-
-// إنشاء تقرير PDF - الطريقة المحسنة
-function generatePDF() {
-const score = calculateScore();
-const now = new Date();
-const dateString = now.toLocaleDateString('ar-SA');
-const name = prompt("أدخل اسمك لتضمينه في التقرير:", "المستخدم");
-if (!name) name = "المستخدم";
-
-// إنشاء محتوى PDF
-const pdfContent = `
-<div class="pdf-container">
-    <div class="pdf-header">
-        <h1 class="pdf-title">تقرير نتائج اختبار الرخصة المهنية</h1>
-        <p class="pdf-subtitle">إعداد: المعلم فهد الخالدي</p>
-    </div>
-    
-    <div class="pdf-section">
-        <h2 class="pdf-section-title">معلومات الاختبار</h2>
-        <p><strong>اسم المستخدم:</strong> ${name}</p>
-        <p><strong>تاريخ الاختبار:</strong> ${dateString}</p>
-        <p><strong>عدد الأسئلة:</strong> ${score.total}</p>
-        <p><strong>مدة الاختبار:</strong> 15 دقيقة</p>
-    </div>
-    
-    <div class="pdf-section">
-        <h2 class="pdf-section-title">النتائج</h2>
-        <table class="pdf-table">
-            <tr>
-                <th>المؤشر</th>
-                <th>القيمة</th>
-                <th>النسبة</th>
-            </tr>
-            <tr>
-                <td>الإجابات الصحيحة</td>
-                <td>${score.correct}</td>
-                <td>${score.percentage}%</td>
-            </tr>
-            <tr>
-                <td>الإجابات الخاطئة</td>
-                <td>${score.total - score.correct}</td>
-                <td>${(100 - score.percentage).toFixed(2)}%</td>
-            </tr>
-            <tr>
-                <td>إجمالي الأسئلة</td>
-                <td>${score.total}</td>
-                <td>100%</td>
-            </tr>
-        </table>
-        <p style="margin-top: 20px; font-size: 18px; color: ${score.percentage >= 70 ? '#10B981' : '#F59E0B'}">
-            <strong>التقييم:</strong> ${score.evaluation}
-        </p>
-    </div>
-    
-    <div class="pdf-section">
-        <h2 class="pdf-section-title">تفاصيل الإجابات</h2>
-        <table class="pdf-table">
-            <tr>
-                <th>رقم السؤال</th>
-                <th>الحالة</th>
-                <th>الإجابة الصحيحة</th>
-            </tr>
-            ${questions.map((q, index) => {
-                const userAnswer = userAnswers[index];
-                const isCorrect = userAnswer === q.answer;
-                return `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td style="color: ${isCorrect ? '#10B981' : '#EF4444'}">
-                        ${isCorrect ? '✓ صحيح' : '✗ خطأ'}
-                    </td>
-                    <td>${q.options[q.answer]}</td>
-                </tr>
-                `;
-            }).join('')}
-        </table>
-    </div>
-    
-    <div class="pdf-section">
-        <h2 class="pdf-section-title">نصائح للتحسين</h2>
-        ${score.percentage >= 90 ? 
-            '<p>أداؤك ممتاز! استمر في المراجعة الدورية للمحافظة على هذا المستوى.</p>' : 
-        score.percentage >= 70 ?
-            '<p>أداؤك جيد. ركز على الأسئلة التي أخطأت فيها وحاول فهمها جيداً.</p>' :
-            '<p>أنت بحاجة إلى مراجعة شاملة للمفاهيم الأساسية. ننصحك بمراجعة المواد التعليمية وحل المزيد من التمارين.</p>'
+    let totalCorrect = 0;
+    userAnswers.forEach((answer, index) => {
+        // استخدام السؤال الأصلي (غير المرتب) للتحقق من الإجابة الصحيحة
+        if (answer === questions[index]?.answer) {
+            totalCorrect++;
         }
-        <ul style="margin-right: 20px; margin-top: 15px;">
-            <li>مراجعة النظريات التربوية الأساسية</li>
-            <li>حل تمارين إضافية متنوعة</li>
-            <li>التركيز على فهم التفسيرات بدلاً من حفظ الإجابات</li>
-            <li>التدرب على إدارة وقت الاختبار</li>
-        </ul>
-    </div>
-    
-    <div class="pdf-section">
-        <h2 class="pdf-section-title">معلومات إضافية</h2>
-        <p><strong>وقت الإكمال:</strong> ${(15 - timeLeft/60).toFixed(0)} دقيقة من أصل 15 دقيقة</p>
-        <p><strong>عدد الأسئلة المعلمة:</strong> ${markedQuestions.length}</p>
-        <p><strong>سجل الأداء:</strong> ${performanceHistory.length} محاولة سابقة</p>
-    </div>
-    
-    <div class="pdf-footer">
-        <p>تم إنشاء هذا التقرير تلقائياً بواسطة نظام اختبار الرخصة المهنية التفاعلي</p>
-        <p>© ${new Date().getFullYear()} - إعداد المعلم فهد الخالدي</p>
-    </div>
-</div>
-`;
+    });
 
-// إضافة المحتوى إلى الصفحة
-const pdfContainer = document.getElementById('pdf-container');
-pdfContainer.innerHTML = pdfContent;
+    const total = questions.length;
+    const percentage = total > 0 ? ((totalCorrect / total) * 100).toFixed(2) : 0;
 
-// استخدام html2canvas لتحويل المحتوى إلى صورة
-html2canvas(pdfContainer, {
-    scale: 2,
-    backgroundColor: '#ffffff',
-    useCORS: true,
-    logging: false
-}).then(canvas => {
-    // تحويل Canvas إلى صورة
-    const imgData = canvas.toDataURL('image/png');
-    
-    // استخدام jsPDF مع الصورة
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    
-    // حساب أبعاد الصورة
-    const imgWidth = 210; // A4 width in mm
-    const pageHeight = 297; // A4 height in mm
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-    // إضافة الصورة إلى PDF
-    doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-    
-    // إذا كانت الصورة أطول من صفحة واحدة، إضافة صفحات إضافية
-    let heightLeft = imgHeight;
-    let position = 0;
-    
-    // إضافة صفحات إضافية إذا لزم الأمر
-    while (heightLeft >= pageHeight) {
-        position = heightLeft - pageHeight;
-        doc.addPage();
-        doc.addImage(imgData, 'PNG', 0, -position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+    let evaluation = "";
+    let evaluationIcon = "";
+    if (percentage >= 90) {
+        evaluation = "ممتاز - فهم تام للموضوع";
+        evaluationIcon = "🌟";
+    } else if (percentage >= 80) {
+        evaluation = "جيد جداً - إلمام جيد بالأحكام";
+        evaluationIcon = "🔵";
+    } else if (percentage >= 70) {
+        evaluation = "جيد - فهم مقبول يحتاج لبعض التحسين";
+        evaluationIcon = "🟢";
+    } else if (percentage >= 60) {
+        evaluation = "مقبول - تحتاج لمراجعة إضافية";
+        evaluationIcon = "🟡";
+    } else {
+        evaluation = "يحتاج تحسين - راجع الموضوع جيداً";
+        evaluationIcon = "⚠️";
     }
-    
-    // حفظ الملف
-    const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
-    doc.save(`تقرير_نتائج_اختبار_الرخصة_المهنية_${date}.pdf`);
-    
-    // إظهار رسالة نجاح
-    alert('تم إنشاء وتحميل التقرير بنجاح!');
-    
-}).catch(error => {
-    console.error('خطأ في إنشاء PDF:', error);
-    
-    // طريقة بديلة إذا فشلت الطريقة الأولى
-    try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('p', 'mm', 'a4');
-        
-        // إضافة نص بسيط إذا فشلت الطريقة الأولى
-        doc.setFontSize(16);
-        doc.text('تقرير نتائج اختبار الرخصة المهنية', 105, 20, null, null, 'center');
-        doc.setFontSize(12);
-        doc.text(`اسم المستخدم: ${name}`, 20, 40);
-        doc.text(`التاريخ: ${dateString}`, 20, 50);
-        doc.text(`النتيجة: ${score.correct}/${score.total} (${score.percentage}%)`, 20, 60);
-        doc.text(`التقييم: ${score.evaluation}`, 20, 70);
-        doc.text('إعداد: المعلم فهد الخالدي', 105, 280, null, null, 'center');
-        
-        const date = new Date().toLocaleDateString('ar-SA').replace(/\//g, '-');
-        doc.save(`تقرير_نتائج_${date}.pdf`);
-        
-        alert('تم تحميل التقرير بنسخة مبسطة (بدون رسوم بيانية).');
-    } catch (e) {
-        alert('حدث خطأ في إنشاء PDF. الرجاء المحاولة مرة أخرى أو استخدام زر طباعة الشهادة بدلاً من ذلك.');
-    }
-});
-}
 
-// مشاركة النتائج
-function shareResults() {
-const score = calculateScore();
-const text = `🎯 حصلت على ${score.correct}/${score.total} (${score.percentage}%) في اختبار الرخصة المهنية! \nجرب الاختبار: ${window.location.href}`;
-
-if (navigator.share) {
-navigator.share({
-title: 'نتيجة اختبار الرخصة المهنية',
-text: text,
-url: window.location.href
-}).catch(error => {
-console.log('Error sharing:', error);
-});
-} else {
-// نسخ إلى الحافظة
-navigator.clipboard.writeText(text)
-.then(() => alert('تم نسخ النتيجة إلى الحافظة! يمكنك مشاركتها الآن.'))
-.catch(err => {
-console.error('Error copying text: ', err);
-// طريقة بديلة للمتصفحات القديمة
-const textArea = document.createElement('textarea');
-textArea.value = text;
-document.body.appendChild(textArea);
-textArea.select();
-document.execCommand('copy');
-document.body.removeChild(textArea);
-alert('تم نسخ النتيجة إلى الحافظة!');
-});
-}
+    return {
+        correct: totalCorrect,
+        total: total,
+        percentage: parseFloat(percentage),
+        evaluation: evaluation,
+        evaluationIcon: evaluationIcon
+    };
 }
 
 // حفظ سجل الأداء
 function savePerformanceRecord() {
-const score = calculateScore();
-performanceHistory.push({
-date: new Date().toISOString(),
-score: score.correct,
-total: score.total,
-percentage: score.percentage
-});
+    const score = calculateScore();
+    performanceHistory.push({
+        date: new Date().toISOString(),
+        score: score.correct,
+        total: score.total,
+        percentage: score.percentage
+    });
 
-// الحفاظ على آخر 10 محاولات فقط
-if (performanceHistory.length > 10) {
-performanceHistory = performanceHistory.slice(-10);
+    // الحفاظ على آخر 10 محاولات فقط
+    if (performanceHistory.length > 10) {
+        performanceHistory = performanceHistory.slice(-10);
+    }
+
+    savePerformanceHistory();
 }
 
-savePerformanceHistory();
+// إنشاء تقرير PDF
+function generatePDF() {
+    const score = calculateScore();
+    const answeredCount = userAnswers.filter(answer => answer !== null).length;
+    
+    // إنشاء محتوى PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // إعداد الخط العربي
+    doc.addFont('https://fonts.gstatic.com/s/tajawal/v9/Iurf6YBj_oCad4k1l_6gLrZjiLlJ.ttf', 'Tajawal', 'normal');
+    doc.setFont('Tajawal');
+    doc.setR2L(true);
+    
+    // العنوان
+    doc.setFontSize(24);
+    doc.setTextColor(26, 95, 122);
+    doc.text('تقرير نتائج اختبار الدراسات الإسلامية', 105, 20, null, null, 'center');
+    
+    doc.setFontSize(16);
+    doc.setTextColor(21, 152, 149);
+    doc.text('موضوع: الخوف والرجاء في الإسلام', 105, 30, null, null, 'center');
+    
+    doc.setFontSize(12);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`تاريخ الاختبار: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
+    
+    // خط فاصل
+    doc.setDrawColor(26, 95, 122);
+    doc.setLineWidth(0.5);
+    doc.line(20, 45, 190, 45);
+    
+    // النتائج الرئيسية
+    doc.setFontSize(18);
+    doc.setTextColor(30, 30, 30);
+    doc.text('النتائج الرئيسية', 20, 60);
+    
+    doc.setFontSize(14);
+    doc.text(`الدرجة النهائية: ${score.correct} من ${score.total}`, 20, 75);
+    doc.text(`النسبة المئوية: ${score.percentage}%`, 20, 85);
+    doc.text(`التقييم: ${score.evaluation}`, 20, 95);
+    doc.text(`عدد الأسئلة المجابة: ${answeredCount} من ${questions.length}`, 20, 105);
+    doc.text(`الوقت المستغرق: ${(49 - (timeLeft / 60)).toFixed(2)} دقيقة من 49 دقيقة`, 20, 115);
+    
+    // تفاصيل الإجابات
+    doc.setFontSize(18);
+    doc.text('تفاصيل الإجابات', 20, 135);
+    
+    doc.setFontSize(12);
+    let yPos = 150;
+    let pageNumber = 1;
+    
+    for (let i = 0; i < questions.length; i++) {
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+            pageNumber++;
+            doc.setFontSize(10);
+            doc.text(`صفحة ${pageNumber}`, 105, 290, null, null, 'center');
+            doc.setFontSize(12);
+        }
+        
+        const status = userAnswers[i] === null ? 'لم يتم الإجابة' : 
+                      (userAnswers[i] === questions[i].answer ? 'صحيح' : 'خاطئ');
+        const statusColor = userAnswers[i] === null ? [150, 150, 150] : 
+                           (userAnswers[i] === questions[i].answer ? [76, 175, 80] : [239, 68, 68]);
+        
+        doc.setTextColor(statusColor[0], statusColor[1], statusColor[2]);
+        doc.text(`سؤال ${i+1}: ${status}`, 20, yPos);
+        yPos += 10;
+    }
+    
+    // نصائح بناءً على النتيجة
+    doc.addPage();
+    doc.setFontSize(18);
+    doc.setTextColor(30, 30, 30);
+    doc.text('نصائح للتحسين', 20, 20);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(80, 80, 80);
+    
+    let tips = [];
+    if (score.percentage >= 90) {
+        tips = [
+            'ممتاز! لديك فهم قوي لموضوع الخوف والرجاء.',
+            'يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة.',
+            'ركز على التطبيق العملي لموازنة الخوف والرجاء في حياتك اليومية.',
+            'احرص على تعليم الآخرين هذا الباب الهام من أبواب العقيدة.'
+        ];
+    } else if (score.percentage >= 70) {
+        tips = [
+            'أداؤك جيد، يمكنك تحسينه بالمزيد من المراجعة.',
+            'راجع جيدًا الفروق بين أنواع الخوف المختلفة.',
+            'تأمل في الأمثلة العملية للخوف المحمود والخوف المذموم.',
+            'ادرس الأدلة القرآنية والنبوية المتعلقة بالخوف والرجاء.'
+        ];
+    } else {
+        tips = [
+            'أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء.',
+            'ابدأ بتعلم التعريفات الأساسية والأحكام الشرعية.',
+            'افهم جيدًا الفرق بين الخوف الطبيعي والخوف الشركي.',
+            'تأكد من فهمك لشروط الرجاء النافع وأمثلته.'
+        ];
+    }
+    
+    yPos = 35;
+    tips.forEach(tip => {
+        doc.text(`• ${tip}`, 20, yPos);
+        yPos += 15;
+    });
+    
+    // مصادر للدراسة
+    doc.setFontSize(16);
+    doc.setTextColor(26, 95, 122);
+    doc.text('مصادر مقترحة للدراسة:', 20, yPos + 10);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(80, 80, 80);
+    const sources = [
+        'كتاب "القواعد المثلى" لابن عثيمين',
+        'كتاب "التوحيد" للشيخ صالح الفوزان',
+        'شرح "ثلاثة الأصول" للشيخ ابن باز',
+        'كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية'
+    ];
+    
+    yPos += 25;
+    sources.forEach(source => {
+        doc.text(`- ${source}`, 20, yPos);
+        yPos += 12;
+    });
+    
+    // تذييل الصفحة
+    doc.setFontSize(10);
+    doc.setTextColor(150, 150, 150);
+    doc.text('تم إنشاء هذا التقرير تلقائيًا من نظام الاختبارات التفاعلية', 105, 290, null, null, 'center');
+    
+    // حفظ الملف
+    doc.save(`نتيجة-اختبار-الخوف-والرجاء-${new Date().toISOString().slice(0,10)}.pdf`);
+    
+    alert('تم إنشاء وتحميل تقرير PDF بنجاح!');
+}
+
+// إعادة تشغيل الاختبار
+function restartQuiz() {
+    // إعادة تعيين جميع المتغيرات
+    currentQuestionIndex = 0;
+    userAnswers = Array(questions.length).fill(null);
+    timeLeft = 49 * 60;
+    markedQuestions = [];
+    answerLocked = Array(questions.length).fill(false);
+    shuffledQuestions = [];
+
+    // إعادة تعيين العرض
+    document.getElementById("quiz").style.display = "block";
+    document.querySelector(".controls").style.display = "flex";
+    document.getElementById("result-box").style.display = "none";
+
+    // إعادة تحميل المؤقت
+    clearInterval(timerInterval);
+    startTimer();
+
+    // إعادة تحميل الاختبار
+    loadQuiz();
+
+    // تحديث المؤقت
+    updateTimerDisplay();
 }
 
 // إنهاء الاختبار
 function finishQuiz() {
-clearInterval(timerInterval);
+    clearInterval(timerInterval);
 
-const score = calculateScore();
+    const score = calculateScore();
 
-// حفظ سجل الأداء
-savePerformanceRecord();
+    // حفظ سجل الأداء
+    savePerformanceRecord();
 
-// عرض النتائج
-document.getElementById("result-box").style.display = "block";
-document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
-document.getElementById("percentage").innerHTML = `النسبة المئوية: ${score.percentage}%`;
-document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
+    // عرض النتائج
+    document.getElementById("result-box").style.display = "block";
+    document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
+    document.getElementById("percentage").innerHTML = `النسبة المئوية: ${score.percentage}%`;
+    document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
 
-// إخفاء الاختبار
-document.getElementById("quiz").style.display = "none";
-document.querySelector(".controls").style.display = "none";
-document.getElementById('questions-list').style.display = 'none';
+    // إخفاء الاختبار
+    document.getElementById("quiz").style.display = "none";
+    document.querySelector(".controls").style.display = "none";
 
-// عرض النتائج المتقدمة
-document.getElementById('advanced-results').style.display = 'block';
+    // عرض النتائج المتقدمة
+    document.getElementById('advanced-results').style.display = 'block';
 
-// إنشاء الرسوم البيانية والنصائح
-setTimeout(() => {
-createPerformanceChart();
-createCustomTips();
-generateQRCode();
-}, 100);
+    // إنشاء الرسوم البيانية والنصائح
+    setTimeout(() => {
+        createPerformanceChart();
+        createCustomTips();
+    }, 100);
 }
 
 // بدء التحميل الأولي
 window.onload = function() {
-checkDarkModePreference();
-loadPerformanceHistory();
-loadQuiz();
-startTimer();
+    checkDarkModePreference();
+    loadPerformanceHistory();
+    loadQuiz();
+    startTimer();
 
-// إضافة تأثيرات عند التحميل
-document.querySelector('.hero-section').classList.add('bounce-in');
-setTimeout(() => {
-if (document.querySelector('.card')) {
-document.querySelector('.card').classList.add('fade-in');
-}
-}, 300);
+    // إضافة تأثيرات عند التحميل
+    document.querySelector('.hero-section').classList.add('bounce-in');
+    setTimeout(() => {
+        if (document.querySelector('.card')) {
+            document.querySelector('.card').classList.add('fade-in');
+        }
+    }, 300);
+    
+    // إغلاق النوافذ المنبثقة عند النقر خارجها
+    window.onclick = function(event) {
+        const currentScoreModal = document.getElementById('currentScoreModal');
+        const questionsModal = document.getElementById('questionsModal');
+        
+        if (event.target == currentScoreModal) {
+            currentScoreModal.style.display = 'none';
+        }
+        
+        if (event.target == questionsModal) {
+            questionsModal.style.display = 'none';
+        }
+    }
 }
 </script>
 </body>
