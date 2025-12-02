@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -1257,6 +1256,41 @@ line-height: 1.8;
 .score-details p {
 margin: 10px 0;
 }
+
+/* تعديلات للأصوات */
+.sound-controls {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-top: 15px;
+}
+
+.sound-btn {
+background: rgba(255, 255, 255, 0.1);
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 50%;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+color: white;
+transition: all 0.3s ease;
+}
+
+.sound-btn:hover {
+background: rgba(255, 255, 255, 0.2);
+transform: scale(1.1);
+}
+
+.sound-btn.muted {
+opacity: 0.5;
+}
+
+.sound-btn.muted i {
+color: #ff6b6b;
+}
 </style>
 </head>
 <body>
@@ -1291,6 +1325,12 @@ margin: 10px 0;
 <h1 class="hero-title">اختبار الدراسات الإسلامية - الخوف والرجاء</h1>
 <p class="hero-subtitle">اختبار شامل لموضوع الخوف والرجاء في الإسلام مع تفصيل الأحكام الشرعية وتغذية راجعة فورية</p>
 <div class="quiz-info">عدد الأسئلة: 49 سؤالًا | الوقت المتاح: 49 دقيقة</div>
+<div class="sound-controls">
+<button class="sound-btn" id="soundToggleBtn" title="تشغيل/إيقاف الأصوات">
+<i class="fas fa-volume-up"></i>
+</button>
+<span style="font-size: 0.9rem; opacity: 0.8;">الأصوات مفعلة</span>
+</div>
 </div>
 </section>
 
@@ -1415,6 +1455,21 @@ margin: 10px 0;
 </button>
 </div>
 </div>
+
+<!-- عناصر الصوت المخفية -->
+<audio id="correctSound" preload="auto">
+<source src="https://drive.google.com/uc?export=download&id=1QJjpGss8Y3qRCDEIlPZyKLt0XLYAiGN1" type="audio/mpeg">
+<source src="correct-sound.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="wrongSound" preload="auto">
+<source src="https://drive.google.com/uc?export=download&id=1-nIDiucmngF2Qd-5It-Aipyq93rz7Ywx" type="audio/mpeg">
+<source src="wrong-sound.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="finishSound" preload="auto">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 // مصفوفة أسئلة الدراسات الإسلامية (الخوف والرجاء)
@@ -2262,771 +2317,839 @@ let markedQuestions = [];
 let answerLocked = Array(questions.length).fill(false);
 let performanceHistory = [];
 let shuffledQuestions = [];
+let soundEnabled = true;
 
 // دالة لترتيب الخيارات بشكل عشوائي
 function shuffleOptions(question) {
-    // إنشاء نسخة من الخيارات
-    const options = [...question.options];
-    const answer = question.answer;
-    
-    // ترتيب الخيارات عشوائياً
-    const shuffledIndices = [...Array(options.length).keys()];
-    for (let i = shuffledIndices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
-    }
-    
-    // إنشاء الخيارات الجديدة مع الحفاظ على الإجابة الصحيحة
-    const shuffledOptions = shuffledIndices.map(idx => options[idx]);
-    const newAnswer = shuffledIndices.indexOf(answer);
-    
-    return {
-        ...question,
-        options: shuffledOptions,
-        answer: newAnswer
-    };
+// إنشاء نسخة من الخيارات
+const options = [...question.options];
+const answer = question.answer;
+// ترتيب الخيارات عشوائياً
+const shuffledIndices = [...Array(options.length).keys()];
+for (let i = shuffledIndices.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+}
+// إنشاء الخيارات الجديدة مع الحفاظ على الإجابة الصحيحة
+const shuffledOptions = shuffledIndices.map(idx => options[idx]);
+const newAnswer = shuffledIndices.indexOf(answer);
+
+return {
+...question,
+options: shuffledOptions,
+answer: newAnswer
+};
 }
 
 // تحميل سجل الأداء السابق من localStorage
 function loadPerformanceHistory() {
-    const savedHistory = localStorage.getItem('islamicStudiesPerformanceHistory');
-    if (savedHistory) {
-        try {
-            performanceHistory = JSON.parse(savedHistory);
-        } catch (e) {
-            performanceHistory = [];
-        }
-    }
+const savedHistory = localStorage.getItem('islamicStudiesPerformanceHistory');
+if (savedHistory) {
+try {
+performanceHistory = JSON.parse(savedHistory);
+} catch (e) {
+performanceHistory = [];
+}
+}
 }
 
 // حفظ سجل الأداء إلى localStorage
 function savePerformanceHistory() {
-    localStorage.setItem('islamicStudiesPerformanceHistory', JSON.stringify(performanceHistory));
+localStorage.setItem('islamicStudiesPerformanceHistory', JSON.stringify(performanceHistory));
 }
 
 // تبديل الوضع الليلي
 document.getElementById('themeBtn').addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme');
-    const icon = this.querySelector('i');
-    if (document.body.classList.contains('dark-theme')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-        localStorage.setItem('darkMode', 'enabled');
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-        localStorage.setItem('darkMode', 'disabled');
-    }
+document.body.classList.toggle('dark-theme');
+const icon = this.querySelector('i');
+if (document.body.classList.contains('dark-theme')) {
+icon.classList.remove('fa-moon');
+icon.classList.add('fa-sun');
+localStorage.setItem('darkMode', 'enabled');
+} else {
+icon.classList.remove('fa-sun');
+icon.classList.add('fa-moon');
+localStorage.setItem('darkMode', 'disabled');
+}
 });
 
 // التحقق من تفضيل الوضع الداكن المخزن
 function checkDarkModePreference() {
-    const darkMode = localStorage.getItem('darkMode');
-    const icon = document.querySelector('#themeBtn i');
+const darkMode = localStorage.getItem('darkMode');
+const icon = document.querySelector('#themeBtn i');
 
-    if (darkMode === 'enabled') {
-        document.body.classList.add('dark-theme');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    } else {
-        document.body.classList.remove('dark-theme');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-    }
+if (darkMode === 'enabled') {
+document.body.classList.add('dark-theme');
+icon.classList.remove('fa-moon');
+icon.classList.add('fa-sun');
+} else {
+document.body.classList.remove('dark-theme');
+icon.classList.remove('fa-sun');
+icon.classList.add('fa-moon');
 }
+}
+
+// تشغيل الصوت الصحيح
+function playCorrectSound() {
+if (soundEnabled) {
+const sound = document.getElementById('correctSound');
+sound.currentTime = 0;
+sound.play().catch(e => console.log('لا يمكن تشغيل الصوت:', e));
+}
+}
+
+// تشغيل الصوت الخاطئ
+function playWrongSound() {
+if (soundEnabled) {
+const sound = document.getElementById('wrongSound');
+sound.currentTime = 0;
+sound.play().catch(e => console.log('لا يمكن تشغيل الصوت:', e));
+}
+}
+
+// تشغيل صوت النهاية
+function playFinishSound() {
+if (soundEnabled) {
+const sound = document.getElementById('finishSound');
+sound.currentTime = 0;
+sound.play().catch(e => console.log('لا يمكن تشغيل الصوت:', e));
+}
+}
+
+// تبديل تشغيل/إيقاف الصوت
+document.getElementById('soundToggleBtn').addEventListener('click', function() {
+soundEnabled = !soundEnabled;
+const icon = this.querySelector('i');
+const statusText = this.nextElementSibling;
+
+if (soundEnabled) {
+icon.classList.remove('fa-volume-mute');
+icon.classList.add('fa-volume-up');
+this.classList.remove('muted');
+statusText.textContent = 'الأصوات مفعلة';
+} else {
+icon.classList.remove('fa-volume-up');
+icon.classList.add('fa-volume-mute');
+this.classList.add('muted');
+statusText.textContent = 'الأصوات معطلة';
+}
+
+localStorage.setItem('soundEnabled', soundEnabled);
+});
 
 // المؤقت
 function startTimer() {
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
+timerInterval = setInterval(() => {
+timeLeft--;
+updateTimerDisplay();
 
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            finishQuiz();
-        }
-    }, 1000);
+if (timeLeft <= 0) {
+clearInterval(timerInterval);
+finishQuiz();
+}
+}, 1000);
 }
 
 function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    const timeDisplay = document.getElementById('time-display');
-    timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+const minutes = Math.floor(timeLeft / 60);
+const seconds = timeLeft % 60;
+const timeDisplay = document.getElementById('time-display');
+timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-    if (timeLeft < 300) { // 5 دقائق
-        timeDisplay.classList.add('timer-warning');
-    } else {
-        timeDisplay.classList.remove('timer-warning');
-    }
+if (timeLeft < 300) { // 5 دقائق
+timeDisplay.classList.add('timer-warning');
+} else {
+timeDisplay.classList.remove('timer-warning');
+}
 }
 
 // فتح نافذة الدرجات الحالية
 function openCurrentScoreModal() {
-    const score = calculateScore();
-    const answeredCount = userAnswers.filter(answer => answer !== null).length;
-    const totalQuestions = questions.length;
-    const percentage = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
-    
-    // تحديث دائرة الدرجات
-    const circle = document.getElementById('score-circle-fill');
-    const text = document.getElementById('score-percentage');
-    const circumference = 440; // 2 * π * r (r = 70)
-    const offset = circumference - (percentage / 100) * circumference;
-    
-    circle.style.strokeDashoffset = offset;
-    text.textContent = `${percentage}%`;
-    
-    // تحديث تفاصيل الدرجات
-    document.getElementById('current-score-details').innerHTML = 
-        `<strong>الدرجة الحالية:</strong> ${score.correct} من ${totalQuestions}`;
-    document.getElementById('current-correct-details').innerHTML = 
-        `<strong>الإجابات الصحيحة:</strong> ${score.correct}`;
-    document.getElementById('current-progress-details').innerHTML = 
-        `<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions} (${Math.round((answeredCount/totalQuestions)*100)}%)`;
-    
-    // عرض النافذة المنبثقة
-    document.getElementById('currentScoreModal').style.display = 'block';
+const score = calculateScore();
+const answeredCount = userAnswers.filter(answer => answer !== null).length;
+const totalQuestions = questions.length;
+const percentage = totalQuestions > 0 ? ((score.correct / totalQuestions) * 100).toFixed(2) : 0;
+// تحديث دائرة الدرجات
+const circle = document.getElementById('score-circle-fill');
+const text = document.getElementById('score-percentage');
+const circumference = 440; // 2 * π * r (r = 70)
+const offset = circumference - (percentage / 100) * circumference;
+
+circle.style.strokeDashoffset = offset;
+text.textContent = `${percentage}%`;
+// تحديث تفاصيل الدرجات
+document.getElementById('current-score-details').innerHTML =
+`<strong>الدرجة الحالية:</strong> ${score.correct} من ${totalQuestions}`;
+document.getElementById('current-correct-details').innerHTML =
+`<strong>الإجابات الصحيحة:</strong> ${score.correct}`;
+document.getElementById('current-progress-details').innerHTML =
+`<strong>التقدم:</strong> ${answeredCount} من ${totalQuestions} (${Math.round((answeredCount/totalQuestions)*100)}%)`;
+// عرض النافذة المنبثقة
+document.getElementById('currentScoreModal').style.display = 'block';
 }
 
 function closeCurrentScoreModal() {
-    document.getElementById('currentScoreModal').style.display = 'none';
+document.getElementById('currentScoreModal').style.display = 'none';
 }
 
 // فتح نافذة قائمة الأسئلة
 function openQuestionsModal() {
-    const grid = document.getElementById('questions-grid-modal');
-    grid.innerHTML = '';
+const grid = document.getElementById('questions-grid-modal');
+grid.innerHTML = '';
 
-    questions.forEach((_, index) => {
-        const btn = document.createElement('div');
-        btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
-        btn.innerHTML = `<span>${index + 1}</span>`;
-        btn.onclick = () => {
-            currentQuestionIndex = index;
-            loadQuiz();
-            closeQuestionsModal();
-        };
-        grid.appendChild(btn);
-    });
+questions.forEach((_, index) => {
+const btn = document.createElement('div');
+btn.className = `question-status-grid-modal ${index === currentQuestionIndex ? 'current' : ''} ${userAnswers[index] !== null ? 'answered' : ''} ${markedQuestions.includes(index) ? 'flagged' : ''}`;
+btn.innerHTML = `<span>${index + 1}</span>`;
+btn.onclick = () => {
+currentQuestionIndex = index;
+loadQuiz();
+closeQuestionsModal();
+};
+grid.appendChild(btn);
+});
 
-    document.getElementById('questionsModal').style.display = 'block';
+document.getElementById('questionsModal').style.display = 'block';
 }
 
 function closeQuestionsModal() {
-    document.getElementById('questionsModal').style.display = 'none';
+document.getElementById('questionsModal').style.display = 'none';
 }
 
 // وضع علامة للمراجعة
 function toggleMarkForReview() {
-    const index = markedQuestions.indexOf(currentQuestionIndex);
-    const btn = document.getElementById('mark-review-btn');
+const index = markedQuestions.indexOf(currentQuestionIndex);
+const btn = document.getElementById('mark-review-btn');
 
-    if (index === -1) {
-        markedQuestions.push(currentQuestionIndex);
-        btn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
-        btn.style.background = 'var(--tertiary-gradient)';
-    } else {
-        markedQuestions.splice(index, 1);
-        btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
-        btn.style.background = 'var(--secondary-gradient)';
-    }
+if (index === -1) {
+markedQuestions.push(currentQuestionIndex);
+btn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+btn.style.background = 'var(--tertiary-gradient)';
+} else {
+markedQuestions.splice(index, 1);
+btn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+btn.style.background = 'var(--secondary-gradient)';
+}
 }
 
 // تحميل الاختبار
 function loadQuiz() {
-    const quizDiv = document.getElementById("quiz");
+const quizDiv = document.getElementById("quiz");
 
-    // إذا لم يتم ترتيب الأسئلة بعد، قم بترتيبها
-    if (shuffledQuestions.length === 0) {
-        shuffledQuestions = questions.map(q => shuffleOptions(q));
-    }
-    
-    const question = shuffledQuestions[currentQuestionIndex];
-    const isLocked = answerLocked[currentQuestionIndex];
+// إذا لم يتم ترتيب الأسئلة بعد، قم بترتيبها
+if (shuffledQuestions.length === 0) {
+shuffledQuestions = questions.map(q => shuffleOptions(q));
+}
 
-    let html = `
-    <div class="question-box fade-in">
-        <div class="question-number">
-            <i class="fas fa-question-circle"></i>
-            السؤال ${currentQuestionIndex + 1} من ${questions.length}
-            ${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
-            ${markedQuestions.includes(currentQuestionIndex) ? '<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> معلمة</span>' : ''}
-        </div>
-        <div class="question-text">${question.q}</div>
-        <div class="options">
-    `;
+const question = shuffledQuestions[currentQuestionIndex];
+const isLocked = answerLocked[currentQuestionIndex];
 
-    question.options.forEach((opt, i) => {
-        const isChecked = userAnswers[currentQuestionIndex] === i;
-        const isDisabled = isLocked;
-        let labelClass = '';
+let html = `
+<div class="question-box fade-in">
+<div class="question-number">
+<i class="fas fa-question-circle"></i>
+السؤال ${currentQuestionIndex + 1} من ${questions.length}
+${isLocked ? '<span style="color: var(--accent); margin-right: 10px;"><i class="fas fa-lock"></i> مقفل</span>' : ''}
+${markedQuestions.includes(currentQuestionIndex) ? '<span style="background: var(--tertiary-gradient); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; margin-right: 10px;"><i class="fas fa-flag"></i> معلمة</span>' : ''}
+</div>
+<div class="question-text">${question.q}</div>
+<div class="options">
+`;
 
-        if (isLocked) {
-            labelClass = 'locked';
-            if (isChecked) {
-                labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
-            } else if (i === question.answer) {
-                labelClass += ' correct-answer';
-            }
-        } else if (isChecked) {
-            labelClass = 'selected';
-        }
+question.options.forEach((opt, i) => {
+const isChecked = userAnswers[currentQuestionIndex] === i;
+const isDisabled = isLocked;
+let labelClass = '';
 
-        html += `
-        <label class="${labelClass}">
-            <input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})" ${isLocked ? 'onclick="return false;"' : ''}>
-            ${opt}
-            ${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary); margin-right: 5px;"></i>' : ''}
-        </label>
-        `;
-    });
+if (isLocked) {
+labelClass = 'locked';
+if (isChecked) {
+labelClass += userAnswers[currentQuestionIndex] === question.answer ? ' correct-answer' : ' wrong-answer';
+} else if (i === question.answer) {
+labelClass += ' correct-answer';
+}
+} else if (isChecked) {
+labelClass = 'selected';
+}
 
-    html += `
-        </div>
-        <div id="explanation" class="explanation"></div>
-    </div>
-    <div class="navigation">
-        <button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
-            <i class="fas fa-arrow-right"></i>
-            السابق
-        </button>
-        <button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
-            التالي
-            <i class="fas fa-arrow-left"></i>
-        </button>
-    </div>
-    `;
+html += `
+<label class="${labelClass}">
+<input type="radio" name="q${currentQuestionIndex}" value="${i}" ${isChecked ? 'checked' : ''} ${isDisabled ? 'disabled' : ''} onchange="selectAnswer(${i})" ${isLocked ? 'onclick="return false;"' : ''}>
+${opt}
+${isLocked && i === question.answer ? ' <i class="fas fa-check" style="color: var(--secondary); margin-right: 5px;"></i>' : ''}
+</label>
+`;
+});
 
-    quizDiv.innerHTML = html;
+html += `
+</div>
+<div id="explanation" class="explanation"></div>
+</div>
+<div class="navigation">
+<button class="btn btn-secondary" onclick="previousQuestion()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>
+<i class="fas fa-arrow-right"></i>
+السابق
+</button>
+<button class="btn btn-primary" onclick="nextQuestion()" ${currentQuestionIndex === questions.length - 1 ? 'disabled' : ''}>
+التالي
+<i class="fas fa-arrow-left"></i>
+</button>
+</div>
+`;
 
-    // تحديث شريط التقدم
-    const progress = document.getElementById('progress');
-    progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
+quizDiv.innerHTML = html;
 
-    // تحديث معلومات الاختبار
-    document.getElementById('quiz-info').innerHTML = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+// تحديث شريط التقدم
+const progress = document.getElementById('progress');
+progress.style.width = questions.length > 0 ? `${((currentQuestionIndex + 1) / questions.length) * 100}%` : '0%';
 
-    // تحديث زر وضع العلامة
-    const markBtn = document.getElementById('mark-review-btn');
-    if (markedQuestions.includes(currentQuestionIndex)) {
-        markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
-        markBtn.style.background = 'var(--tertiary-gradient)';
-    } else {
-        markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
-        markBtn.style.background = 'var(--secondary-gradient)';
-    }
+// تحديث معلومات الاختبار
+document.getElementById('quiz-info').innerHTML = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
 
-    // عرض الشرح إذا كان المستخدم قد أجاب على السؤال
-    if (userAnswers[currentQuestionIndex] !== null) {
-        showExplanation();
-    }
+// تحديث زر وضع العلامة
+const markBtn = document.getElementById('mark-review-btn');
+if (markedQuestions.includes(currentQuestionIndex)) {
+markBtn.innerHTML = '<i class="fas fa-flag"></i> إزالة العلامة';
+markBtn.style.background = 'var(--tertiary-gradient)';
+} else {
+markBtn.innerHTML = '<i class="fas fa-flag"></i> وضع علامة للمراجعة';
+markBtn.style.background = 'var(--secondary-gradient)';
+}
+
+// عرض الشرح إذا كان المستخدم قد أجاب على السؤال
+if (userAnswers[currentQuestionIndex] !== null) {
+showExplanation();
+}
 }
 
 // اختيار إجابة - مقفل بعد الاختيار
 function selectAnswer(answerIndex) {
-    // إذا كان السؤال مقفولاً بالفعل، لا تفعل شيئاً
-    if (answerLocked[currentQuestionIndex]) {
-        return;
-    }
+// إذا كان السؤال مقفولاً بالفعل، لا تفعل شيئاً
+if (answerLocked[currentQuestionIndex]) {
+return;
+}
 
-    userAnswers[currentQuestionIndex] = answerIndex;
-    answerLocked[currentQuestionIndex] = true;
+userAnswers[currentQuestionIndex] = answerIndex;
+answerLocked[currentQuestionIndex] = true;
 
-    // تعطيل جميع خيارات الراديو في السؤال الحالي
-    const radioInputs = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
-    radioInputs.forEach(input => {
-        input.disabled = true;
-    });
+// تشغيل الصوت المناسب
+const question = shuffledQuestions[currentQuestionIndex];
+if (answerIndex === question.answer) {
+playCorrectSound();
+} else {
+playWrongSound();
+}
 
-    // إضافة فئة locked لجميع labels
-    const labels = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
-    labels.forEach(input => {
-        input.closest('label').classList.add('locked');
-    });
+// تعطيل جميع خيارات الراديو في السؤال الحالي
+const radioInputs = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
+radioInputs.forEach(input => {
+input.disabled = true;
+});
 
-    // إظهار الشرح والتغذية الراجعة
-    showExplanation();
+// إضافة فئة locked لجميع labels
+const labels = document.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
+labels.forEach(input => {
+input.closest('label').classList.add('locked');
+});
+
+// إظهار الشرح والتغذية الراجعة
+showExplanation();
 }
 
 // عرض الشرح
 function showExplanation() {
-    const question = shuffledQuestions[currentQuestionIndex];
-    const explanationDiv = document.getElementById("explanation");
-    const userAnswer = userAnswers[currentQuestionIndex];
+const question = shuffledQuestions[currentQuestionIndex];
+const explanationDiv = document.getElementById("explanation");
+const userAnswer = userAnswers[currentQuestionIndex];
 
-    if (userAnswer !== null) {
-        explanationDiv.style.display = "block";
+if (userAnswer !== null) {
+explanationDiv.style.display = "block";
 
-        let resultHTML = "";
+let resultHTML = "";
 
-        if (userAnswer === question.answer) {
-            resultHTML = `<p class="correct"><i class="fas fa-check-circle"></i> إجابة صحيحة! أحسنت!</p>`;
-        } else {
-            resultHTML = `
-            <p class="wrong"><i class="fas fa-times-circle"></i> إجابة خاطئة — الإجابة الصحيحة: <span class="correct">${question.options[question.answer]}</span></p>
-            `;
-        }
+if (userAnswer === question.answer) {
+resultHTML = `<p class="correct"><i class="fas fa-check-circle"></i> إجابة صحيحة! أحسنت!</p>`;
+} else {
+resultHTML = `
+<p class="wrong"><i class="fas fa-times-circle"></i> إجابة خاطئة — الإجابة الصحيحة: <span class="correct">${question.options[question.answer]}</span></p>
+`;
+}
 
-        // إضافة الشروح الملونة
-        resultHTML += `
-        <div class="explanation-line explanation-correct"><strong>📚 التفسير الصحيح:</strong> ${questions[currentQuestionIndex].explanations.correct}</div>
-        `;
+// إضافة الشروح الملونة
+resultHTML += `
+<div class="explanation-line explanation-correct"><strong>📚 التفسير الصحيح:</strong> ${questions[currentQuestionIndex].explanations.correct}</div>
+`;
 
-        // إضافة التفسيرات للخيارات الخاطئة
-        const wrongKeys = ['wrong1', 'wrong2', 'wrong3'];
+// إضافة التفسيرات للخيارات الخاطئة
+const wrongKeys = ['wrong1', 'wrong2', 'wrong3'];
 
-        wrongKeys.forEach((key, index) => {
-            if (questions[currentQuestionIndex].explanations[key]) {
-                resultHTML += `<div class="explanation-line explanation-wrong-${index + 1}"><strong>💡 ملاحظة:</strong> ${questions[currentQuestionIndex].explanations[key]}</div>`;
-            }
-        });
+wrongKeys.forEach((key, index) => {
+if (questions[currentQuestionIndex].explanations[key]) {
+resultHTML += `<div class="explanation-line explanation-wrong-${index + 1}"><strong>💡 ملاحظة:</strong> ${questions[currentQuestionIndex].explanations[key]}</div>`;
+}
+});
 
-        explanationDiv.innerHTML = resultHTML;
-    }
+explanationDiv.innerHTML = resultHTML;
+}
 }
 
 // الانتقال إلى السؤال التالي
 function nextQuestion() {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuiz();
-    }
+if (currentQuestionIndex < questions.length - 1) {
+currentQuestionIndex++;
+loadQuiz();
+}
 }
 
 // الانتقال إلى السؤال السابق
 function previousQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuiz();
-    }
+if (currentQuestionIndex > 0) {
+currentQuestionIndex--;
+loadQuiz();
+}
 }
 
 // إنشاء الرسم البياني للأداء
 function createPerformanceChart() {
-    loadPerformanceHistory();
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    const dates = performanceHistory.map(attempt => {
-        const date = new Date(attempt.date);
-        return `${date.getDate()}/${date.getMonth() + 1}`;
-    });
-    const scores = performanceHistory.map(attempt => attempt.percentage);
+loadPerformanceHistory();
+const ctx = document.getElementById('performanceChart').getContext('2d');
+const dates = performanceHistory.map(attempt => {
+const date = new Date(attempt.date);
+return `${date.getDate()}/${date.getMonth() + 1}`;
+});
+const scores = performanceHistory.map(attempt => attempt.percentage);
 
-    // إضافة الدرجة الحالية إلى الرسم البياني
-    const currentScore = calculateScore().percentage;
-    dates.push("الآن");
-    scores.push(currentScore);
+// إضافة الدرجة الحالية إلى الرسم البياني
+const currentScore = calculateScore().percentage;
+dates.push("الآن");
+scores.push(currentScore);
 
-    // تدمير الرسم البياني القديم إذا كان موجودًا
-    if (window.performanceChartInstance) {
-        window.performanceChartInstance.destroy();
-    }
+// تدمير الرسم البياني القديم إذا كان موجودًا
+if (window.performanceChartInstance) {
+window.performanceChartInstance.destroy();
+}
 
-    window.performanceChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                label: 'النسبة المئوية %',
-                data: scores,
-                borderColor: 'rgba(26, 95, 122, 1)',
-                backgroundColor: 'rgba(26, 95, 122, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        color: 'var(--text)',
-                        font: {
-                            family: 'Tajawal',
-                            size: 14
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: {
-                        color: 'var(--text)',
-                        callback: function(value) {
-                            return value + '%';
-                        },
-                        font: {
-                            family: 'Tajawal',
-                            size: 12
-                        }
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    }
-                },
-                x: {
-                    ticks: {
-                        color: 'var(--text)',
-                        font: {
-                            family: 'Tajawal',
-                            size: 12
-                        }
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    }
-                }
-            }
-        }
-    });
+window.performanceChartInstance = new Chart(ctx, {
+type: 'line',
+data: {
+labels: dates,
+datasets: [{
+label: 'النسبة المئوية %',
+data: scores,
+borderColor: 'rgba(26, 95, 122, 1)',
+backgroundColor: 'rgba(26, 95, 122, 0.1)',
+borderWidth: 3,
+fill: true,
+tension: 0.4
+}]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+display: true,
+position: 'top',
+labels: {
+color: 'var(--text)',
+font: {
+family: 'Tajawal',
+size: 14
+}
+}
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+max: 100,
+ticks: {
+color: 'var(--text)',
+callback: function(value) {
+return value + '%';
+},
+font: {
+family: 'Tajawal',
+size: 12
+}
+},
+grid: {
+color: 'rgba(255, 255, 255, 0.1)'
+}
+},
+x: {
+ticks: {
+color: 'var(--text)',
+font: {
+family: 'Tajawal',
+size: 12
+}
+},
+grid: {
+color: 'rgba(255, 255, 255, 0.1)'
+}
+}
+}
+}
+});
 }
 
 // إنشاء النصائح المخصصة
 function createCustomTips() {
-    const score = calculateScore();
-    const tipsContainer = document.getElementById('tips-container');
-    let tipsHTML = '';
+const score = calculateScore();
+const tipsContainer = document.getElementById('tips-container');
+let tipsHTML = '';
 
-    if (score.percentage >= 90) {
-        tipsHTML = `
-        <div class="tip-card">
-            <h4><i class="fas fa-star"></i> أداء ممتاز!</h4>
-            <p>أداؤك رائع في موضوع الخوف والرجاء! لديك فهم قوي للأحكام الشرعية المتعلقة بهذا الباب الهام من أبواب العقيدة.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-lightbulb"></i> نصائح للمستوى المتقدم</h4>
-            <p>يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة مثل كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-book"></i> الخطوة التالية</h4>
-            <p>ابدأ في دراسة الموازنة بين الخوف والرجاء في حياة السلف الصالح وكيفية تطبيق ذلك عمليًا.</p>
-        </div>
-        `;
-    } else if (score.percentage >= 70) {
-        tipsHTML = `
-        <div class="tip-card">
-            <h4><i class="fas fa-check-circle"></i> أداء جيد</h4>
-            <p>أداؤك جيد، ركز على الأسئلة التي واجهت صعوبة فيها، خاصة التمييز بين أنواع الخوف المختلفة.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-book-open"></i> مراجعة مركزة</h4>
-            <p>راجع جيدًا الفروق بين: الخوف الطبيعي والخوف الشركي، والرجاء النافع والرجاء الكاذب.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-clock"></i> تحسين الفهم</h4>
-            <p>ادرس الأمثلة العملية لكل نوع من أنواع الخوف والرجاء لترسخ المعلومة.</p>
-        </div>
-        `;
-    } else {
-        tipsHTML = `
-        <div class="tip-card">
-            <h4><i class="fas fa-exclamation-triangle"></i> يحتاج تحسين</h4>
-            <p>أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء، فهو من أساسيات العقيدة الإسلامية.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-graduation-cap"></i> الأساسيات أولاً</h4>
-            <p>ابدأ بتعلم: تعريف الخوف والرجاء، أنواع كل منهما، الأحكام الشرعية، والأدلة من القرآن والسنة.</p>
-        </div>
-        <div class="tip-card">
-            <h4><i class="fas fa-redo"></i> الممارسة المستمرة</h4>
-            <p>كرر الاختبار بعد دراسة الموضوع من مصادره الأصلية لمتابعة تطور مستواك.</p>
-        </div>
-        `;
-    }
+if (score.percentage >= 90) {
+tipsHTML = `
+<div class="tip-card">
+<h4><i class="fas fa-star"></i> أداء ممتاز!</h4>
+<p>أداؤك رائع في موضوع الخوف والرجاء! لديك فهم قوي للأحكام الشرعية المتعلقة بهذا الباب الهام من أبواب العقيدة.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-lightbulb"></i> نصائح للمستوى المتقدم</h4>
+<p>يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة مثل كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-book"></i> الخطوة التالية</h4>
+<p>ابدأ في دراسة الموازنة بين الخوف والرجاء في حياة السلف الصالح وكيفية تطبيق ذلك عمليًا.</p>
+</div>
+`;
+} else if (score.percentage >= 70) {
+tipsHTML = `
+<div class="tip-card">
+<h4><i class="fas fa-check-circle"></i> أداء جيد</h4>
+<p>أداؤك جيد، ركز على الأسئلة التي واجهت صعوبة فيها، خاصة التمييز بين أنواع الخوف المختلفة.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-book-open"></i> مراجعة مركزة</h4>
+<p>راجع جيدًا الفروق بين: الخوف الطبيعي والخوف الشركي، والرجاء النافع والرجاء الكاذب.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-clock"></i> تحسين الفهم</h4>
+<p>ادرس الأمثلة العملية لكل نوع من أنواع الخوف والرجاء لترسخ المعلومة.</p>
+</div>
+`;
+} else {
+tipsHTML = `
+<div class="tip-card">
+<h4><i class="fas fa-exclamation-triangle"></i> يحتاج تحسين</h4>
+<p>أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء، فهو من أساسيات العقيدة الإسلامية.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-graduation-cap"></i> الأساسيات أولاً</h4>
+<p>ابدأ بتعلم: تعريف الخوف والرجاء، أنواع كل منهما، الأحكام الشرعية، والأدلة من القرآن والسنة.</p>
+</div>
+<div class="tip-card">
+<h4><i class="fas fa-redo"></i> الممارسة المستمرة</h4>
+<p>كرر الاختبار بعد دراسة الموضوع من مصادره الأصلية لمتابعة تطور مستواك.</p>
+</div>
+`;
+}
 
-    tipsContainer.innerHTML = tipsHTML;
+tipsContainer.innerHTML = tipsHTML;
 }
 
 // حساب الدرجات
 function calculateScore() {
-    let totalCorrect = 0;
-    userAnswers.forEach((answer, index) => {
-        // استخدام السؤال الأصلي (غير المرتب) للتحقق من الإجابة الصحيحة
-        if (answer === questions[index]?.answer) {
-            totalCorrect++;
-        }
-    });
+let totalCorrect = 0;
+userAnswers.forEach((answer, index) => {
+// استخدام السؤال الأصلي (غير المرتب) للتحقق من الإجابة الصحيحة
+if (answer === questions[index]?.answer) {
+totalCorrect++;
+}
+});
 
-    const total = questions.length;
-    const percentage = total > 0 ? ((totalCorrect / total) * 100).toFixed(2) : 0;
+const total = questions.length;
+const percentage = total > 0 ? ((totalCorrect / total) * 100).toFixed(2) : 0;
 
-    let evaluation = "";
-    let evaluationIcon = "";
-    if (percentage >= 90) {
-        evaluation = "ممتاز - فهم تام للموضوع";
-        evaluationIcon = "🌟";
-    } else if (percentage >= 80) {
-        evaluation = "جيد جداً - إلمام جيد بالأحكام";
-        evaluationIcon = "🔵";
-    } else if (percentage >= 70) {
-        evaluation = "جيد - فهم مقبول يحتاج لبعض التحسين";
-        evaluationIcon = "🟢";
-    } else if (percentage >= 60) {
-        evaluation = "مقبول - تحتاج لمراجعة إضافية";
-        evaluationIcon = "🟡";
-    } else {
-        evaluation = "يحتاج تحسين - راجع الموضوع جيداً";
-        evaluationIcon = "⚠️";
-    }
+let evaluation = "";
+let evaluationIcon = "";
+if (percentage >= 90) {
+evaluation = "ممتاز - فهم تام للموضوع";
+evaluationIcon = "🌟";
+} else if (percentage >= 80) {
+evaluation = "جيد جداً - إلمام جيد بالأحكام";
+evaluationIcon = "🔵";
+} else if (percentage >= 70) {
+evaluation = "جيد - فهم مقبول يحتاج لبعض التحسين";
+evaluationIcon = "🟢";
+} else if (percentage >= 60) {
+evaluation = "مقبول - تحتاج لمراجعة إضافية";
+evaluationIcon = "🟡";
+} else {
+evaluation = "يحتاج تحسين - راجع الموضوع جيداً";
+evaluationIcon = "⚠️";
+}
 
-    return {
-        correct: totalCorrect,
-        total: total,
-        percentage: parseFloat(percentage),
-        evaluation: evaluation,
-        evaluationIcon: evaluationIcon
-    };
+return {
+correct: totalCorrect,
+total: total,
+percentage: parseFloat(percentage),
+evaluation: evaluation,
+evaluationIcon: evaluationIcon
+};
 }
 
 // حفظ سجل الأداء
 function savePerformanceRecord() {
-    const score = calculateScore();
-    performanceHistory.push({
-        date: new Date().toISOString(),
-        score: score.correct,
-        total: score.total,
-        percentage: score.percentage
-    });
+const score = calculateScore();
+performanceHistory.push({
+date: new Date().toISOString(),
+score: score.correct,
+total: score.total,
+percentage: score.percentage
+});
 
-    // الحفاظ على آخر 10 محاولات فقط
-    if (performanceHistory.length > 10) {
-        performanceHistory = performanceHistory.slice(-10);
-    }
+// الحفاظ على آخر 10 محاولات فقط
+if (performanceHistory.length > 10) {
+performanceHistory = performanceHistory.slice(-10);
+}
 
-    savePerformanceHistory();
+savePerformanceHistory();
 }
 
 // إنشاء تقرير PDF
 function generatePDF() {
-    const score = calculateScore();
-    const answeredCount = userAnswers.filter(answer => answer !== null).length;
-    
-    // إنشاء محتوى PDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // إعداد الخط العربي
-    doc.addFont('https://fonts.gstatic.com/s/tajawal/v9/Iurf6YBj_oCad4k1l_6gLrZjiLlJ.ttf', 'Tajawal', 'normal');
-    doc.setFont('Tajawal');
-    doc.setR2L(true);
-    
-    // العنوان
-    doc.setFontSize(24);
-    doc.setTextColor(26, 95, 122);
-    doc.text('تقرير نتائج اختبار الدراسات الإسلامية', 105, 20, null, null, 'center');
-    
-    doc.setFontSize(16);
-    doc.setTextColor(21, 152, 149);
-    doc.text('موضوع: الخوف والرجاء في الإسلام', 105, 30, null, null, 'center');
-    
-    doc.setFontSize(12);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`تاريخ الاختبار: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
-    
-    // خط فاصل
-    doc.setDrawColor(26, 95, 122);
-    doc.setLineWidth(0.5);
-    doc.line(20, 45, 190, 45);
-    
-    // النتائج الرئيسية
-    doc.setFontSize(18);
-    doc.setTextColor(30, 30, 30);
-    doc.text('النتائج الرئيسية', 20, 60);
-    
-    doc.setFontSize(14);
-    doc.text(`الدرجة النهائية: ${score.correct} من ${score.total}`, 20, 75);
-    doc.text(`النسبة المئوية: ${score.percentage}%`, 20, 85);
-    doc.text(`التقييم: ${score.evaluation}`, 20, 95);
-    doc.text(`عدد الأسئلة المجابة: ${answeredCount} من ${questions.length}`, 20, 105);
-    doc.text(`الوقت المستغرق: ${(49 - (timeLeft / 60)).toFixed(2)} دقيقة من 49 دقيقة`, 20, 115);
-    
-    // تفاصيل الإجابات
-    doc.setFontSize(18);
-    doc.text('تفاصيل الإجابات', 20, 135);
-    
-    doc.setFontSize(12);
-    let yPos = 150;
-    let pageNumber = 1;
-    
-    for (let i = 0; i < questions.length; i++) {
-        if (yPos > 270) {
-            doc.addPage();
-            yPos = 20;
-            pageNumber++;
-            doc.setFontSize(10);
-            doc.text(`صفحة ${pageNumber}`, 105, 290, null, null, 'center');
-            doc.setFontSize(12);
-        }
-        
-        const status = userAnswers[i] === null ? 'لم يتم الإجابة' : 
-                      (userAnswers[i] === questions[i].answer ? 'صحيح' : 'خاطئ');
-        const statusColor = userAnswers[i] === null ? [150, 150, 150] : 
-                           (userAnswers[i] === questions[i].answer ? [76, 175, 80] : [239, 68, 68]);
-        
-        doc.setTextColor(statusColor[0], statusColor[1], statusColor[2]);
-        doc.text(`سؤال ${i+1}: ${status}`, 20, yPos);
-        yPos += 10;
-    }
-    
-    // نصائح بناءً على النتيجة
-    doc.addPage();
-    doc.setFontSize(18);
-    doc.setTextColor(30, 30, 30);
-    doc.text('نصائح للتحسين', 20, 20);
-    
-    doc.setFontSize(12);
-    doc.setTextColor(80, 80, 80);
-    
-    let tips = [];
-    if (score.percentage >= 90) {
-        tips = [
-            'ممتاز! لديك فهم قوي لموضوع الخوف والرجاء.',
-            'يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة.',
-            'ركز على التطبيق العملي لموازنة الخوف والرجاء في حياتك اليومية.',
-            'احرص على تعليم الآخرين هذا الباب الهام من أبواب العقيدة.'
-        ];
-    } else if (score.percentage >= 70) {
-        tips = [
-            'أداؤك جيد، يمكنك تحسينه بالمزيد من المراجعة.',
-            'راجع جيدًا الفروق بين أنواع الخوف المختلفة.',
-            'تأمل في الأمثلة العملية للخوف المحمود والخوف المذموم.',
-            'ادرس الأدلة القرآنية والنبوية المتعلقة بالخوف والرجاء.'
-        ];
-    } else {
-        tips = [
-            'أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء.',
-            'ابدأ بتعلم التعريفات الأساسية والأحكام الشرعية.',
-            'افهم جيدًا الفرق بين الخوف الطبيعي والخوف الشركي.',
-            'تأكد من فهمك لشروط الرجاء النافع وأمثلته.'
-        ];
-    }
-    
-    yPos = 35;
-    tips.forEach(tip => {
-        doc.text(`• ${tip}`, 20, yPos);
-        yPos += 15;
-    });
-    
-    // مصادر للدراسة
-    doc.setFontSize(16);
-    doc.setTextColor(26, 95, 122);
-    doc.text('مصادر مقترحة للدراسة:', 20, yPos + 10);
-    
-    doc.setFontSize(12);
-    doc.setTextColor(80, 80, 80);
-    const sources = [
-        'كتاب "القواعد المثلى" لابن عثيمين',
-        'كتاب "التوحيد" للشيخ صالح الفوزان',
-        'شرح "ثلاثة الأصول" للشيخ ابن باز',
-        'كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية'
-    ];
-    
-    yPos += 25;
-    sources.forEach(source => {
-        doc.text(`- ${source}`, 20, yPos);
-        yPos += 12;
-    });
-    
-    // تذييل الصفحة
-    doc.setFontSize(10);
-    doc.setTextColor(150, 150, 150);
-    doc.text('تم إنشاء هذا التقرير تلقائيًا من نظام الاختبارات التفاعلية', 105, 290, null, null, 'center');
-    
-    // حفظ الملف
-    doc.save(`نتيجة-اختبار-الخوف-والرجاء-${new Date().toISOString().slice(0,10)}.pdf`);
-    
-    alert('تم إنشاء وتحميل تقرير PDF بنجاح!');
+const score = calculateScore();
+const answeredCount = userAnswers.filter(answer => answer !== null).length;
+// إنشاء محتوى PDF
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+// إعداد الخط العربي
+doc.addFont('https://fonts.gstatic.com/s/tajawal/v9/Iurf6YBj_oCad4k1l_6gLrZjiLlJ.ttf', 'Tajawal', 'normal');
+doc.setFont('Tajawal');
+doc.setR2L(true);
+
+// العنوان
+doc.setFontSize(24);
+doc.setTextColor(26, 95, 122);
+doc.text('تقرير نتائج اختبار الدراسات الإسلامية', 105, 20, null, null, 'center');
+
+doc.setFontSize(16);
+doc.setTextColor(21, 152, 149);
+doc.text('موضوع: الخوف والرجاء في الإسلام', 105, 30, null, null, 'center');
+
+doc.setFontSize(12);
+doc.setTextColor(100, 100, 100);
+doc.text(`تاريخ الاختبار: ${new Date().toLocaleDateString('ar-SA')}`, 105, 40, null, null, 'center');
+
+// خط فاصل
+doc.setDrawColor(26, 95, 122);
+doc.setLineWidth(0.5);
+doc.line(20, 45, 190, 45);
+// النتائج الرئيسية
+doc.setFontSize(18);
+doc.setTextColor(30, 30, 30);
+doc.text('النتائج الرئيسية', 20, 60);
+
+doc.setFontSize(14);
+doc.text(`الدرجة النهائية: ${score.correct} من ${score.total}`, 20, 75);
+doc.text(`النسبة المئوية: ${score.percentage}%`, 20, 85);
+doc.text(`التقييم: ${score.evaluation}`, 20, 95);
+doc.text(`عدد الأسئلة المجابة: ${answeredCount} من ${questions.length}`, 20, 105);
+doc.text(`الوقت المستغرق: ${(49 - (timeLeft / 60)).toFixed(2)} دقيقة من 49 دقيقة`, 20, 115);
+// تفاصيل الإجابات
+doc.setFontSize(18);
+doc.text('تفاصيل الإجابات', 20, 135);
+
+doc.setFontSize(12);
+let yPos = 150;
+let pageNumber = 1;
+
+for (let i = 0; i < questions.length; i++) {
+if (yPos > 270) {
+doc.addPage();
+yPos = 20;
+pageNumber++;
+doc.setFontSize(10);
+doc.text(`صفحة ${pageNumber}`, 105, 290, null, null, 'center');
+doc.setFontSize(12);
+}
+
+const status = userAnswers[i] === null ? 'لم يتم الإجابة' :
+(userAnswers[i] === questions[i].answer ? 'صحيح' : 'خاطئ');
+const statusColor = userAnswers[i] === null ? [150, 150, 150] :
+(userAnswers[i] === questions[i].answer ? [76, 175, 80] : [239, 68, 68]);
+
+doc.setTextColor(statusColor[0], statusColor[1], statusColor[2]);
+doc.text(`سؤال ${i+1}: ${status}`, 20, yPos);
+yPos += 10;
+}
+// نصائح بناءً على النتيجة
+doc.addPage();
+doc.setFontSize(18);
+doc.setTextColor(30, 30, 30);
+doc.text('نصائح للتحسين', 20, 20);
+
+doc.setFontSize(12);
+doc.setTextColor(80, 80, 80);
+
+let tips = [];
+if (score.percentage >= 90) {
+tips = [
+'ممتاز! لديك فهم قوي لموضوع الخوف والرجاء.',
+'يمكنك الآن التوسع في دراسة كتب العقيدة المتقدمة.',
+'ركز على التطبيق العملي لموازنة الخوف والرجاء في حياتك اليومية.',
+'احرص على تعليم الآخرين هذا الباب الهام من أبواب العقيدة.'
+];
+} else if (score.percentage >= 70) {
+tips = [
+'أداؤك جيد، يمكنك تحسينه بالمزيد من المراجعة.',
+'راجع جيدًا الفروق بين أنواع الخوف المختلفة.',
+'تأمل في الأمثلة العملية للخوف المحمود والخوف المذموم.',
+'ادرس الأدلة القرآنية والنبوية المتعلقة بالخوف والرجاء.'
+];
+} else {
+tips = [
+'أنت بحاجة إلى مراجعة شاملة لموضوع الخوف والرجاء.',
+'ابدأ بتعلم التعريفات الأساسية والأحكام الشرعية.',
+'افهم جيدًا الفرق بين الخوف الطبيعي والخوف الشركي.',
+'تأكد من فهمك لشروط الرجاء النافع وأمثلته.'
+];
+}
+
+yPos = 35;
+tips.forEach(tip => {
+doc.text(`• ${tip}`, 20, yPos);
+yPos += 15;
+});
+// مصادر للدراسة
+doc.setFontSize(16);
+doc.setTextColor(26, 95, 122);
+doc.text('مصادر مقترحة للدراسة:', 20, yPos + 10);
+
+doc.setFontSize(12);
+doc.setTextColor(80, 80, 80);
+const sources = [
+'كتاب "القواعد المثلى" لابن عثيمين',
+'كتاب "التوحيد" للشيخ صالح الفوزان',
+'شرح "ثلاثة الأصول" للشيخ ابن باز',
+'كتاب "الخوف والرجاء" من مجموع الفتاوى لابن تيمية'
+];
+
+yPos += 25;
+sources.forEach(source => {
+doc.text(`- ${source}`, 20, yPos);
+yPos += 12;
+});
+// تذييل الصفحة
+doc.setFontSize(10);
+doc.setTextColor(150, 150, 150);
+doc.text('تم إنشاء هذا التقرير تلقائيًا من نظام الاختبارات التفاعلية', 105, 290, null, null, 'center');
+
+// حفظ الملف
+doc.save(`نتيجة-اختبار-الخوف-والرجاء-${new Date().toISOString().slice(0,10)}.pdf`);
+alert('تم إنشاء وتحميل تقرير PDF بنجاح!');
 }
 
 // إعادة تشغيل الاختبار
 function restartQuiz() {
-    // إعادة تعيين جميع المتغيرات
-    currentQuestionIndex = 0;
-    userAnswers = Array(questions.length).fill(null);
-    timeLeft = 49 * 60;
-    markedQuestions = [];
-    answerLocked = Array(questions.length).fill(false);
-    shuffledQuestions = [];
+// إعادة تعيين جميع المتغيرات
+currentQuestionIndex = 0;
+userAnswers = Array(questions.length).fill(null);
+timeLeft = 49 * 60;
+markedQuestions = [];
+answerLocked = Array(questions.length).fill(false);
+shuffledQuestions = [];
 
-    // إعادة تعيين العرض
-    document.getElementById("quiz").style.display = "block";
-    document.querySelector(".controls").style.display = "flex";
-    document.getElementById("result-box").style.display = "none";
+// إعادة تعيين العرض
+document.getElementById("quiz").style.display = "block";
+document.querySelector(".controls").style.display = "flex";
+document.getElementById("result-box").style.display = "none";
 
-    // إعادة تحميل المؤقت
-    clearInterval(timerInterval);
-    startTimer();
+// إعادة تحميل المؤقت
+clearInterval(timerInterval);
+startTimer();
 
-    // إعادة تحميل الاختبار
-    loadQuiz();
+// إعادة تحميل الاختبار
+loadQuiz();
 
-    // تحديث المؤقت
-    updateTimerDisplay();
+// تحديث المؤقت
+updateTimerDisplay();
 }
 
 // إنهاء الاختبار
 function finishQuiz() {
-    clearInterval(timerInterval);
+clearInterval(timerInterval);
 
-    const score = calculateScore();
+const score = calculateScore();
 
-    // حفظ سجل الأداء
-    savePerformanceRecord();
+// حفظ سجل الأداء
+savePerformanceRecord();
 
-    // عرض النتائج
-    document.getElementById("result-box").style.display = "block";
-    document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
-    document.getElementById("percentage").innerHTML = `النسبة المئوية: ${score.percentage}%`;
-    document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
+// تشغيل صوت النهاية
+playFinishSound();
 
-    // إخفاء الاختبار
-    document.getElementById("quiz").style.display = "none";
-    document.querySelector(".controls").style.display = "none";
+// عرض النتائج
+document.getElementById("result-box").style.display = "block";
+document.getElementById("result").innerHTML = `${score.evaluationIcon} النتيجة: ${score.correct} من ${score.total}`;
+document.getElementById("percentage").innerHTML = `النسبة المئوية: ${score.percentage}%`;
+document.getElementById("evaluation").innerHTML = `التقييم: ${score.evaluation}`;
 
-    // عرض النتائج المتقدمة
-    document.getElementById('advanced-results').style.display = 'block';
+// إخفاء الاختبار
+document.getElementById("quiz").style.display = "none";
+document.querySelector(".controls").style.display = "none";
 
-    // إنشاء الرسوم البيانية والنصائح
-    setTimeout(() => {
-        createPerformanceChart();
-        createCustomTips();
-    }, 100);
+// عرض النتائج المتقدمة
+document.getElementById('advanced-results').style.display = 'block';
+
+// إنشاء الرسوم البيانية والنصائح
+setTimeout(() => {
+createPerformanceChart();
+createCustomTips();
+}, 100);
 }
 
 // بدء التحميل الأولي
 window.onload = function() {
-    checkDarkModePreference();
-    loadPerformanceHistory();
-    loadQuiz();
-    startTimer();
+checkDarkModePreference();
+loadPerformanceHistory();
+// تحميل تفضيلات الصوت
+const savedSoundSetting = localStorage.getItem('soundEnabled');
+if (savedSoundSetting !== null) {
+soundEnabled = savedSoundSetting === 'true';
+}
+// تحديث أيقونة الصوت
+const soundBtn = document.getElementById('soundToggleBtn');
+const soundIcon = soundBtn.querySelector('i');
+const soundStatus = soundBtn.nextElementSibling;
 
-    // إضافة تأثيرات عند التحميل
-    document.querySelector('.hero-section').classList.add('bounce-in');
-    setTimeout(() => {
-        if (document.querySelector('.card')) {
-            document.querySelector('.card').classList.add('fade-in');
-        }
-    }, 300);
-    
-    // إغلاق النوافذ المنبثقة عند النقر خارجها
-    window.onclick = function(event) {
-        const currentScoreModal = document.getElementById('currentScoreModal');
-        const questionsModal = document.getElementById('questionsModal');
-        
-        if (event.target == currentScoreModal) {
-            currentScoreModal.style.display = 'none';
-        }
-        
-        if (event.target == questionsModal) {
-            questionsModal.style.display = 'none';
-        }
-    }
+if (soundEnabled) {
+soundIcon.classList.remove('fa-volume-mute');
+soundIcon.classList.add('fa-volume-up');
+soundBtn.classList.remove('muted');
+soundStatus.textContent = 'الأصوات مفعلة';
+} else {
+soundIcon.classList.remove('fa-volume-up');
+soundIcon.classList.add('fa-volume-mute');
+soundBtn.classList.add('muted');
+soundStatus.textContent = 'الأصوات معطلة';
+}
+
+loadQuiz();
+startTimer();
+
+// إضافة تأثيرات عند التحميل
+document.querySelector('.hero-section').classList.add('bounce-in');
+setTimeout(() => {
+if (document.querySelector('.card')) {
+document.querySelector('.card').classList.add('fade-in');
+}
+}, 300);
+// إغلاق النوافذ المنبثقة عند النقر خارجها
+window.onclick = function(event) {
+const currentScoreModal = document.getElementById('currentScoreModal');
+const questionsModal = document.getElementById('questionsModal');
+
+if (event.target == currentScoreModal) {
+currentScoreModal.style.display = 'none';
+}
+
+if (event.target == questionsModal) {
+questionsModal.style.display = 'none';
+}
+}
 }
 </script>
 </body>
